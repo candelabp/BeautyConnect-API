@@ -15,15 +15,14 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 @Entity
-public class Cliente extends Base{
+public class PrestadorDeServicio extends Base {
 
     private String nombre;
-
-    private String apellido;
 
     private Integer telefono;
 
     @OneToOne
     @JoinColumn(name = "usuarioId")
     private Usuario usuario;
+
 }
