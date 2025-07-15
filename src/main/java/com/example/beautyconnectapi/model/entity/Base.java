@@ -17,7 +17,6 @@ import java.io.Serializable;
 @ToString
 @SuperBuilder
 public class Base implements Serializable {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

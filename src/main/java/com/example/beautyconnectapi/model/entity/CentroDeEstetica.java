@@ -17,7 +17,6 @@ import java.util.List;
 @SuperBuilder
 @Entity
 public class CentroDeEstetica extends Base {
-
     private String nombre;
 
     private String descripcion;

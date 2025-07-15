@@ -16,7 +16,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Entity
 public class Resenia extends Base {
-
     private Integer puntuacion;
 
     private String comentario;

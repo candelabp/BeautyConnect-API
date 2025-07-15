@@ -17,7 +17,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Entity
 public class Servicio extends Base {
-
     @Enumerated(EnumType.STRING)
     private TipoDeServico tipoDeServico;
 

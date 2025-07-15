@@ -16,7 +16,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Entity
 public class PrestadorDeServicio extends Base {
-
     private String nombre;
 
     private Integer telefono;

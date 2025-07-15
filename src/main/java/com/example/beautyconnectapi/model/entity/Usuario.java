@@ -17,7 +17,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Entity
 public class Usuario extends Base {
-
     private String mail;
 
     private String contrasenia;

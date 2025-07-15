@@ -15,7 +15,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Entity
 public class Domicilio extends Base {
-
     private String calle;
 
     private Integer numero;

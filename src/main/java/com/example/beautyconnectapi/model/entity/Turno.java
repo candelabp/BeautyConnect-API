@@ -20,7 +20,6 @@ import java.time.LocalTime;
 @SuperBuilder
 @Entity
 public class Turno extends Base {
-
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate fecha;
 
