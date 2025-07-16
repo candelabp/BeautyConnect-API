@@ -1,9 +1,9 @@
 package com.example.beautyconnectapi.model.entity;
 
+import com.example.beautyconnectapi.model.enums.Estado;
+import com.example.beautyconnectapi.model.enums.TipoDeServico;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,4 +29,15 @@ public class Turno extends Base {
     @ManyToOne
     @JoinColumn(name = "clienteId")
     private Cliente cliente;
+
+    @Enumerated(EnumType.STRING)
+    private TipoDeServico tipoDeservicio;
+
+    @ManyToOne
+    private PrestadorDeServicio prestador;
+
+    @Enumerated(EnumType.STRING)
+    private Estado estado;
+
+
 }

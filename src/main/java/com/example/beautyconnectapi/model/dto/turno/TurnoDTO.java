@@ -1,6 +1,9 @@
 package com.example.beautyconnectapi.model.dto.turno;
 
 import com.example.beautyconnectapi.model.dto.cliente.ClienteDTO;
+import com.example.beautyconnectapi.model.dto.prestadorDeServicio.PrestadorDeServicioDTO;
+import com.example.beautyconnectapi.model.entity.Servicio;
+import com.example.beautyconnectapi.model.enums.Estado;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
@@ -20,4 +23,10 @@ public class TurnoDTO {
     private LocalTime hora;
 
     private ClienteDTO cliente;
+
+    private Servicio servicio;
+
+    private PrestadorDeServicioDTO prestadorDeServicioDTO;
+
+    private Estado estado;
 }
