@@ -1,9 +1,11 @@
 package com.example.beautyconnectapi.service;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.example.beautyconnectapi.model.dto.usuario.UsuarioDTO;
+import com.example.beautyconnectapi.model.dto.usuario.UsuarioResponseDTO;
 
-@Service
-@RequiredArgsConstructor
-public class UsuarioService {
+public interface UsuarioService {
+    UsuarioResponseDTO saveUsuario(UsuarioDTO usuarioDto);
+    UsuarioResponseDTO getUsuarioById(Long usuarioId);
+    UsuarioResponseDTO deleteUsuario(Long usuarioId);
+    UsuarioResponseDTO findByEmail(String email);
 }

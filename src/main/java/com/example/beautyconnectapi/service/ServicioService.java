@@ -1,9 +1,14 @@
 package com.example.beautyconnectapi.service;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.example.beautyconnectapi.model.dto.servicio.ServicioDTO;
+import com.example.beautyconnectapi.model.dto.servicio.ServicioResponseDTO;
 
-@Service
-@RequiredArgsConstructor
-public class ServicioService {
+import java.util.List;
+
+public interface ServicioService {
+    ServicioResponseDTO saveServicio(ServicioDTO servicioDTO);
+    ServicioResponseDTO getServicioById(Long servicioId);
+    ServicioResponseDTO updateServicio(Long servicioId, ServicioDTO servicioDTO);
+    ServicioResponseDTO deleteServicio(Long servicioId);
+    List<ServicioResponseDTO> obtenerServiciosPorCentroId(Long centroDeEsteticaId);
 }

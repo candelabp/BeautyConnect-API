@@ -1,0 +1,88 @@
+package com.example.beautyconnectapi.service.impl;
+
+import com.example.beautyconnectapi.config.mapper.DomicilioMapper;
+import com.example.beautyconnectapi.model.dto.domicilio.DomicilioDTO;
+import com.example.beautyconnectapi.model.dto.domicilio.DomicilioResponseDTO;
+import com.example.beautyconnectapi.model.entity.Domicilio;
+import com.example.beautyconnectapi.repository.DomicilioRepository;
+import com.example.beautyconnectapi.service.DomicilioService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class DomicilioServiceImpl implements DomicilioService {
+
+    private final DomicilioRepository domicilioRepository;
+    private final DomicilioMapper domicilioMapper;
+
+    public DomicilioServiceImpl(DomicilioRepository domicilioRepository, DomicilioMapper domicilioMapper) {
+        this.domicilioRepository = domicilioRepository;
+        this.domicilioMapper = domicilioMapper;
+    }
+
+    @Override
+    @Transactional
+    public DomicilioResponseDTO saveDomicilio(DomicilioDTO domicilioDto){
+        Domicilio domicilio = domicilioMapper.toEntity(domicilioDto);
+        domicilioRepository.save(domicilio);
+        return domicilioMapper.toResponseDTO(domicilio);
+    }
+
+    @Override
+    @Transactional
+    public DomicilioResponseDTO getDomicilioById(Long domicilioId){
+        Domicilio domicilio = domicilioRepository.findById(domicilioId)
+                .orElseThrow(() -> new RuntimeException("Domicilio no encontrado"));
+        return domicilioMapper.toResponseDTO(domicilio);
+    }
+
+    @Override
+    @Transactional
+    public DomicilioResponseDTO updateDomicilio(Long domicilioId, DomicilioDTO domicilioDto){
+        Domicilio domicilio = domicilioRepository.findById(domicilioId)
+                .orElseThrow(() -> new RuntimeException("Domicilio no encontrado"));
+
+        if (!domicilio.getCalle().equals(domicilioDto.getCalle())) {
+            domicilio.setCalle(domicilioDto.getCalle());
+        }
+
+        if (!domicilio.getLocalidad().equals(domicilioDto.getLocalidad())) {
+            domicilio.setLocalidad(domicilioDto.getLocalidad());
+        }
+
+        if (!domicilio.getNumero().equals(domicilioDto.getNumero())) {
+            domicilio.setNumero(domicilioDto.getNumero());
+        }
+
+        if (!domicilio.getCodigoPostal().equals(domicilioDto.getCodigoPostal())) {
+            domicilio.setCodigoPostal(domicilioDto.getCodigoPostal());
+        }
+
+        domicilioRepository.save(domicilio);
+        return domicilioMapper.toResponseDTO(domicilio);
+    }
+
+    @Override
+    @Transactional
+    public void deleteDomicilio(Long domicilioId){
+        Domicilio domicilio = domicilioRepository.findById(domicilioId)
+                .orElseThrow(() -> new RuntimeException("Domicilio con el id " + domicilioId + " no encontrado"));
+        domicilio.setActive(false);
+        domicilioRepository.save(domicilio);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<DomicilioResponseDTO> getDomiciliosByCentroDeEstetica(Long centroDeEsteticaId){
+        if (centroDeEsteticaId == null) {
+            throw new IllegalArgumentException("El ID del centro de estética no puede ser null.");
+        }
+        List<Domicilio> domicilios = domicilioRepository.getByCentroDeEsteticaId(centroDeEsteticaId);
+        return domicilios.stream()
+                .map(domicilioMapper::toResponseDTO)
+                .collect(Collectors.toList());
+    }
+}
