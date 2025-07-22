@@ -9,10 +9,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ClienteMapper {
     @Mapping(target = "id", ignore = true)
-    @Mapping(source = "usuario.mail", target = "mail")
-    @Mapping(source = "usuario.contrasenia", target = "contrasenia")
-    Cliente toEntity(ClienteDTO dto);
 
-    @Mapping(source = "usuario.mail", target = "mail")
+    Cliente toEntity(ClienteDTO dto);
     ClienteResponseDTO toResponseDto(Cliente cliente);
 }
