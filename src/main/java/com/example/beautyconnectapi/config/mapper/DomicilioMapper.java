@@ -4,9 +4,11 @@ import com.example.beautyconnectapi.model.dto.domicilio.DomicilioDTO;
 import com.example.beautyconnectapi.model.dto.domicilio.DomicilioResponseDTO;
 import com.example.beautyconnectapi.model.entity.Domicilio;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface DomicilioMapper {
+    @Mapping(target = "id", ignore = true)
     Domicilio toEntity(DomicilioDTO domicilioDTO);
     DomicilioResponseDTO toResponseDTO(Domicilio domicilio);
 }

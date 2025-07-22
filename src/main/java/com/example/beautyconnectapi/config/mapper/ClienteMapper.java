@@ -8,6 +8,7 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface ClienteMapper {
+    @Mapping(target = "id", ignore = true)
     @Mapping(source = "usuario.email", target = "email")
     @Mapping(source = "usuario.contrasenia", target = "contrasenia")
     Cliente toEntity(ClienteDTO dto);
