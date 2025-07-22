@@ -14,8 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/centrodeestetica")
 public class CentroDeEsteticaController {
-    @Autowired
-    private CentroDeEsteticaService centroDeEsteticaService;
+    private final CentroDeEsteticaService centroDeEsteticaService;
 
     public CentroDeEsteticaController(CentroDeEsteticaService centroDeEsteticaService) {
         this.centroDeEsteticaService = centroDeEsteticaService;

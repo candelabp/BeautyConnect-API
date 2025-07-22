@@ -1,9 +1,11 @@
 package com.example.beautyconnectapi.service;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.example.beautyconnectapi.model.dto.superAdmin.SuperAdminDTO;
+import com.example.beautyconnectapi.model.dto.superAdmin.SuperAdminResponseDTO;
 
-@Service
-@RequiredArgsConstructor
-public class SuperAdminService {
+public interface SuperAdminService {
+    SuperAdminResponseDTO saveSuperAdmin(SuperAdminDTO superAdminDTO);
+    SuperAdminResponseDTO getSuperAdminById(Long superAdminId);
+    SuperAdminResponseDTO updateSuperAdmin(Long superAdminId, SuperAdminDTO superAdminDTO);
+    SuperAdminResponseDTO deleteSuperAdmin(SuperAdminDTO superAdminDTO);
 }
