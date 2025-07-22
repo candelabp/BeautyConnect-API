@@ -7,5 +7,5 @@ public interface UsuarioService {
     UsuarioResponseDTO saveUsuario(UsuarioDTO usuarioDto);
     UsuarioResponseDTO getUsuarioById(Long usuarioId);
     UsuarioResponseDTO deleteUsuario(Long usuarioId);
-    UsuarioResponseDTO findByEmail(String email);
+    UsuarioResponseDTO findByMail(String mail);
 }

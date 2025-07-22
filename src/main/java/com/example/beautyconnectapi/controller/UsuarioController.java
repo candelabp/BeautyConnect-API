@@ -34,7 +34,7 @@ public class UsuarioController {
     }
 
     @PatchMapping("/obtenerPorEmail")
-    public UsuarioResponseDTO findByEmail(String email){
-        return usuarioService.findByEmail(email);
+    public UsuarioResponseDTO findByMail(String mail){
+        return usuarioService.findByMail(mail);
     }
 }

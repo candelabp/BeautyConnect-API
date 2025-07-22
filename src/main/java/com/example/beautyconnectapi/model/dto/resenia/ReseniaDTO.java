@@ -1,5 +1,6 @@
 package com.example.beautyconnectapi.model.dto.resenia;
 
+import com.example.beautyconnectapi.model.dto.centroDeEstetica.CentroDeEsteticaDTO;
 import com.example.beautyconnectapi.model.dto.cliente.ClienteDTO;
 import lombok.*;
 
@@ -14,4 +15,6 @@ public class ReseniaDTO {
     private String comentario;
 
     private ClienteDTO cliente;
+
+    private Long centroDeEsteticaId;
 }

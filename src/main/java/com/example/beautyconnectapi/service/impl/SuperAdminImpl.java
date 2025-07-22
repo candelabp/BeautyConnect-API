@@ -6,8 +6,10 @@ import com.example.beautyconnectapi.model.dto.superAdmin.SuperAdminResponseDTO;
 import com.example.beautyconnectapi.model.entity.SuperAdmin;
 import com.example.beautyconnectapi.repository.SuperAdminRepository;
 import com.example.beautyconnectapi.service.SuperAdminService;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class SuperAdminImpl implements SuperAdminService {
     private final SuperAdminRepository superAdminRepository;
     private final SuperAdminMapper superAdminMapper;

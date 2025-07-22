@@ -23,4 +23,6 @@ public class Resenia extends Base {
     @ManyToOne
     @JoinColumn(name = "clienteId")
     private Cliente cliente;
+    @ManyToOne
+    private CentroDeEstetica centroDeEstetica;
 }

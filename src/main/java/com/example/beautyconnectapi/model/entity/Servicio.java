@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import jakarta.persistence.ManyToOne;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,4 +25,7 @@ public class Servicio extends Base {
     private Integer duracion;
 
     private Double precio;
+
+    @ManyToOne
+    private CentroDeEstetica centroDeEstetica;
 }

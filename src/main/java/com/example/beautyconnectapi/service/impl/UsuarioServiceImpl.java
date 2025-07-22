@@ -47,8 +47,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @Transactional
-    public UsuarioResponseDTO findByEmail(String email){
-        Usuario usuario = usuarioRepository.getUsuarioByEmail(email);
+    public UsuarioResponseDTO findByMail(String mail){
+        Usuario usuario = usuarioRepository.getUsuarioByMail(mail);
         return usuarioMapper.toResponseDTO(usuario);
     }
 

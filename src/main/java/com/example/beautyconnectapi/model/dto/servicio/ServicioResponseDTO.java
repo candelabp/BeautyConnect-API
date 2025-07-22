@@ -1,5 +1,7 @@
 package com.example.beautyconnectapi.model.dto.servicio;
 
+import com.example.beautyconnectapi.model.dto.centroDeEstetica.CentroDeEsteticaDTO;
+import com.example.beautyconnectapi.model.dto.centroDeEstetica.CentroDeEsteticaResponseDTO;
 import com.example.beautyconnectapi.model.enums.TipoDeServico;
 import lombok.*;
 
@@ -16,4 +18,5 @@ public class ServicioResponseDTO {
     private Integer duracion;
 
     private Double precio;
+    private CentroDeEsteticaResponseDTO centroDeEsteticaResponseDTO;
 }
