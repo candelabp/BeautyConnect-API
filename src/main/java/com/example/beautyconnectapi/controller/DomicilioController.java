@@ -20,7 +20,7 @@ public class DomicilioController {
         this.domicilioService = domicilioService;
     }
 
-    @GetMapping("/save")
+    @PostMapping("/save")
     public DomicilioResponseDTO saveDomicilio(DomicilioDTO domicilioDto){
         return domicilioService.saveDomicilio(domicilioDto);
     }
