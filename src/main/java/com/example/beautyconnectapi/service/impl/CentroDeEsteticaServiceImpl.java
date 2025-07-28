@@ -7,6 +7,7 @@ import com.example.beautyconnectapi.model.entity.CentroDeEstetica;
 import com.example.beautyconnectapi.model.enums.Estado;
 import com.example.beautyconnectapi.repository.CentroDeEsteticaRepository;
 import com.example.beautyconnectapi.service.CentroDeEsteticaService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,5 +51,24 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
         centroDeEstetica.setEstado(estado);
         return centroDeEsteticaMapper.toResponseDTO(centroDeEstetica);
     }
+
+    @Override
+    public CentroDeEsteticaResponseDTO actualizar(Long id, CentroDeEsteticaDTO dto) {
+        CentroDeEstetica entity = centroDeEsteticaRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Centro no encontrado"));
+
+        CentroDeEstetica actualizado = centroDeEsteticaMapper.toEntity(dto);
+        actualizado.setId(id);
+        return centroDeEsteticaMapper.toResponseDTO(centroDeEsteticaRepository.save(actualizado));
+    }
+
+
+    @Override
+    public CentroDeEsteticaResponseDTO obtenerPorId(Long id) {
+        return centroDeEsteticaRepository.findById(id)
+                .map(centroDeEsteticaMapper::toResponseDTO)
+                .orElseThrow(() -> new EntityNotFoundException("Centro no encontrado"));
+    }
+
 
 }

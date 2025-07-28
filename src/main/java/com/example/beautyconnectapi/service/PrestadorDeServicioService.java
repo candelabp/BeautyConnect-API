@@ -11,5 +11,6 @@ public interface PrestadorDeServicioService {
     PrestadorDeServicioResponseDTO registrar(PrestadorDeServicioDTO dto);
     List<PrestadorDeServicioResponseDTO> listarActivos();
     PrestadorDeServicioResponseDTO buscarPorId(Long id);
+    PrestadorDeServicioResponseDTO actualizar(Long id, PrestadorDeServicioDTO dto);
 
 }

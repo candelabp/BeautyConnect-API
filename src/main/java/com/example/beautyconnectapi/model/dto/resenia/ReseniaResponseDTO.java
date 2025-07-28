@@ -13,6 +13,8 @@ public class ReseniaResponseDTO {
     private Integer puntuacion;
 
     private String comentario;
+    private int calificacion;
+
 
     private ClienteResponseDTO cliente;
 

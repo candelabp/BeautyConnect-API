@@ -20,6 +20,9 @@ public class Resenia extends Base {
 
     private String comentario;
 
+    private int calificacion;
+
+
     @ManyToOne
     @JoinColumn(name = "clienteId")
     private Cliente cliente;

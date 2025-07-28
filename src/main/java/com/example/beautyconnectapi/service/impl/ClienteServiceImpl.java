@@ -7,6 +7,7 @@ import com.example.beautyconnectapi.model.entity.Cliente;
 import com.example.beautyconnectapi.model.enums.Rol;
 import com.example.beautyconnectapi.repository.ClienteRepository;
 import com.example.beautyconnectapi.service.ClienteService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,5 +43,15 @@ public class ClienteServiceImpl implements ClienteService {
                 .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
         return clienteMapper.toResponseDto(cliente);
 
+    }
+    @Override
+    public ClienteResponseDTO actualizarCliente(Long id, ClienteDTO dto) {
+        Cliente cliente = clienteRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado"));
+
+        Cliente actualizado = clienteMapper.toEntity(dto);
+        actualizado.setId(id);
+        actualizado.setUsuario(cliente.getUsuario()); // mantener referencia si aplica
+        return clienteMapper.toResponseDto(clienteRepo.save(actualizado));
     }
 }

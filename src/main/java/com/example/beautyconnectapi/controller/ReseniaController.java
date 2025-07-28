@@ -12,17 +12,42 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/resenia")
 public class ReseniaController {
-   private final ReseniaService reseniaService;
-   public ReseniaController(ReseniaService reseniaService){
-       this.reseniaService = reseniaService;
-   }
 
-   @PostMapping
+    private final ReseniaService reseniaService;
+
+    public ReseniaController(ReseniaService reseniaService){
+        this.reseniaService = reseniaService;
+    }
+
+    // POST /api/resenia
+    @PostMapping
     public ResponseEntity<ReseniaResponseDTO> crear(@RequestBody ReseniaDTO dto){
-       return ResponseEntity.ok(reseniaService.crear(dto));
-   }
-   @GetMapping("/centro/{centroId}")
+        return ResponseEntity.ok(reseniaService.crear(dto));
+    }
+
+    // GET /api/resenia
+    @GetMapping
+    public ResponseEntity<List<ReseniaResponseDTO>> listar() {
+        return ResponseEntity.ok(reseniaService.listarTodas());
+    }
+
+    // GET /api/resenia/{id}
+    @GetMapping("/{id}")
+    public ResponseEntity<ReseniaResponseDTO> obtenerPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(reseniaService.obtenerPorId(id));
+    }
+
+    // PUT /api/resenia/update/{id}
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ReseniaResponseDTO> actualizar(@PathVariable Long id, @RequestBody ReseniaDTO dto) {
+        return ResponseEntity.ok(reseniaService.actualizar(id, dto));
+    }
+
+
+
+    // GET /api/resenia/centro/{centroId}
+    @GetMapping("/centro/{centroId}")
     public ResponseEntity<List<ReseniaResponseDTO>> listarPorCentro(@PathVariable Long centroId){
-       return ResponseEntity.ok(reseniaService.listarPorCentro(centroId));
-   }
+        return ResponseEntity.ok(reseniaService.listarPorCentro(centroId));
+    }
 }

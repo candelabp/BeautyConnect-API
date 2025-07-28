@@ -14,4 +14,6 @@ public interface TurnoService {
     List<TurnoResponseDTO> listarPorCliente(Long clienteId);
     List<TurnoResponseDTO> listarPorPrestador(Long prestadorId);
     TurnoResponseDTO cambiarEstado(Long turnoId, Estado nuevoEstado);
+    TurnoResponseDTO obtenerPorId(Long id);
+    TurnoResponseDTO actualizar(Long id, TurnoDTO dto);
 }

@@ -14,29 +14,51 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/centrodeestetica")
 public class CentroDeEsteticaController {
+
     private final CentroDeEsteticaService centroDeEsteticaService;
 
     public CentroDeEsteticaController(CentroDeEsteticaService centroDeEsteticaService) {
         this.centroDeEsteticaService = centroDeEsteticaService;
     }
 
-    @PostMapping("/registrar")
-    public ResponseEntity<CentroDeEsteticaResponseDTO> registrar(@RequestBody CentroDeEsteticaDTO centroDeEsteticaDto) {
-        return ResponseEntity.ok(centroDeEsteticaService.registrar(centroDeEsteticaDto));
+    // POST /api/centrodeestetica
+    @PostMapping
+    public ResponseEntity<CentroDeEsteticaResponseDTO> registrar(@RequestBody CentroDeEsteticaDTO dto) {
+        return ResponseEntity.ok(centroDeEsteticaService.registrar(dto));
     }
 
-    @GetMapping("/listar")
+    // GET /api/centrodeestetica
+    @GetMapping
     public ResponseEntity<List<CentroDeEsteticaResponseDTO>> listar() {
         return ResponseEntity.ok(centroDeEsteticaService.listar());
     }
 
+    // GET /api/centrodeestetica/{id}
+    @GetMapping("/{id}")
+    public ResponseEntity<CentroDeEsteticaResponseDTO> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(centroDeEsteticaService.obtenerPorId(id));
+    }
+
+    // PUT /api/centrodeestetica/update/{id}
+    @PutMapping("/update/{id}")
+    public ResponseEntity<CentroDeEsteticaResponseDTO> actualizar(@PathVariable Long id, @RequestBody CentroDeEsteticaDTO dto) {
+        return ResponseEntity.ok(centroDeEsteticaService.actualizar(id, dto));
+    }
+
+    // DELETE /api/centrodeestetica/{id}
+
+
+    // GET /api/centrodeestetica/listarEstado?estado=ACTIVO
     @GetMapping("/listarEstado")
-    public ResponseEntity<List<CentroDeEsteticaResponseDTO>> listarPorEstado(Estado estado) {
+    public ResponseEntity<List<CentroDeEsteticaResponseDTO>> listarPorEstado(@RequestParam Estado estado) {
         return ResponseEntity.ok(centroDeEsteticaService.listarPorEstado(estado));
     }
 
+    // PUT /api/centrodeestetica/cambiarEstado?id=1&estado=ACTIVO
     @PutMapping("/cambiarEstado")
-    public ResponseEntity<CentroDeEsteticaResponseDTO> cambiarEstado(Long id, Estado estado) {
+    public ResponseEntity<CentroDeEsteticaResponseDTO> cambiarEstado(@RequestParam Long id, @RequestParam Estado estado) {
         return ResponseEntity.ok(centroDeEsteticaService.cambiarEstado(id, estado));
     }
 }
+
+

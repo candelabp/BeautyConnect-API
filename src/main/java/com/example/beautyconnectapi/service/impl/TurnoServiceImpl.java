@@ -7,6 +7,7 @@ import com.example.beautyconnectapi.model.entity.Turno;
 import com.example.beautyconnectapi.model.enums.Estado;
 import com.example.beautyconnectapi.repository.TurnoRepository;
 import com.example.beautyconnectapi.service.TurnoService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -58,4 +59,22 @@ public class TurnoServiceImpl implements TurnoService {
         turno.setEstado(nuevoEstado);
         return turnoMapper.toResponseDTO(turnoRepository.save(turno));
     }
+
+    @Override
+    public TurnoResponseDTO obtenerPorId(Long id) {
+        return turnoRepository.findById(id)
+                .map(turnoMapper::toResponseDTO)
+                .orElseThrow(() -> new EntityNotFoundException("Turno no encontrado"));
+    }
+
+    @Override
+    public TurnoResponseDTO actualizar(Long id, TurnoDTO dto) {
+        Turno existente = turnoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Turno no encontrado"));
+
+        Turno actualizado = turnoMapper.toEntity(dto);
+        actualizado.setId(id);
+        return turnoMapper.toResponseDTO(turnoRepository.save(actualizado));
+    }
+
 }

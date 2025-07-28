@@ -6,6 +6,7 @@ import com.example.beautyconnectapi.model.dto.prestadorDeServicio.PrestadorDeSer
 import com.example.beautyconnectapi.model.entity.PrestadorDeServicio;
 import com.example.beautyconnectapi.repository.PrestadorDeServicioRepository;
 import com.example.beautyconnectapi.service.PrestadorDeServicioService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,5 +40,15 @@ public class PrestadorDeServicioImpl implements PrestadorDeServicioService {
         return prestadorDeServicioRepository.findById(id)
                 .map(prestadorDeServicioMapper::toResponseDTO)
                 .orElseThrow(() -> new RuntimeException("Prestador no encontrado"));
+    }
+
+    @Override
+    public PrestadorDeServicioResponseDTO actualizar(Long id, PrestadorDeServicioDTO dto) {
+        PrestadorDeServicio entity = prestadorDeServicioRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Prestador no encontrado"));
+
+        PrestadorDeServicio actualizado = prestadorDeServicioMapper.toEntity(dto);
+        actualizado.setId(id);
+        return prestadorDeServicioMapper.toResponseDTO(prestadorDeServicioRepository.save(actualizado));
     }
 }
