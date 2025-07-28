@@ -15,5 +15,5 @@ public class PrestadorDeServicioResponseDTO {
 
     private Integer telefono;
 
-    private UsuarioResponseDTO usuario;
+    private UsuarioResponseDTO usuarioResponseDTO;
 }
