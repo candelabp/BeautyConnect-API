@@ -1,11 +1,14 @@
 package com.example.beautyconnectapi.model.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,16 +16,9 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 @Entity
-public class Cliente extends Base{
-    private String nombre;
+public class Disponibilidad extends Base{
 
-    private String apellido;
-
-    private Integer telefono;
-
-    @OneToOne(cascade = CascadeType.PERSIST)
-    private Usuario usuario;
-
-    @ManyToOne
-    private Domicilio domicilio;
+    private DayOfWeek dia;
+    private LocalTime horaInicio;
+    private LocalTime horaFinalizacion;
 }

@@ -33,8 +33,9 @@ public class Turno extends Base {
     @Enumerated(EnumType.STRING)
     private TipoDeServico tipoDeservicio;
 
-    @ManyToOne
-    private PrestadorDeServicio prestador;
+    @OneToOne
+    @JoinColumn(name = "profesional_id")
+    private Profesional profesional;
 
     @Enumerated(EnumType.STRING)
     private Estado estado;

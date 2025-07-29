@@ -30,10 +30,12 @@ public class CentroDeEstetica extends Base {
     @OneToOne
     private PrestadorDeServicio prestadoresServicio;
 
-    @OneToMany(mappedBy = "centroDeEstetica")
-    private List<Domicilio> domicilios;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "domicilio_id")
+    private Domicilio domicilio;
 
-    @OneToMany
+
+    @OneToMany(mappedBy = "centroDeEstetica")
     private List<Servicio> servicios;
 
     @OneToMany
@@ -44,4 +46,6 @@ public class CentroDeEstetica extends Base {
 
     @Enumerated(EnumType.STRING)
     private Estado estado;
+    @OneToMany
+    private List <Profesional> profesionales;
 }
