@@ -67,11 +67,12 @@ public class DomicilioServiceImpl implements DomicilioService {
 
     @Override
     @Transactional
-    public void deleteDomicilio(Long domicilioId){
+    public DomicilioResponseDTO deleteDomicilio(Long domicilioId){
         Domicilio domicilio = domicilioRepository.findById(domicilioId)
                 .orElseThrow(() -> new RuntimeException("Domicilio con el id " + domicilioId + " no encontrado"));
         domicilio.setActive(false);
         domicilioRepository.save(domicilio);
+        return domicilioMapper.toResponseDTO(domicilio);
     }
 
     @Override

@@ -36,8 +36,8 @@ public class DomicilioController {
     }
 
     @PostMapping("/delete")
-    public void deleteDomicilio(Long domicilioId){
-        domicilioService.deleteDomicilio(domicilioId);
+    public DomicilioResponseDTO deleteDomicilio(Long domicilioId){
+        return domicilioService.deleteDomicilio(domicilioId);
     }
 
     @GetMapping("/obtenerPorCentro")

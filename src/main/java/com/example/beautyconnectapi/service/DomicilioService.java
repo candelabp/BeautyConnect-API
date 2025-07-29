@@ -9,6 +9,6 @@ public interface DomicilioService {
     DomicilioResponseDTO saveDomicilio(DomicilioDTO domicilioDto);
     DomicilioResponseDTO getDomicilioById(Long domicilioId);
     DomicilioResponseDTO updateDomicilio(Long domicilioId, DomicilioDTO domicilioDto);
-    void deleteDomicilio(Long domicilioId);
+    DomicilioResponseDTO deleteDomicilio(Long domicilioId);
     List<DomicilioResponseDTO> getDomiciliosByCentroDeEstetica(Long centroDeEsteticaId);
 }
