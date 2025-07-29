@@ -4,10 +4,7 @@ import com.example.beautyconnectapi.model.dto.usuario.UsuarioDTO;
 import com.example.beautyconnectapi.model.dto.usuario.UsuarioResponseDTO;
 import com.example.beautyconnectapi.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/usuario")
@@ -18,7 +15,8 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    @GetMapping("/save")
+
+    @PostMapping("/save")
     public UsuarioResponseDTO saveUsuario(UsuarioDTO usuarioDto){
         return usuarioService.saveUsuario(usuarioDto);
     }

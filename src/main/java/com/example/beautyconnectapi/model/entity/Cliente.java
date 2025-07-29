@@ -23,6 +23,6 @@ public class Cliente extends Base{
 
     private Integer telefono;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Usuario usuario;
 }
