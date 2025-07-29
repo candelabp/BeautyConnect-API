@@ -16,6 +16,5 @@ public class ServicioDTO {
 
     private Double precio;
 
-    private CentroDeEsteticaDTO centroDeEsteticaDTO;
 
 }

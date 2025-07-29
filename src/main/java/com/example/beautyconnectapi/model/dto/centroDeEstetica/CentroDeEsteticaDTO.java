@@ -27,8 +27,4 @@ public class CentroDeEsteticaDTO {
     private List<DomicilioDTO> domicilios;
 
     private List<ServicioDTO> servicios;
-
-    private List<TurnoDTO> turnos;
-
-    private List<ReseniaDTO> resenias;
 }

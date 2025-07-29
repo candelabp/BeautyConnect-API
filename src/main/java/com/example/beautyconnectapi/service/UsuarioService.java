@@ -8,4 +8,5 @@ public interface UsuarioService {
     UsuarioResponseDTO getUsuarioById(Long usuarioId);
     UsuarioResponseDTO deleteUsuario(Long usuarioId);
     UsuarioResponseDTO findByMail(String mail);
+
 }
