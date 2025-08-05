@@ -14,6 +14,8 @@ import java.util.List;
 @Setter
 @Builder
 public class CentroDeEsteticaDTO {
+    private Long id;
+
     private String nombre;
 
     private String descripcion;
@@ -27,4 +29,8 @@ public class CentroDeEsteticaDTO {
     private List<DomicilioDTO> domicilios;
 
     private List<ServicioDTO> servicios;
+
+    private List<TurnoDTO> turnos;
+
+    private List<ReseniaDTO> resenias;
 }

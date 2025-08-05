@@ -41,4 +41,5 @@ public class Turno extends Base {
     private Estado estado;
 
 
+
 }

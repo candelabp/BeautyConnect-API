@@ -45,12 +45,12 @@ public class TurnoServiceImpl implements TurnoService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public List<TurnoResponseDTO> listarPorPrestador(Long prestadorId) {
-        return turnoRepository.findByPrestadorId(prestadorId).stream()
-                .map(turnoMapper::toResponseDTO)
-                .collect(Collectors.toList());
-    }
+//    @Override
+//    public List<TurnoResponseDTO> listarPorPrestador(Long prestadorId) {
+//        return turnoRepository.findByPrestadorId(prestadorId).stream()
+//                .map(turnoMapper::toResponseDTO)
+//                .collect(Collectors.toList());
+//    }
 
     @Override
     public TurnoResponseDTO cambiarEstado(Long turnoId, Estado nuevoEstado) {

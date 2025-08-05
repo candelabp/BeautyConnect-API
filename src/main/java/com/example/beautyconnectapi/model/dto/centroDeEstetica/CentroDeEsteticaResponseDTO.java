@@ -2,6 +2,8 @@ package com.example.beautyconnectapi.model.dto.centroDeEstetica;
 
 import com.example.beautyconnectapi.model.dto.domicilio.DomicilioResponseDTO;
 import com.example.beautyconnectapi.model.dto.prestadorDeServicio.PrestadorDeServicioResponseDTO;
+import com.example.beautyconnectapi.model.dto.profesional.ProfesionalDTO;
+import com.example.beautyconnectapi.model.dto.profesional.ProfesionalResponseDTO;
 import com.example.beautyconnectapi.model.dto.resenia.ReseniaResponseDTO;
 import com.example.beautyconnectapi.model.dto.servicio.ServicioResponseDTO;
 import com.example.beautyconnectapi.model.dto.turno.TurnoResponseDTO;
@@ -28,8 +30,6 @@ public class CentroDeEsteticaResponseDTO {
 
     private Integer cuit;
 
-    private PrestadorDeServicioResponseDTO prestadoresServicio;
-
     private List<DomicilioResponseDTO> domicilios;
 
     private List<ServicioResponseDTO> servicios;
@@ -39,4 +39,7 @@ public class CentroDeEsteticaResponseDTO {
     private List<ReseniaResponseDTO> resenias;
 
     private Estado estado;
+
+    private List<ProfesionalResponseDTO> profesionales;
+
 }

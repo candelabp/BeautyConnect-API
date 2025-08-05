@@ -46,6 +46,7 @@ public class CentroDeEstetica extends Base {
 
     @Enumerated(EnumType.STRING)
     private Estado estado;
+
     @OneToMany
     private List <Profesional> profesionales;
 }
