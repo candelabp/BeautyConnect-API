@@ -1,5 +1,6 @@
 package com.example.beautyconnectapi.model.dto.usuario;
 
+import com.example.beautyconnectapi.model.enums.Rol;
 import lombok.*;
 
 @NoArgsConstructor
@@ -11,4 +12,6 @@ public class UsuarioDTO {
     private String mail;
 
     private String contrasenia;
+
+    private Rol rol;
 }

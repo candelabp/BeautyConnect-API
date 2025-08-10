@@ -9,8 +9,6 @@ import lombok.*;
 @Setter
 @Builder
 public class PrestadorDeServicioDTO {
-    private Long id;
-
     private String nombre;
 
     private Integer telefono;

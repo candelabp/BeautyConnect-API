@@ -16,8 +16,6 @@ import lombok.experimental.SuperBuilder;
 public class Cliente extends Base{
     private String nombre;
 
-    private String apellido;
-
     private Integer telefono;
 
     @OneToOne(cascade = CascadeType.PERSIST)
