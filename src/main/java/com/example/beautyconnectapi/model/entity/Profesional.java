@@ -19,11 +19,14 @@ import java.util.List;
 public class Profesional extends Base{
     private String nombre;
 
+    private String apellido;
+
     @OneToMany
     private List<Disponibilidad> disponibilidades;
 
     @OneToMany
     private List<Servicio> servicios;
+
     @ManyToOne
     private CentroDeEstetica centroDeEstetica;
 }

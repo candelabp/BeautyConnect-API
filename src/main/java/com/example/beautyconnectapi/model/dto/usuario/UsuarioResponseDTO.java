@@ -16,4 +16,6 @@ public class UsuarioResponseDTO {
     private String contrasenia;
 
     private Rol rol;
+
+    private String uid;
 }
