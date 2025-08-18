@@ -17,6 +17,8 @@ public class ProfesionalResponseDTO {
 
     private String nombre;
 
+    private String apellido;
+
     private List<DisponibilidadResponseDTO> disponibilidades;
 
     private List<ServicioResponseDTO> servicios;

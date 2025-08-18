@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @NoArgsConstructor
@@ -34,7 +35,6 @@ public class CentroDeEstetica extends Base {
     @JoinColumn(name = "domicilio_id")
     private Domicilio domicilio;
 
-
     @OneToMany(mappedBy = "centroDeEstetica")
     private List<Servicio> servicios;
 
@@ -49,4 +49,7 @@ public class CentroDeEstetica extends Base {
 
     @OneToMany
     private List <Profesional> profesionales;
+
+    @OneToMany
+    private List<Disponibilidad> disponibilidad;
 }

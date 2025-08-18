@@ -26,10 +26,4 @@ public class Domicilio extends Base {
     private String localidad;
 
     private Integer codigoPostal;
-
-    @OneToOne
-    private CentroDeEstetica centroDeEstetica;
-
-    @OneToMany(mappedBy = "domicilio")
-    private List<Cliente> clientes;
 }

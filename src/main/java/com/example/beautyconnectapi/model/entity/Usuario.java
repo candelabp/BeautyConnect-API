@@ -21,6 +21,8 @@ public class Usuario extends Base {
 
     private String contrasenia;
 
+    private String uid;
+
     @Enumerated(EnumType.STRING)
     private Rol rol;
 

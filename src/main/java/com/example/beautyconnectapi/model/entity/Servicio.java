@@ -25,7 +25,4 @@ public class Servicio extends Base {
     private Integer duracion;
 
     private Double precio;
-
-    @ManyToOne
-    private CentroDeEstetica centroDeEstetica;
 }

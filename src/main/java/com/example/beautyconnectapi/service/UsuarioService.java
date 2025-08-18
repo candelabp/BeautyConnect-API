@@ -8,5 +8,7 @@ public interface UsuarioService {
     UsuarioResponseDTO getUsuarioById(Long usuarioId);
     UsuarioResponseDTO deleteUsuario(Long usuarioId);
     UsuarioResponseDTO findByMail(String mail);
-
+    UsuarioResponseDTO findByUid(String uid);
+   boolean existsByMail(String mail);
+   boolean existsByUid(String uid);
 }
