@@ -11,8 +11,6 @@ import lombok.*;
 public class UsuarioDTO {
     private String mail;
 
-    private String contrasenia;
-
     private Rol rol;
 
     private String uid;

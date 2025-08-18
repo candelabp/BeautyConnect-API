@@ -60,7 +60,6 @@ public class AuthController {
             // 2. Guardar usuario en base de datos
             UsuarioDTO usuarioDto = (new UsuarioDTO(
                     request.mail,
-                    request.contasenia,
                     request.rol,
                     uid
             ));
@@ -106,7 +105,6 @@ public class AuthController {
             // 2. Guardar usuario si no existe
             UsuarioDTO usuarioDto = (new UsuarioDTO(
                     email,
-                    null,
                     request.rol,
                     uid
             ));
