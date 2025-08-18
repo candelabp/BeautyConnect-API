@@ -35,4 +35,5 @@ out/
 
 ### VS Code ###
 .vscode/
-firebase-service-account.json
+
+.firebase-service-account.json
