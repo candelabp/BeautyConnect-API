@@ -52,4 +52,24 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioMapper.toResponseDTO(usuario);
     }
 
+    @Override
+    @Transactional
+    public UsuarioResponseDTO findByUid(String uid){
+        Usuario usuario = usuarioRepository.getUsuarioByUid(uid);
+        return usuarioMapper.toResponseDTO(usuario);
+    }
+
+    @Override
+    @Transactional
+    public boolean existsByMail(String mail) {
+        return usuarioRepository.existsByMail(mail);
+    }
+
+    @Override
+    @Transactional
+    public boolean existsByUid(String uid) {
+        return usuarioRepository.existsByUid(uid);
+    }
+
+
 }

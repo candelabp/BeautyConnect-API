@@ -13,7 +13,9 @@ public class PrestadorDeServicioResponseDTO {
 
     private String nombre;
 
-    private Integer telefono;
+    private String apellido;
+
+    private String telefono;
 
     private UsuarioResponseDTO usuarioResponseDTO;
 }

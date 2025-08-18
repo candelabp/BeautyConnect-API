@@ -39,7 +39,4 @@ public class Turno extends Base {
 
     @Enumerated(EnumType.STRING)
     private Estado estado;
-
-
-
 }

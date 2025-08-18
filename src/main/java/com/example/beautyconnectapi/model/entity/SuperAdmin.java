@@ -18,7 +18,9 @@ import lombok.experimental.SuperBuilder;
 public class SuperAdmin extends Base {
     private String nombre;
 
-    private Integer telefono;
+    private String apellido;
+
+    private String telefono;
 
     @OneToOne
     @JoinColumn(name = "usuarioId")
