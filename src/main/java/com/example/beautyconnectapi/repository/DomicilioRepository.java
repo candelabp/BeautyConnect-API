@@ -9,5 +9,4 @@ import java.util.List;
 
 @Repository
 public interface DomicilioRepository extends JpaRepository<Domicilio, Long> {
-    List<Domicilio> getByCentroDeEsteticaId(Long centroDeEsteticaId);
 }

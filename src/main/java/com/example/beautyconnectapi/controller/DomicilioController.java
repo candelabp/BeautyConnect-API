@@ -40,8 +40,5 @@ public class DomicilioController {
         return domicilioService.deleteDomicilio(domicilioId);
     }
 
-    @GetMapping("/obtenerPorCentro")
-    public List<DomicilioResponseDTO> getDomiciliosByCentroDeEstetica(Long centroDeEsteticaId){
-        return domicilioService.getDomiciliosByCentroDeEstetica(centroDeEsteticaId);
-    }
+
 }

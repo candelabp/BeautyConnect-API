@@ -9,6 +9,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -35,8 +36,12 @@ public class CentroDeEstetica extends Base {
     @JoinColumn(name = "domicilio_id")
     private Domicilio domicilio;
 
-    @OneToMany(mappedBy = "centroDeEstetica")
-    private List<Servicio> servicios;
+    @OneToMany(
+            mappedBy = "centroDeEstetica",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Servicio> servicios = new ArrayList<>();
 
     @OneToMany
     private List<Turno> turnos;

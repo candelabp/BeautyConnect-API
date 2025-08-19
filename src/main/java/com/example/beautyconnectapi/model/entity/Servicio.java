@@ -1,15 +1,12 @@
 package com.example.beautyconnectapi.model.entity;
 
 import com.example.beautyconnectapi.model.enums.TipoDeServico;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import jakarta.persistence.ManyToOne;
 
 
 @NoArgsConstructor
@@ -25,4 +22,7 @@ public class Servicio extends Base {
     private Integer duracion;
 
     private Double precio;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "centro_id", nullable = false)
+    private CentroDeEstetica centroDeEstetica;
 }

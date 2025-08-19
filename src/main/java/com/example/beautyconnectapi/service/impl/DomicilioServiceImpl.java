@@ -75,15 +75,5 @@ public class DomicilioServiceImpl implements DomicilioService {
         return domicilioMapper.toResponseDTO(domicilio);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<DomicilioResponseDTO> getDomiciliosByCentroDeEstetica(Long centroDeEsteticaId){
-        if (centroDeEsteticaId == null) {
-            throw new IllegalArgumentException("El ID del centro de estética no puede ser null.");
-        }
-        List<Domicilio> domicilios = domicilioRepository.getByCentroDeEsteticaId(centroDeEsteticaId);
-        return domicilios.stream()
-                .map(domicilioMapper::toResponseDTO)
-                .collect(Collectors.toList());
-    }
+
 }

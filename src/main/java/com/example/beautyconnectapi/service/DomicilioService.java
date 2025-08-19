@@ -10,5 +10,4 @@ public interface DomicilioService {
     DomicilioResponseDTO getDomicilioById(Long domicilioId);
     DomicilioResponseDTO updateDomicilio(Long domicilioId, DomicilioDTO domicilioDto);
     DomicilioResponseDTO deleteDomicilio(Long domicilioId);
-    List<DomicilioResponseDTO> getDomiciliosByCentroDeEstetica(Long centroDeEsteticaId);
 }
