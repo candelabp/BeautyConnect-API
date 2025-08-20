@@ -54,4 +54,10 @@ public class ClienteServiceImpl implements ClienteService {
         actualizado.setUsuario(cliente.getUsuario()); // mantener referencia si aplica
         return clienteMapper.toResponseDto(clienteRepo.save(actualizado));
     }
+
+    @Override
+    public ClienteResponseDTO findByUsuarioId(Long idUsuario) {
+        Cliente cliente = clienteRepo.getByUsuarioId(idUsuario);
+        return clienteMapper.toResponseDto(cliente);
+    }
 }

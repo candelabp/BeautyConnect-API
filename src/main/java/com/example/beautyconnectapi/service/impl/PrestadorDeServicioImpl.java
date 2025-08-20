@@ -1,8 +1,10 @@
 package com.example.beautyconnectapi.service.impl;
 
 import com.example.beautyconnectapi.config.mapper.PrestadorDeServicioMapper;
+import com.example.beautyconnectapi.model.dto.cliente.ClienteResponseDTO;
 import com.example.beautyconnectapi.model.dto.prestadorDeServicio.PrestadorDeServicioDTO;
 import com.example.beautyconnectapi.model.dto.prestadorDeServicio.PrestadorDeServicioResponseDTO;
+import com.example.beautyconnectapi.model.entity.Cliente;
 import com.example.beautyconnectapi.model.entity.PrestadorDeServicio;
 import com.example.beautyconnectapi.repository.PrestadorDeServicioRepository;
 import com.example.beautyconnectapi.service.PrestadorDeServicioService;
@@ -50,5 +52,11 @@ public class PrestadorDeServicioImpl implements PrestadorDeServicioService {
         PrestadorDeServicio actualizado = prestadorDeServicioMapper.toEntity(dto);
         actualizado.setId(id);
         return prestadorDeServicioMapper.toResponseDTO(prestadorDeServicioRepository.save(actualizado));
+    }
+
+    @Override
+    public PrestadorDeServicioResponseDTO findByUsuarioId(Long idUsuario) {
+        PrestadorDeServicio prestadorDeServicio = prestadorDeServicioRepository.getByUsuarioId(idUsuario);
+        return prestadorDeServicioMapper.toResponseDTO(prestadorDeServicio);
     }
 }

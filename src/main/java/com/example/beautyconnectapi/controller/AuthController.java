@@ -1,8 +1,11 @@
 package com.example.beautyconnectapi.controller;
 
 import com.example.beautyconnectapi.model.dto.cliente.ClienteDTO;
+import com.example.beautyconnectapi.model.dto.cliente.ClienteResponseDTO;
 import com.example.beautyconnectapi.model.dto.prestadorDeServicio.PrestadorDeServicioDTO;
+import com.example.beautyconnectapi.model.dto.prestadorDeServicio.PrestadorDeServicioResponseDTO;
 import com.example.beautyconnectapi.model.dto.usuario.UsuarioDTO;
+import com.example.beautyconnectapi.model.dto.usuario.UsuarioResponseDTO;
 import com.example.beautyconnectapi.model.enums.Rol;
 import com.example.beautyconnectapi.service.ClienteService;
 import com.example.beautyconnectapi.service.PrestadorDeServicioService;
@@ -71,17 +74,20 @@ public class AuthController {
                 clienteDTO.setApellido(request.getClienteDTO().getApellido());
                 clienteDTO.setTelefono(request.getClienteDTO().getTelefono());
                 clienteDTO.setUsuario(usuarioDto);
-                clienteService.registrarCliente(clienteDTO);
+
+                ClienteResponseDTO registrado = clienteService.registrarCliente(clienteDTO);
+                return ResponseEntity.ok(registrado);
             } else if (request.rol == Rol.PRESTADOR_DE_SERVICIO) {
                 PrestadorDeServicioDTO prestadorDTO = new PrestadorDeServicioDTO();
                 prestadorDTO.setNombre(request.getPrestadorDTO().getNombre());
                 prestadorDTO.setApellido(request.getPrestadorDTO().getApellido());
                 prestadorDTO.setTelefono(request.getPrestadorDTO().getTelefono());
                 prestadorDTO.setUsuarioDTO(usuarioDto);
-                prestadorServicioService.registrar(prestadorDTO);
-            }
 
-            return ResponseEntity.ok("Usuario registrado con éxito");
+                PrestadorDeServicioResponseDTO registrado = prestadorServicioService.registrar(prestadorDTO);
+                return ResponseEntity.ok(registrado);
+            }
+            return ResponseEntity.badRequest().body("Rol inválido");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error al registrar usuario: " + e.getMessage());
         }
@@ -98,16 +104,22 @@ public class AuthController {
             String uid = decodedToken.getUid();
             String email = decodedToken.getEmail();
 
-            if (usuarioService.existsByMail(request.mail) || usuarioService.existsByUid(uid)) {
-                return ResponseEntity.ok("Usuario ya registrado");
-            }
-
-            // 2. Guardar usuario si no existe
-            UsuarioDTO usuarioDto = (new UsuarioDTO(
-                    email,
-                    request.rol,
-                    uid
-            ));
+            if (usuarioService.existsByMail(email) || usuarioService.existsByUid(uid)) {
+                UsuarioResponseDTO usuario = usuarioService.findByMail(email);
+                if (usuario.getRol() == Rol.CLIENTE) {
+                    ClienteResponseDTO clienteDTO = clienteService.findByUsuarioId(usuario.getId());
+                    return ResponseEntity.ok(clienteDTO);
+                } else if (usuario.getRol() == Rol.PRESTADOR_DE_SERVICIO) {
+                    PrestadorDeServicioResponseDTO prestadorDTO = prestadorServicioService.findByUsuarioId(usuario.getId());
+                    return ResponseEntity.ok(prestadorDTO);
+                }
+            } else {
+                // 2. Guardar usuario si no existe
+                UsuarioDTO usuarioDto = (new UsuarioDTO(
+                        email,
+                        request.rol,
+                        uid
+                ));
 
             // 3. Guardar en tabla correspondiente según rol si no existía
             if (request.rol == Rol.CLIENTE) {
@@ -116,17 +128,22 @@ public class AuthController {
                 clienteDTO.setApellido("");
                 clienteDTO.setTelefono("");
                 clienteDTO.setUsuario(usuarioDto);
-                clienteService.registrarCliente(clienteDTO);
+
+                ClienteResponseDTO registrado = clienteService.registrarCliente(clienteDTO);
+                return ResponseEntity.ok(registrado);
             } else if (request.rol == Rol.PRESTADOR_DE_SERVICIO) {
                 PrestadorDeServicioDTO prestadorDTO = new PrestadorDeServicioDTO();
                 prestadorDTO.setNombre("");
                 prestadorDTO.setApellido("");
                 prestadorDTO.setTelefono("");
                 prestadorDTO.setUsuarioDTO(usuarioDto);
-                prestadorServicioService.registrar(prestadorDTO);
-            }
 
-            return ResponseEntity.ok("Usuario registrado con Google con éxito");
+                PrestadorDeServicioResponseDTO registrado = prestadorServicioService.registrar(prestadorDTO);
+                return ResponseEntity.ok(registrado);
+            }}
+
+
+            return ResponseEntity.badRequest().body("Rol inválido");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error en registro con Google: " + e.getMessage());
         }
