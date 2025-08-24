@@ -16,6 +16,4 @@ public class DomicilioDTO {
     private String localidad;
 
     private Integer codigoPostal;
-
-    private CentroDeEsteticaDTO centroDeEstetica;
 }

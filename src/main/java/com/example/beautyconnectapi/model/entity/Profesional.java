@@ -27,6 +27,4 @@ public class Profesional extends Base{
     @OneToMany
     private List<Servicio> servicios;
 
-    @ManyToOne
-    private CentroDeEstetica centroDeEstetica;
 }

@@ -19,5 +19,4 @@ public class DomicilioResponseDTO {
 
     private Integer codigoPostal;
 
-    private CentroDeEsteticaResponseDTO centroDeEstetica;
 }

@@ -23,5 +23,4 @@ public class ProfesionalResponseDTO {
 
     private List<ServicioResponseDTO> servicios;
 
-    private CentroDeEsteticaResponseDTO centroDeEstetica;
 }

@@ -31,6 +31,15 @@ public class ServicioServiceImpl implements ServicioService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<ServicioResponseDTO> getAllServicios() {
+        List<Servicio> servicios = servicioRepository.findAll();
+        return servicios.stream()
+                .map(servicioMapper::toResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     @Transactional
     public ServicioResponseDTO getServicioById(Long servicioId){
         Servicio servicio = servicioRepository.findById(servicioId)

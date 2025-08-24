@@ -9,6 +9,9 @@ import com.example.beautyconnectapi.service.ProfesionalService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class ProfesionalServiceImpl implements ProfesionalService {
     private final ProfesionalRepository profesionalRepository;
@@ -58,5 +61,13 @@ public class ProfesionalServiceImpl implements ProfesionalService {
         profesional.setActive(false);
         profesionalRepository.save(profesional);
         return profesionalMapper.toResponseDTO(profesional);
+    }
+    @Override
+    @Transactional(readOnly = true)
+    public List<ProfesionalResponseDTO> getAllProfesionales() {
+        List<Profesional> profesionales = profesionalRepository.findAll();
+        return profesionales.stream()
+                .map(profesionalMapper::toResponseDTO)
+                .collect(Collectors.toList());
     }
 }

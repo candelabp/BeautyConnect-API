@@ -11,4 +11,5 @@ public interface ServicioService {
     ServicioResponseDTO updateServicio(Long servicioId, ServicioDTO servicioDTO);
     ServicioResponseDTO deleteServicio(Long servicioId);
     List<ServicioResponseDTO> obtenerServiciosPorCentroId(Long centroDeEsteticaId);
+    List<ServicioResponseDTO> getAllServicios();
 }

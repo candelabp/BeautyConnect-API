@@ -27,7 +27,7 @@ public class CentroDeEstetica extends Base {
 
     private String docValido;
 
-    private Integer cuit;
+    private int cuit;
 
     @OneToOne
     private PrestadorDeServicio prestadoresServicio;

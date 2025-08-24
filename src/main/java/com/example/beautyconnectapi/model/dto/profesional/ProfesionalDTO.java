@@ -22,6 +22,4 @@ public class ProfesionalDTO {
     private List<DisponibilidadDTO> disponibilidades;
 
     private List<ServicioDTO> servicios;
-
-    private CentroDeEsteticaDTO centroDeEstetica;
 }

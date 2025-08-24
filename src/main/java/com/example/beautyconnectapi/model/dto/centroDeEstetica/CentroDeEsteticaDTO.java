@@ -24,7 +24,7 @@ public class CentroDeEsteticaDTO {
 
     private String docValido;
 
-    private Integer cuit;
+    private int cuit;
 
     private List<DomicilioDTO> domicilios;
 
