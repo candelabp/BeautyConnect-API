@@ -60,4 +60,10 @@ public class ClienteServiceImpl implements ClienteService {
         Cliente cliente = clienteRepo.getByUsuarioId(idUsuario);
         return clienteMapper.toResponseDto(cliente);
     }
+    @Override
+    public ClienteResponseDTO obtenerPorUid(String uid) {
+        Cliente cliente = clienteRepo.findByUsuarioUid(uid)
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado para uid: " + uid));
+        return clienteMapper.toResponseDto(cliente);
+    }
 }

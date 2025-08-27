@@ -12,5 +12,6 @@ public interface ClienteService {
     ClienteResponseDTO obtenerPorId(Long id);
     ClienteResponseDTO actualizarCliente(Long id, ClienteDTO dto);
     ClienteResponseDTO findByUsuarioId(Long id);
+    ClienteResponseDTO obtenerPorUid(String uid);
 
 }
