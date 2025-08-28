@@ -66,4 +66,13 @@ public class ClienteServiceImpl implements ClienteService {
                 .orElseThrow(() -> new RuntimeException("Cliente no encontrado para uid: " + uid));
         return clienteMapper.toResponseDto(cliente);
     }
+
+    @Override
+    public ClienteResponseDTO cambiarEstadoActive(Long id){
+        Cliente cliente = clienteRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado"));
+        cliente.setActive(!cliente.getActive());
+        cliente.getUsuario().setActive(cliente.getActive());
+        return clienteMapper.toResponseDto(clienteRepo.save(cliente));
+    }
 }

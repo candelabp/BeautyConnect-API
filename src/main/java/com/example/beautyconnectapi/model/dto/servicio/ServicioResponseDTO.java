@@ -18,5 +18,6 @@ public class ServicioResponseDTO {
     private Integer duracion;
 
     private Double precio;
+
     private CentroDeEsteticaResponseDTO centroDeEsteticaResponseDTO;
 }

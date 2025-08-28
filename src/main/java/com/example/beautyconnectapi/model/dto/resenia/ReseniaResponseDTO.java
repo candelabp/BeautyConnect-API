@@ -14,7 +14,6 @@ public class ReseniaResponseDTO {
 
     private String comentario;
 
-
     private ClienteResponseDTO cliente;
 
     private CentroDeEsteticaResponseDTO centroDeEsteticaResponseDTO;

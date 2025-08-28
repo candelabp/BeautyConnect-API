@@ -18,4 +18,6 @@ public class ClienteResponseDTO {
     private String telefono;
 
     private UsuarioResponseDTO usuario;
+
+    private Boolean active;
 }

@@ -39,7 +39,6 @@ public class AuthController {
     public static class RegistroRequest {
         private String idToken;
         private String mail;
-        private String contasenia;
         private Rol rol;
         private String uid;
         private ClienteDTO clienteDTO;

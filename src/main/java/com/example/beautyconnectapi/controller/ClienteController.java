@@ -46,10 +46,14 @@ public class ClienteController {
     }
 
     // DELETE /api/cliente/{id}
-
     @GetMapping("/by-uid/{uid}")
     public ResponseEntity<ClienteResponseDTO> getByUid(@PathVariable String uid) {
         return ResponseEntity.ok(clienteService.obtenerPorUid(uid));
+    }
+
+    @PatchMapping("/cambiarEstadoActivo/{id}")
+    public ResponseEntity<ClienteResponseDTO> cambiarEstadoActivo(@PathVariable Long id) {
+        return ResponseEntity.ok(clienteService.cambiarEstadoActive(id));
     }
 
 }
