@@ -59,6 +59,10 @@ public class CentroDeEsteticaController {
     public ResponseEntity<CentroDeEsteticaResponseDTO> cambiarEstado(@RequestParam Long id, @RequestParam Estado estado) {
         return ResponseEntity.ok(centroDeEsteticaService.cambiarEstado(id, estado));
     }
+    @GetMapping("/by-prestador-uid/{uid}")
+    public ResponseEntity<CentroDeEsteticaResponseDTO> getByPrestadorUid(@PathVariable String uid) {
+        return ResponseEntity.ok(centroDeEsteticaService.obtenerPorPrestadorUid(uid));
+    }
 }
 
 

@@ -38,6 +38,7 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
 
     }
 
+
     @Override
     public List<CentroDeEsteticaResponseDTO> listarPorEstado(Estado estado) {
         return centroDeEsteticaRepository.findByEstado(estado).stream()
@@ -68,6 +69,12 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
         return centroDeEsteticaRepository.findById(id)
                 .map(centroDeEsteticaMapper::toResponseDTO)
                 .orElseThrow(() -> new EntityNotFoundException("Centro no encontrado"));
+    }
+
+    public CentroDeEsteticaResponseDTO obtenerPorPrestadorUid(String uid) {
+        CentroDeEstetica centro = centroDeEsteticaRepository.findByPrestadoresServicio_Usuario_Uid(uid)
+                .orElseThrow(() -> new RuntimeException("Centro no encontrado para UID " + uid));
+        return centroDeEsteticaMapper.toResponseDTO(centro);
     }
 
 

@@ -14,4 +14,5 @@ public interface PrestadorDeServicioService {
     PrestadorDeServicioResponseDTO buscarPorId(Long id);
     PrestadorDeServicioResponseDTO actualizar(Long id, PrestadorDeServicioDTO dto);
     PrestadorDeServicioResponseDTO findByUsuarioId(Long id);
+    PrestadorDeServicioResponseDTO buscarPorUid(String uid);
 }

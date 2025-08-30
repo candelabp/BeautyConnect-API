@@ -59,4 +59,10 @@ public class PrestadorDeServicioImpl implements PrestadorDeServicioService {
         PrestadorDeServicio prestadorDeServicio = prestadorDeServicioRepository.getByUsuarioId(idUsuario);
         return prestadorDeServicioMapper.toResponseDTO(prestadorDeServicio);
     }
+
+    public PrestadorDeServicioResponseDTO buscarPorUid(String uid) {
+        PrestadorDeServicio entity = prestadorDeServicioRepository.findByUsuario_Uid(uid)
+                .orElseThrow(() -> new RuntimeException("Prestador no encontrado para UID " + uid));
+        return prestadorDeServicioMapper.toResponseDTO(entity);
+    }
 }
