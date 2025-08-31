@@ -1,15 +1,17 @@
 package com.example.beautyconnectapi.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import com.example.beautyconnectapi.model.enums.TipoDeServico;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -21,10 +23,13 @@ public class Profesional extends Base{
 
     private String apellido;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Disponibilidad> disponibilidades;
 
-    @OneToMany
-    private List<Servicio> servicios;
+    @ElementCollection
+    @CollectionTable(name = "profesional_servicios", joinColumns = @JoinColumn(name = "profesional_id"))
+    @Enumerated(EnumType.STRING)
+    @Column(name = "servicio")
+    private Set<TipoDeServico> servicios = new HashSet<>();
 
 }

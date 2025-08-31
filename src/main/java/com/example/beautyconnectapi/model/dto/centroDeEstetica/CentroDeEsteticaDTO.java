@@ -26,7 +26,7 @@ public class CentroDeEsteticaDTO {
 
     private int cuit;
 
-    private List<DomicilioDTO> domicilios;
+    private  DomicilioDTO domicilio;
 
     private List<ServicioDTO> servicios;
 

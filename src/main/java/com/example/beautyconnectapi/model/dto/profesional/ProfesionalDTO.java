@@ -3,6 +3,7 @@ package com.example.beautyconnectapi.model.dto.profesional;
 import com.example.beautyconnectapi.model.dto.centroDeEstetica.CentroDeEsteticaDTO;
 import com.example.beautyconnectapi.model.dto.disponibilidad.DisponibilidadDTO;
 import com.example.beautyconnectapi.model.dto.servicio.ServicioDTO;
+import com.example.beautyconnectapi.model.enums.TipoDeServico;
 import lombok.*;
 
 import java.util.List;
@@ -21,5 +22,5 @@ public class ProfesionalDTO {
 
     private List<DisponibilidadDTO> disponibilidades;
 
-    private List<ServicioDTO> servicios;
+    private List<TipoDeServico> servicios;
 }
