@@ -11,6 +11,7 @@ import java.time.LocalTime;
 @Setter
 @Builder
 public class DisponibilidadDTO {
+    private Long id;
     private DayOfWeek dia;
     private LocalTime horaInicio;
     private LocalTime horaFinalizacion;

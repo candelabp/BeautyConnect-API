@@ -4,7 +4,7 @@ public enum TipoDeServico {
     PELUQUERIA,
     MANICURA,
     PEDICURA,
-    LIMPIEZAFACIAL,
+    LIMPIEZA_FACIAL,
     MASAJES,
     DEPILACION,
     MAQUILLAJE,

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,7 +25,12 @@ public class Profesional extends Base{
     private String apellido;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Disponibilidad> disponibilidades;
+    @JoinTable(
+            name = "profesional_disponibilidades",
+            joinColumns = @JoinColumn(name = "profesional_id"),
+            inverseJoinColumns = @JoinColumn(name = "disponibilidades_id")
+    )
+    private List<Disponibilidad> disponibilidades = new ArrayList<>();
 
     @ElementCollection
     @CollectionTable(name = "profesional_servicios", joinColumns = @JoinColumn(name = "profesional_id"))
