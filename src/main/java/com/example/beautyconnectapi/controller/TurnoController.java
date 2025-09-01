@@ -41,7 +41,7 @@ public class TurnoController {
     }
 
 
-    @GetMapping("/cliente/{clienteId}")
+    @GetMapping("/cliente/{id}")
     public ResponseEntity<List<TurnoResponseDTO>> porCliente(@PathVariable Long clienteId) {
         return ResponseEntity.ok(turnoService.listarPorCliente(clienteId));
     }
