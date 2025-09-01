@@ -2,6 +2,7 @@ package com.example.beautyconnectapi.service;
 
 import com.example.beautyconnectapi.model.dto.centroDeEstetica.CentroDeEsteticaDTO;
 import com.example.beautyconnectapi.model.dto.centroDeEstetica.CentroDeEsteticaResponseDTO;
+import com.example.beautyconnectapi.model.dto.profesional.ProfesionalDTO;
 import com.example.beautyconnectapi.model.enums.Estado;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface CentroDeEsteticaService {
     CentroDeEsteticaResponseDTO actualizar(Long id, CentroDeEsteticaDTO dto);
 
     CentroDeEsteticaResponseDTO obtenerPorPrestadorUid(String uid);
+
+    CentroDeEsteticaResponseDTO guardarProfesional(ProfesionalDTO profesional, Long id);
 }

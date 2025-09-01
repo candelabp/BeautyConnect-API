@@ -1,11 +1,15 @@
 package com.example.beautyconnectapi.service.impl;
 
 import com.example.beautyconnectapi.config.mapper.CentroDeEsteticaMapper;
+import com.example.beautyconnectapi.config.mapper.ProfesionalMapper;
 import com.example.beautyconnectapi.model.dto.centroDeEstetica.CentroDeEsteticaDTO;
 import com.example.beautyconnectapi.model.dto.centroDeEstetica.CentroDeEsteticaResponseDTO;
+import com.example.beautyconnectapi.model.dto.profesional.ProfesionalDTO;
 import com.example.beautyconnectapi.model.entity.CentroDeEstetica;
+import com.example.beautyconnectapi.model.entity.Profesional;
 import com.example.beautyconnectapi.model.enums.Estado;
 import com.example.beautyconnectapi.repository.CentroDeEsteticaRepository;
+import com.example.beautyconnectapi.repository.ProfesionalRepository;
 import com.example.beautyconnectapi.service.CentroDeEsteticaService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -17,10 +21,16 @@ import java.util.stream.Collectors;
 public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
     private final CentroDeEsteticaRepository centroDeEsteticaRepository;
     private final CentroDeEsteticaMapper centroDeEsteticaMapper;
+    private final ProfesionalMapper profesionalMapper;
+    private final ProfesionalRepository profesionalRepository;
 
-    public CentroDeEsteticaServiceImpl(CentroDeEsteticaRepository centroDeEsteticaRepository, CentroDeEsteticaMapper centroDeEsteticaMapper) {
+
+
+    public CentroDeEsteticaServiceImpl(CentroDeEsteticaRepository centroDeEsteticaRepository, CentroDeEsteticaMapper centroDeEsteticaMapper, ProfesionalMapper profesionalMapper, ProfesionalRepository profesionalRepository) {
         this.centroDeEsteticaRepository = centroDeEsteticaRepository;
         this.centroDeEsteticaMapper = centroDeEsteticaMapper;
+        this.profesionalMapper = profesionalMapper;
+        this.profesionalRepository = profesionalRepository;
     }
 
     @Override
@@ -75,6 +85,18 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
         CentroDeEstetica centro = centroDeEsteticaRepository.findByPrestadoresServicio_Usuario_Uid(uid)
                 .orElseThrow(() -> new RuntimeException("Centro no encontrado para UID " + uid));
         return centroDeEsteticaMapper.toResponseDTO(centro);
+    }
+
+    @Override
+    public CentroDeEsteticaResponseDTO guardarProfesional(ProfesionalDTO profesionalDto, Long id) {
+        CentroDeEstetica centroDeEstetica = centroDeEsteticaRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Centro no encontrado"));
+        Profesional profesional = profesionalMapper.toEntity(profesionalDto);
+        profesionalRepository.save(profesional);
+        centroDeEstetica.getProfesionales().add(profesional);
+        centroDeEsteticaRepository.save(centroDeEstetica);
+        return centroDeEsteticaMapper.toResponseDTO(centroDeEstetica);
+
     }
 
 

@@ -2,6 +2,7 @@ package com.example.beautyconnectapi.controller;
 
 import com.example.beautyconnectapi.model.dto.centroDeEstetica.CentroDeEsteticaDTO;
 import com.example.beautyconnectapi.model.dto.centroDeEstetica.CentroDeEsteticaResponseDTO;
+import com.example.beautyconnectapi.model.dto.profesional.ProfesionalDTO;
 import com.example.beautyconnectapi.model.entity.CentroDeEstetica;
 import com.example.beautyconnectapi.model.enums.Estado;
 import com.example.beautyconnectapi.service.CentroDeEsteticaService;
@@ -62,6 +63,15 @@ public class CentroDeEsteticaController {
     @GetMapping("/by-prestador-uid/{uid}")
     public ResponseEntity<CentroDeEsteticaResponseDTO> getByPrestadorUid(@PathVariable String uid) {
         return ResponseEntity.ok(centroDeEsteticaService.obtenerPorPrestadorUid(uid));
+    }
+
+    @PostMapping("/{id}/profesionales")
+    public ResponseEntity<CentroDeEsteticaResponseDTO> agregarProfesional(
+            @PathVariable Long id,
+            @RequestBody ProfesionalDTO profesionalDTO
+    ) {
+        CentroDeEsteticaResponseDTO dto = centroDeEsteticaService.guardarProfesional(profesionalDTO, id);
+        return ResponseEntity.ok(dto);
     }
 }
 
