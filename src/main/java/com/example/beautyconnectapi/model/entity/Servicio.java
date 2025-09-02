@@ -19,10 +19,11 @@ public class Servicio extends Base {
     @Enumerated(EnumType.STRING)
     private TipoDeServico tipoDeServico;
 
-    private Integer duracion;
-
     private Double precio;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "centro_id", nullable = false)
     private CentroDeEstetica centroDeEstetica;
+
+
 }

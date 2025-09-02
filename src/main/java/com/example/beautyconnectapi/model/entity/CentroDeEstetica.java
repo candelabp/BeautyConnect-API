@@ -27,7 +27,7 @@ public class CentroDeEstetica extends Base {
 
     private String docValido;
 
-    private int cuit;
+    private Long cuit;
 
     @OneToOne
     private PrestadorDeServicio prestadoresServicio;
@@ -42,9 +42,6 @@ public class CentroDeEstetica extends Base {
             orphanRemoval = true
     )
     private List<Servicio> servicios = new ArrayList<>();
-
-    @OneToMany
-    private List<Turno> turnos;
 
     @OneToMany
     private List<Resenia> resenias;

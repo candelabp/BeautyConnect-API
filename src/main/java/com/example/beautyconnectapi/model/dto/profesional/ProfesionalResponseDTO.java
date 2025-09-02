@@ -1,5 +1,6 @@
 package com.example.beautyconnectapi.model.dto.profesional;
 
+import com.example.beautyconnectapi.model.dto.centroDeEstetica.CentroDeEsteticaDTO;
 import com.example.beautyconnectapi.model.dto.centroDeEstetica.CentroDeEsteticaResponseDTO;
 import com.example.beautyconnectapi.model.dto.disponibilidad.DisponibilidadResponseDTO;
 import com.example.beautyconnectapi.model.dto.servicio.ServicioResponseDTO;
@@ -19,8 +20,6 @@ public class ProfesionalResponseDTO {
 
     private String apellido;
 
-    private List<DisponibilidadResponseDTO> disponibilidades;
-
-    private List<ServicioResponseDTO> servicios;
+    private CentroDeEsteticaDTO centroDeEstetica;
 
 }

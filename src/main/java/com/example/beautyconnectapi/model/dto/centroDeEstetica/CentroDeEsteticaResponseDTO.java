@@ -28,13 +28,11 @@ public class CentroDeEsteticaResponseDTO {
 
     private String docValido;
 
-    private int cuit;
+    private Long cuit;
 
-    private List<DomicilioResponseDTO> domicilios;
+    private DomicilioResponseDTO domicilio;
 
     private List<ServicioResponseDTO> servicios;
-
-    private List<TurnoResponseDTO> turnos;
 
     private List<ReseniaResponseDTO> resenias;
 

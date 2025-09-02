@@ -26,10 +26,6 @@ public class TurnoResponseDTO {
 
     private ClienteResponseDTO clienteResponseDTO;
 
-    private ServicioResponseDTO servicioResponseDTO;
-
-    private ProfesionalResponseDTO profesionalResponseDTO;
-
     private Estado estado;
 
 }

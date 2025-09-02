@@ -19,7 +19,5 @@ public class ProfesionalDTO {
 
     private String apellido;
 
-    private List<DisponibilidadDTO> disponibilidades;
-
-    private List<ServicioDTO> servicios;
+    private CentroDeEsteticaDTO centroDeEstetica;
 }
