@@ -16,17 +16,15 @@ import java.time.LocalTime;
 @Setter
 @Builder
 public class TurnoDTO {
+    private Long id;
+
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate fecha;
 
     @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime hora;
 
-    private ClienteDTO cliente;
-
-    private ServicioDTO servicioDTO;
-
-    private ProfesionalDTO profesionalDTO;
+    private ClienteDTO clienteDTO;
 
     private Estado estado;
 

@@ -36,7 +36,7 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
     @Override
     public CentroDeEsteticaResponseDTO registrar(CentroDeEsteticaDTO centroDeEsteticadto) {
         CentroDeEstetica centroDeEstetica = centroDeEsteticaMapper.toEntity(centroDeEsteticadto);
-        centroDeEstetica.getCuit();
+        centroDeEstetica.setEstado(Estado.PENDIENTE);
         return centroDeEsteticaMapper.toResponseDTO(centroDeEsteticaRepository.save(centroDeEstetica));
     }
 

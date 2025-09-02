@@ -17,7 +17,6 @@ import java.time.LocalTime;
 @SuperBuilder
 @Entity
 public class Disponibilidad extends Base{
-
     private DayOfWeek dia;
     private LocalTime horaInicio;
     private LocalTime horaFinalizacion;

@@ -13,8 +13,6 @@ import lombok.*;
 public class ServicioDTO {
     private TipoDeServico tipoDeServico;
 
-    private Integer duracion;
-
     private Double precio;
 
     private CentroDeEsteticaDTO centroDeEsteticaDTO;

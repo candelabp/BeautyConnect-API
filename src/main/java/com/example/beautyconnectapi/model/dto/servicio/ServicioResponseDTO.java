@@ -15,8 +15,6 @@ public class ServicioResponseDTO {
 
     private TipoDeServico tipoDeServico;
 
-    private Integer duracion;
-
     private Double precio;
 
     private CentroDeEsteticaResponseDTO centroDeEsteticaResponseDTO;

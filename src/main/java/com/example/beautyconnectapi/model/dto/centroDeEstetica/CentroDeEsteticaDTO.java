@@ -24,13 +24,11 @@ public class CentroDeEsteticaDTO {
 
     private String docValido;
 
-    private int cuit;
+    private Long cuit;
 
     private  DomicilioDTO domicilio;
 
     private List<ServicioDTO> servicios;
-
-    private List<TurnoDTO> turnos;
 
     private List<ReseniaDTO> resenias;
 }
