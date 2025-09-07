@@ -53,16 +53,12 @@ public class ServicioServiceImpl implements ServicioService {
         Servicio servicio = servicioRepository.findById(servicioId)
                 .orElseThrow(() -> new RuntimeException("Servicio no encontrado"));
 
-        if (!servicio.getDuracion().equals(servicioDto.getDuracion())){
-            servicio.setDuracion(servicioDto.getDuracion());
-        }
-
         if (!servicio.getPrecio().equals(servicioDto.getPrecio())){
             servicio.setPrecio(servicioDto.getPrecio());
         }
 
-        if (!servicio.getTipoDeServico().equals(servicioDto.getTipoDeServico())){
-            servicio.setTipoDeServico(servicioDto.getTipoDeServico());
+        if (!servicio.getTipoDeServicio().equals(servicioDto.getTipoDeServicio())){
+            servicio.setTipoDeServicio(servicioDto.getTipoDeServicio());
         }
 
         servicioRepository.save(servicio);

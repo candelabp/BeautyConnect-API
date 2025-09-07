@@ -3,37 +3,46 @@ package com.example.beautyconnectapi.controller;
 import com.example.beautyconnectapi.model.dto.disponibilidad.DisponibilidadDTO;
 import com.example.beautyconnectapi.model.dto.disponibilidad.DisponibilidadResponseDTO;
 import com.example.beautyconnectapi.service.DisponibilidadService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.beautyconnectapi.service.ProfesionalServicioService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/disponibilidad")
 public class DisponibilidadController {
     private final DisponibilidadService disponibilidadService;
+    private final ProfesionalServicioService profesionalServicioService;
 
-    public DisponibilidadController(DisponibilidadService disponibilidadService) {
+    public DisponibilidadController(DisponibilidadService disponibilidadService, ProfesionalServicioService profesionalServicioService) {
         this.disponibilidadService = disponibilidadService;
+        this.profesionalServicioService = profesionalServicioService;
     }
 
     @PostMapping("/save")
-    public DisponibilidadResponseDTO saveDisponibilidad(DisponibilidadDTO disponibilidadDto){
+    public DisponibilidadResponseDTO saveDisponibilidad(@RequestBody DisponibilidadDTO disponibilidadDto){
         return disponibilidadService.saveDisponibilidad(disponibilidadDto);
     }
 
     @GetMapping("/{id}")
-    public DisponibilidadResponseDTO getDisponibilidadById(Long disponibilidadId){
-        return disponibilidadService.getDisponibilidadById(disponibilidadId);
+    public DisponibilidadResponseDTO getDisponibilidadById(@PathVariable Long id){
+        return disponibilidadService.getDisponibilidadById(id);
     }
 
-    @PostMapping("/update")
-    public DisponibilidadResponseDTO updateDisponibilidad(Long disponibilidadId, DisponibilidadDTO disponibilidadDto){
-        return disponibilidadService.updateDisponibilidad(disponibilidadId, disponibilidadDto);
+    @PostMapping("/update/{id}")
+    public DisponibilidadResponseDTO updateDisponibilidad(@PathVariable Long id, @RequestBody DisponibilidadDTO disponibilidadDto){
+        return disponibilidadService.updateDisponibilidad(id, disponibilidadDto);
     }
 
-    @PostMapping("/delete")
-    public DisponibilidadResponseDTO deleteDisponibilidad(Long disponibilidadId){
-        return disponibilidadService.deleteDisponibilidad(disponibilidadId);
+    @PostMapping("/delete/{id}")
+    public DisponibilidadResponseDTO deleteDisponibilidad(@PathVariable Long id){
+        return disponibilidadService.deleteDisponibilidad(id);
     }
+
+    @GetMapping("/disponibles/prof/{profId}/servicio/{servicioId}")
+    public List<DisponibilidadResponseDTO> getByProfServicio(@PathVariable Long profId, @PathVariable Long servicioId){
+        return profesionalServicioService.getFechasDisponibles(profId, servicioId);
+    }
+
+
 }

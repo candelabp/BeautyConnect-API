@@ -7,5 +7,4 @@ public interface SuperAdminService {
     SuperAdminResponseDTO saveSuperAdmin(SuperAdminDTO superAdminDTO);
     SuperAdminResponseDTO getSuperAdminById(Long superAdminId);
     SuperAdminResponseDTO updateSuperAdmin(Long superAdminId, SuperAdminDTO superAdminDTO);
-    SuperAdminResponseDTO deleteSuperAdmin(SuperAdminDTO superAdminDTO);
 }

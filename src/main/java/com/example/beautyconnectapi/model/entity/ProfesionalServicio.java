@@ -2,11 +2,14 @@ package com.example.beautyconnectapi.model.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,6 +26,6 @@ public class ProfesionalServicio extends Base{
     @ManyToOne
     private Profesional profesional;
 
-    @ManyToOne
-    private Disponibilidad disponibilidad;
+    @OneToMany
+    private List<Disponibilidad> disponibilidades;
 }

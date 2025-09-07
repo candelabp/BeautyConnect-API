@@ -42,8 +42,8 @@ public class DisponibilidadServiceImpl implements DisponibilidadService {
         Disponibilidad disponibilidad = disponibilidadRepository.findById(disponibilidadId)
                 .orElseThrow(() -> new RuntimeException("Disponibilidad no encontrada"));
 
-        if(!disponibilidad.getDia().equals(disponibilidadDto.getDia())){
-            disponibilidad.setDia(disponibilidadDto.getDia());
+        if(!disponibilidad.getFecha().equals(disponibilidadDto.getFecha())){
+            disponibilidad.setFecha(disponibilidadDto.getFecha());
         }
         if(!disponibilidad.getHoraInicio().equals(disponibilidadDto.getHoraInicio())){
             disponibilidad.setHoraInicio(disponibilidadDto.getHoraInicio());

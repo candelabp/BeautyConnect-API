@@ -8,7 +8,6 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalTime;
 
 @NoArgsConstructor
@@ -17,9 +16,9 @@ import java.time.LocalTime;
 @Setter
 @SuperBuilder
 @Entity
-public class Disponibilidad extends Base{
-    private LocalDate fecha;
+public class HorarioCentro extends Base{
+    private DayOfWeek diaDesde;
+    private DayOfWeek diaHasta;
     private LocalTime horaInicio;
     private LocalTime horaFinalizacion;
-    private Boolean disponible;
 }

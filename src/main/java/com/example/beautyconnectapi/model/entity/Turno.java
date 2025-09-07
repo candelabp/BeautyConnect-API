@@ -1,7 +1,6 @@
 package com.example.beautyconnectapi.model.entity;
 
 import com.example.beautyconnectapi.model.enums.Estado;
-import com.example.beautyconnectapi.model.enums.TipoDeServico;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -32,4 +31,7 @@ public class Turno extends Base {
 
     @Enumerated(EnumType.STRING)
     private Estado estado;
+
+    @ManyToOne
+    private ProfesionalServicio profesionalServicio;
 }

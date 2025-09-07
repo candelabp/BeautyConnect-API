@@ -55,8 +55,8 @@ public class CentroDeEsteticaController {
     }
 
     // PUT /api/centrodeestetica/cambiarEstado?id=1&estado=ACTIVO
-    @PutMapping("/cambiarEstado")
-    public ResponseEntity<CentroDeEsteticaResponseDTO> cambiarEstado(@RequestParam Long id, @RequestParam Estado estado) {
+    @PutMapping("/cambiarEstado/{id}")
+    public ResponseEntity<CentroDeEsteticaResponseDTO> cambiarEstado(@PathVariable Long id, @RequestParam Estado estado) {
         return ResponseEntity.ok(centroDeEsteticaService.cambiarEstado(id, estado));
     }
 }

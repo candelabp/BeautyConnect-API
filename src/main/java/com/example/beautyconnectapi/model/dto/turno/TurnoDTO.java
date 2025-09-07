@@ -2,6 +2,7 @@ package com.example.beautyconnectapi.model.dto.turno;
 
 import com.example.beautyconnectapi.model.dto.cliente.ClienteDTO;
 import com.example.beautyconnectapi.model.dto.profesional.ProfesionalDTO;
+import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioDTO;
 import com.example.beautyconnectapi.model.dto.servicio.ServicioDTO;
 import com.example.beautyconnectapi.model.enums.Estado;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -28,4 +29,5 @@ public class TurnoDTO {
 
     private Estado estado;
 
+    private ProfesionalServicioDTO profesionalServicioDTO;
 }

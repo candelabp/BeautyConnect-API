@@ -15,22 +15,17 @@ public class SuperAdminController {
     }
 
     @PostMapping("/save")
-    public SuperAdminResponseDTO saveSuperAdmin(SuperAdminDTO superAdminDTO){
+    public SuperAdminResponseDTO saveSuperAdmin(@RequestBody SuperAdminDTO superAdminDTO){
         return superAdminService.saveSuperAdmin(superAdminDTO);
     }
 
-    @GetMapping("/{id}")
-    public SuperAdminResponseDTO getSuperAdminById(Long superAdminId){
+    @GetMapping("/{superAdminId}")
+    public SuperAdminResponseDTO getSuperAdminById(@PathVariable Long superAdminId){
         return superAdminService.getSuperAdminById(superAdminId);
     }
 
-    @PatchMapping("/update")
-    public SuperAdminResponseDTO updateSuperAdmin(Long superAdminId, SuperAdminDTO superAdminDTO){
+    @PatchMapping("/update/{superAdminId}")
+    public SuperAdminResponseDTO updateSuperAdmin(@PathVariable Long superAdminId, SuperAdminDTO superAdminDTO){
         return superAdminService.updateSuperAdmin(superAdminId, superAdminDTO);
-    }
-
-    @PatchMapping("/delete")
-    public SuperAdminResponseDTO deleteSuperAdmin(SuperAdminDTO superAdminDTO){
-        return superAdminService.deleteSuperAdmin(superAdminDTO);
     }
 }

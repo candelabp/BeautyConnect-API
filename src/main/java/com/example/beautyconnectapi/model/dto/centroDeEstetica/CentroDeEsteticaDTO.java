@@ -1,9 +1,9 @@
 package com.example.beautyconnectapi.model.dto.centroDeEstetica;
 
 import com.example.beautyconnectapi.model.dto.domicilio.DomicilioDTO;
+import com.example.beautyconnectapi.model.dto.horarioCentro.HorarioCentroDTO;
 import com.example.beautyconnectapi.model.dto.resenia.ReseniaDTO;
 import com.example.beautyconnectapi.model.dto.servicio.ServicioDTO;
-import com.example.beautyconnectapi.model.dto.turno.TurnoDTO;
 import lombok.*;
 
 import java.util.List;
@@ -31,4 +31,6 @@ public class CentroDeEsteticaDTO {
     private List<ServicioDTO> servicios;
 
     private List<ReseniaDTO> resenias;
+
+    private HorarioCentroDTO horarioCentroDto;
 }

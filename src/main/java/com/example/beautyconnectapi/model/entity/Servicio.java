@@ -1,6 +1,6 @@
 package com.example.beautyconnectapi.model.entity;
 
-import com.example.beautyconnectapi.model.enums.TipoDeServico;
+import com.example.beautyconnectapi.model.enums.TipoDeServicio;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,7 +17,7 @@ import lombok.experimental.SuperBuilder;
 @Entity
 public class Servicio extends Base {
     @Enumerated(EnumType.STRING)
-    private TipoDeServico tipoDeServico;
+    private TipoDeServicio tipoDeServicio;
 
     private Double precio;
 

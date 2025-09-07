@@ -1,7 +1,9 @@
 package com.example.beautyconnectapi.controller;
 
+import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioResponseDTO;
 import com.example.beautyconnectapi.model.dto.servicio.ServicioDTO;
 import com.example.beautyconnectapi.model.dto.servicio.ServicioResponseDTO;
+import com.example.beautyconnectapi.service.ProfesionalServicioService;
 import com.example.beautyconnectapi.service.ServicioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,8 @@ import java.util.List;
 public class ServicioController {
 
     private final ServicioService servicioService;
+    private final ProfesionalServicioService profesionalServicioService;
+
     @GetMapping
     public List<ServicioResponseDTO> getAll() {
         return servicioService.getAllServicios();
@@ -43,5 +47,10 @@ public class ServicioController {
     @GetMapping("/by-centro/{centroId}")
     public List<ServicioResponseDTO> obtenerPorCentro(@PathVariable("centroId") Long centroDeEsteticaId) {
         return servicioService.obtenerServiciosPorCentroId(centroDeEsteticaId);
+    }
+
+    @GetMapping("/getProfServicio/{id}")
+    public List<ProfesionalServicioResponseDTO> getProfServicio(@PathVariable Long id) {
+        return profesionalServicioService.getAllByServicioId(id);
     }
 }

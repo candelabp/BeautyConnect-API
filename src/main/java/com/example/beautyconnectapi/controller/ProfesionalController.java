@@ -26,13 +26,13 @@ public class ProfesionalController {
         return profesionalService.getProfesionalById(profesionalId);
     }
 
-    @PostMapping("/update")
-    public ProfesionalResponseDTO updateProfesional(@RequestParam Long profesionalId, @RequestBody ProfesionalDTO profesionalDto){
+    @PostMapping("/update/{profesionalId}")
+    public ProfesionalResponseDTO updateProfesional(@PathVariable Long profesionalId, @RequestBody ProfesionalDTO profesionalDto){
         return profesionalService.updateProfesional(profesionalId, profesionalDto);
     }
 
-    @PostMapping("/delete")
-    public ProfesionalResponseDTO deleteProfesional(@RequestParam Long profesionalId){
+    @PostMapping("/delete/{profesionalId}")
+    public ProfesionalResponseDTO deleteProfesional(@PathVariable Long profesionalId){
         return profesionalService.deleteProfesional(profesionalId);
     }
 

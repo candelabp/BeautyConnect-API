@@ -1,12 +1,10 @@
 package com.example.beautyconnectapi.model.dto.centroDeEstetica;
 
 import com.example.beautyconnectapi.model.dto.domicilio.DomicilioResponseDTO;
-import com.example.beautyconnectapi.model.dto.prestadorDeServicio.PrestadorDeServicioResponseDTO;
-import com.example.beautyconnectapi.model.dto.profesional.ProfesionalDTO;
+import com.example.beautyconnectapi.model.dto.horarioCentro.HorarioCentroResponseDTO;
 import com.example.beautyconnectapi.model.dto.profesional.ProfesionalResponseDTO;
 import com.example.beautyconnectapi.model.dto.resenia.ReseniaResponseDTO;
 import com.example.beautyconnectapi.model.dto.servicio.ServicioResponseDTO;
-import com.example.beautyconnectapi.model.dto.turno.TurnoResponseDTO;
 import com.example.beautyconnectapi.model.enums.Estado;
 import lombok.*;
 
@@ -40,4 +38,5 @@ public class CentroDeEsteticaResponseDTO {
 
     private List<ProfesionalResponseDTO> profesionales;
 
+    private HorarioCentroResponseDTO horarioCentro;
 }

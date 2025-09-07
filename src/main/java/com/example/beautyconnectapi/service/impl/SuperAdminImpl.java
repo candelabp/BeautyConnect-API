@@ -49,13 +49,4 @@ public class SuperAdminImpl implements SuperAdminService {
         superAdminRepository.save(superAdmin);
         return superAdminMapper.toResponseDTO(superAdmin);
     }
-
-    @Override
-    @Transactional
-    public SuperAdminResponseDTO deleteSuperAdmin(SuperAdminDTO superAdminDTO){
-        SuperAdmin superAdmin = superAdminMapper.toEntity(superAdminDTO);
-        superAdmin.setActive(false);
-        superAdminRepository.save(superAdmin);
-        return superAdminMapper.toResponseDTO(superAdmin);
-    }
 }

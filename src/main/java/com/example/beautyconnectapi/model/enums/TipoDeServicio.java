@@ -1,6 +1,6 @@
 package com.example.beautyconnectapi.model.enums;
 
-public enum TipoDeServico {
+public enum TipoDeServicio {
     PELUQUERIA,
     MANICURA,
     PEDICURA,

@@ -2,7 +2,7 @@ package com.example.beautyconnectapi.model.dto.disponibilidad;
 
 import lombok.*;
 
-import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @NoArgsConstructor
@@ -11,7 +11,7 @@ import java.time.LocalTime;
 @Setter
 @Builder
 public class DisponibilidadResponseDTO {
-    private DayOfWeek dia;
+    private LocalDate fecha;
     private LocalTime horaInicio;
     private LocalTime horaFinalizacion;
 }

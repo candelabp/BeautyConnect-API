@@ -25,16 +25,15 @@ public class DomicilioController {
     }
 
     // READ
-    @GetMapping("/{id}")
-    public ResponseEntity<DomicilioResponseDTO> getDomicilioById(@PathVariable("id") Long domicilioId){
+    @GetMapping("/{domicilioId}")
+    public ResponseEntity<DomicilioResponseDTO> getDomicilioById(@PathVariable Long domicilioId){
         DomicilioResponseDTO resp = domicilioService.getDomicilioById(domicilioId);
         return ResponseEntity.ok(resp);
     }
 
     // UPDATE
     @PutMapping("/{id}")
-    public ResponseEntity<DomicilioResponseDTO> updateDomicilio(@PathVariable("id") Long domicilioId,
-                                                                @RequestBody DomicilioDTO domicilioDto){
+    public ResponseEntity<DomicilioResponseDTO> updateDomicilio(@PathVariable("id") Long domicilioId, @RequestBody DomicilioDTO domicilioDto){
         DomicilioResponseDTO resp = domicilioService.updateDomicilio(domicilioId, domicilioDto);
         return ResponseEntity.ok(resp);
     }
