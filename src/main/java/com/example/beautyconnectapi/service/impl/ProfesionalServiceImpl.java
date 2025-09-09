@@ -31,7 +31,7 @@ public class ProfesionalServiceImpl implements ProfesionalService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public ProfesionalResponseDTO getProfesionalById(Long profesionalId){
         Profesional profesional = profesionalRepository.findById(profesionalId)
                 .orElseThrow(() -> new RuntimeException("Profesional no encontrado"));

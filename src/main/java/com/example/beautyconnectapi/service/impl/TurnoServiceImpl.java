@@ -5,10 +5,13 @@ import com.example.beautyconnectapi.model.dto.turno.TurnoDTO;
 import com.example.beautyconnectapi.model.dto.turno.TurnoResponseDTO;
 import com.example.beautyconnectapi.model.entity.Turno;
 import com.example.beautyconnectapi.model.enums.Estado;
+import com.example.beautyconnectapi.repository.ClienteRepository;
+import com.example.beautyconnectapi.repository.ProfesionalServicioRepository;
 import com.example.beautyconnectapi.repository.TurnoRepository;
 import com.example.beautyconnectapi.service.TurnoService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,20 +21,30 @@ public class TurnoServiceImpl implements TurnoService {
 
     private final TurnoRepository turnoRepository;
     private final TurnoMapper turnoMapper;
+    private final ClienteRepository clienteRepository;
+    private final ProfesionalServicioRepository profesionalServicioRepository;
 
-    public TurnoServiceImpl(TurnoRepository turnoRepository, TurnoMapper turnoMapper) {
+    public TurnoServiceImpl(TurnoRepository turnoRepository, TurnoMapper turnoMapper, ClienteRepository clienteRepository, ProfesionalServicioRepository profesionalServicioRepository) {
         this.turnoRepository = turnoRepository;
         this.turnoMapper = turnoMapper;
+        this.clienteRepository = clienteRepository;
+        this.profesionalServicioRepository = profesionalServicioRepository;
     }
 
     @Override
+    @Transactional
     public TurnoResponseDTO crear(TurnoDTO dto) {
         Turno turno = turnoMapper.toEntity(dto);
         turno.setEstado(Estado.PENDIENTE);
+        turno.setCliente(clienteRepository.findById(dto.getClienteId())
+                .orElseThrow(()  -> new RuntimeException("Cliente no encontrado"))) ;
+        turno.setProfesionalServicio(profesionalServicioRepository.findById(dto.getProfesionalServicioId())
+                .orElseThrow(()  -> new RuntimeException("ProfesionalServicio no encontrado"))) ;
         return turnoMapper.toResponseDTO(turnoRepository.save(turno));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<TurnoResponseDTO> listarTodos() {
         return turnoRepository.findAll().stream()
                 .map(turnoMapper::toResponseDTO)
@@ -39,6 +52,7 @@ public class TurnoServiceImpl implements TurnoService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<TurnoResponseDTO> listarPorCliente(Long clienteId) {
         return turnoRepository.findByClienteId(clienteId).stream()
                 .map(turnoMapper::toResponseDTO)
@@ -53,6 +67,7 @@ public class TurnoServiceImpl implements TurnoService {
 //    }
 
     @Override
+    @Transactional
     public TurnoResponseDTO cambiarEstado(Long turnoId, Estado nuevoEstado) {
         Turno turno = turnoRepository.findById(turnoId)
                 .orElseThrow(() -> new RuntimeException("Turno no encontrado"));
@@ -61,6 +76,7 @@ public class TurnoServiceImpl implements TurnoService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public TurnoResponseDTO obtenerPorId(Long id) {
         return turnoRepository.findById(id)
                 .map(turnoMapper::toResponseDTO)
@@ -68,6 +84,7 @@ public class TurnoServiceImpl implements TurnoService {
     }
 
     @Override
+    @Transactional
     public TurnoResponseDTO actualizar(Long id, TurnoDTO dto) {
         Turno existente = turnoRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Turno no encontrado"));

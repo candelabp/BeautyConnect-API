@@ -6,7 +6,7 @@ import com.example.beautyconnectapi.model.entity.SuperAdmin;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {UsuarioMapper.class})
 public interface SuperAdminMapper {
     @Mapping(target = "id", ignore = true)
     SuperAdmin toEntity(SuperAdminDTO superAdminDTO);

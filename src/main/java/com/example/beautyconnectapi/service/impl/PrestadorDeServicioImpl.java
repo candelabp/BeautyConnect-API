@@ -10,6 +10,7 @@ import com.example.beautyconnectapi.repository.PrestadorDeServicioRepository;
 import com.example.beautyconnectapi.service.PrestadorDeServicioService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,12 +26,14 @@ public class PrestadorDeServicioImpl implements PrestadorDeServicioService {
     }
 
     @Override
+    @Transactional
     public PrestadorDeServicioResponseDTO registrar(PrestadorDeServicioDTO dto) {
         PrestadorDeServicio entity = prestadorDeServicioMapper.toEntity(dto);
         return prestadorDeServicioMapper.toResponseDTO(prestadorDeServicioRepository.save(entity));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<PrestadorDeServicioResponseDTO> listarActivos() {
         return prestadorDeServicioRepository.findByActiveTrue().stream()
                 .map(prestadorDeServicioMapper::toResponseDTO)
@@ -38,6 +41,7 @@ public class PrestadorDeServicioImpl implements PrestadorDeServicioService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PrestadorDeServicioResponseDTO buscarPorId(Long id) {
         return prestadorDeServicioRepository.findById(id)
                 .map(prestadorDeServicioMapper::toResponseDTO)
@@ -45,6 +49,7 @@ public class PrestadorDeServicioImpl implements PrestadorDeServicioService {
     }
 
     @Override
+    @Transactional
     public PrestadorDeServicioResponseDTO actualizar(Long id, PrestadorDeServicioDTO dto) {
         PrestadorDeServicio entity = prestadorDeServicioRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Prestador no encontrado"));
@@ -55,6 +60,7 @@ public class PrestadorDeServicioImpl implements PrestadorDeServicioService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PrestadorDeServicioResponseDTO findByUsuarioId(Long idUsuario) {
         PrestadorDeServicio prestadorDeServicio = prestadorDeServicioRepository.getByUsuarioId(idUsuario);
         return prestadorDeServicioMapper.toResponseDTO(prestadorDeServicio);

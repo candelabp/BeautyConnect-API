@@ -2,7 +2,9 @@ package com.example.beautyconnectapi.model.dto.profesionalServicio;
 
 import com.example.beautyconnectapi.model.dto.disponibilidad.DisponibilidadResponseDTO;
 import com.example.beautyconnectapi.model.dto.profesional.ProfesionalResponseDTO;
+import com.example.beautyconnectapi.model.dto.profesional.ProfesionalResponseDTOSimple;
 import com.example.beautyconnectapi.model.dto.servicio.ServicioResponseDTO;
+import com.example.beautyconnectapi.model.dto.servicio.ServicioResponseDTOSimple;
 import lombok.*;
 
 import java.util.List;
@@ -17,9 +19,9 @@ public class ProfesionalServicioResponseDTO {
 
     private Integer duracion;
 
-    private ServicioResponseDTO servicioResponseDTO;
+    private ServicioResponseDTOSimple servicio;
 
-    private ProfesionalResponseDTO profesionalResponseDTO;
+    private ProfesionalResponseDTOSimple profesional;
 
-    private List<DisponibilidadResponseDTO> disponibilidadResponseDTO;
+    private List<DisponibilidadResponseDTO> disponibilidades;
 }

@@ -21,5 +21,5 @@ public class ProfesionalServicioDTO {
 
     private Long profesionalId;
 
-    private List<DisponibilidadDTO> disponibilidadDTO;
+    private List<DisponibilidadDTO> disponibilidades;
 }

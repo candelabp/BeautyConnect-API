@@ -25,12 +25,12 @@ public class Turno extends Base {
     @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime hora;
 
+    @Enumerated(EnumType.STRING)
+    private Estado estado;
+
     @ManyToOne
     @JoinColumn(name = "clienteId")
     private Cliente cliente;
-
-    @Enumerated(EnumType.STRING)
-    private Estado estado;
 
     @ManyToOne
     private ProfesionalServicio profesionalServicio;

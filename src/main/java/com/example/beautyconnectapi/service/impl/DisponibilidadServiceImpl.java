@@ -28,7 +28,7 @@ public class DisponibilidadServiceImpl implements DisponibilidadService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public DisponibilidadResponseDTO getDisponibilidadById(Long disponibilidadId){
         Disponibilidad disponibilidad = disponibilidadRepository.findById(disponibilidadId)
                 .orElseThrow(() -> new RuntimeException("Disponibilidad no encontrada"));

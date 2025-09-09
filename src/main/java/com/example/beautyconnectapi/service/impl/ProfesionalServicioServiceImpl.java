@@ -7,9 +7,12 @@ import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalSer
 import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioResponseDTO;
 import com.example.beautyconnectapi.model.entity.Disponibilidad;
 import com.example.beautyconnectapi.model.entity.ProfesionalServicio;
+import com.example.beautyconnectapi.repository.ProfesionalRepository;
 import com.example.beautyconnectapi.repository.ProfesionalServicioRepository;
+import com.example.beautyconnectapi.repository.ServicioRepository;
 import com.example.beautyconnectapi.service.ProfesionalServicioService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,16 +21,31 @@ public class ProfesionalServicioServiceImpl implements ProfesionalServicioServic
     private final ProfesionalServicioRepository profesionalServicioRepository;
     private final ProfesionalServicioMapper profesionalServicioMapper;
     private final DisponibilidadMapper disponibilidadMapper;
+    private final ProfesionalRepository profesionalRepository;
+    private final ServicioRepository servicioRepository;
 
-    public ProfesionalServicioServiceImpl(ProfesionalServicioRepository profesionalServicioRepository, ProfesionalServicioMapper profesionalServicioMapper, DisponibilidadMapper disponibilidadMapper){
+    public ProfesionalServicioServiceImpl(ProfesionalServicioRepository profesionalServicioRepository,
+                                          ProfesionalServicioMapper profesionalServicioMapper,
+                                          DisponibilidadMapper disponibilidadMapper,
+                                          ProfesionalRepository profesionalRepository,
+                                          ServicioRepository servicioRepository){
         this.profesionalServicioRepository = profesionalServicioRepository;
         this.profesionalServicioMapper = profesionalServicioMapper;
         this.disponibilidadMapper = disponibilidadMapper;
+        this.profesionalRepository = profesionalRepository;
+        this.servicioRepository = servicioRepository;
     }
 
     @Override
     public  ProfesionalServicioResponseDTO saveProfServico(ProfesionalServicioDTO profesionalServicioDto){
         ProfesionalServicio profesionalServicio = profesionalServicioMapper.toEntity(profesionalServicioDto);
+
+        profesionalServicio.setProfesional(profesionalRepository.findById(profesionalServicioDto.getProfesionalId())
+                .orElseThrow(()  -> new RuntimeException("Profesional no encontrado")));
+
+        profesionalServicio.setServicio(servicioRepository.findById(profesionalServicioDto.getServicioId())
+                .orElseThrow(()  -> new RuntimeException("Servicio no encontrado")));
+
         profesionalServicioRepository.save(profesionalServicio);
         return profesionalServicioMapper.toResponseDTO(profesionalServicio);
     }
@@ -61,18 +79,15 @@ public class ProfesionalServicioServiceImpl implements ProfesionalServicioServic
     }
 
     @Override
-    public List<DisponibilidadResponseDTO> getFechasDisponibles(Long profId, Long servicioId){
+    @Transactional(readOnly = true)
+    public ProfesionalServicioResponseDTO getFechasDisponibles(Long profId, Long servicioId){
         ProfesionalServicio profesionalServicio = profesionalServicioRepository.findByProfesional_IdAndServicio_Id(profId, servicioId)
                 .orElseThrow(() -> new RuntimeException("Profesional no encontrado"));
-        return profesionalServicio.getDisponibilidades()
-                .stream()
-                .filter(Disponibilidad::getDisponible)
-                .map(disponibilidadMapper::toResponseDTO)
-                .toList();
-
+        return profesionalServicioMapper.toResponseDTO(profesionalServicio);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ProfesionalServicioResponseDTO> getAllByServicioId(Long servicioId){
         return profesionalServicioRepository.findByServicio_Id(servicioId)
                 .stream()

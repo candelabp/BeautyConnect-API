@@ -81,7 +81,7 @@ public class AuthController {
                 prestadorDTO.setNombre(request.getPrestadorDTO().getNombre());
                 prestadorDTO.setApellido(request.getPrestadorDTO().getApellido());
                 prestadorDTO.setTelefono(request.getPrestadorDTO().getTelefono());
-                prestadorDTO.setUsuarioDTO(usuarioDto);
+                prestadorDTO.setUsuario(usuarioDto);
 
                 PrestadorDeServicioResponseDTO registrado = prestadorServicioService.registrar(prestadorDTO);
                 return ResponseEntity.ok(registrado);
@@ -135,7 +135,7 @@ public class AuthController {
                 prestadorDTO.setNombre("");
                 prestadorDTO.setApellido("");
                 prestadorDTO.setTelefono("");
-                prestadorDTO.setUsuarioDTO(usuarioDto);
+                prestadorDTO.setUsuario(usuarioDto);
 
                 PrestadorDeServicioResponseDTO registrado = prestadorServicioService.registrar(prestadorDTO);
                 return ResponseEntity.ok(registrado);

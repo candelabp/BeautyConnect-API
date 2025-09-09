@@ -19,6 +19,7 @@ import java.util.UUID;
 public class CloudinaryServiceImpl implements CloudinaryService {
     @Resource
     private Cloudinary cloudinary;
+
     @Override
     public String uploadFile( MultipartFile file) {
         try{

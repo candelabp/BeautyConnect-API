@@ -1,8 +1,10 @@
 package com.example.beautyconnectapi.controller;
 
+import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioDTO;
 import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioResponseDTO;
 import com.example.beautyconnectapi.model.dto.servicio.ServicioDTO;
 import com.example.beautyconnectapi.model.dto.servicio.ServicioResponseDTO;
+import com.example.beautyconnectapi.model.entity.ProfesionalServicio;
 import com.example.beautyconnectapi.service.ProfesionalServicioService;
 import com.example.beautyconnectapi.service.ServicioService;
 import lombok.RequiredArgsConstructor;
@@ -47,10 +49,5 @@ public class ServicioController {
     @GetMapping("/by-centro/{centroId}")
     public List<ServicioResponseDTO> obtenerPorCentro(@PathVariable("centroId") Long centroDeEsteticaId) {
         return servicioService.obtenerServiciosPorCentroId(centroDeEsteticaId);
-    }
-
-    @GetMapping("/getProfServicio/{id}")
-    public List<ProfesionalServicioResponseDTO> getProfServicio(@PathVariable Long id) {
-        return profesionalServicioService.getAllByServicioId(id);
     }
 }

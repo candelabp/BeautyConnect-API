@@ -28,7 +28,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public UsuarioResponseDTO getUsuarioById(Long usuarioId){
         Usuario usuario = usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
@@ -46,27 +46,27 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public UsuarioResponseDTO findByMail(String mail){
         Usuario usuario = usuarioRepository.getUsuarioByMail(mail);
         return usuarioMapper.toResponseDTO(usuario);
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public UsuarioResponseDTO findByUid(String uid){
         Usuario usuario = usuarioRepository.getUsuarioByUid(uid);
         return usuarioMapper.toResponseDTO(usuario);
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public boolean existsByMail(String mail) {
         return usuarioRepository.existsByMail(mail);
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public boolean existsByUid(String uid) {
         return usuarioRepository.existsByUid(uid);
     }

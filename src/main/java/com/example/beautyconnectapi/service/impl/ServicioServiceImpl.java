@@ -40,7 +40,7 @@ public class ServicioServiceImpl implements ServicioService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public ServicioResponseDTO getServicioById(Long servicioId){
         Servicio servicio = servicioRepository.findById(servicioId)
                 .orElseThrow(() -> new RuntimeException("Servicio no encontrado"));
@@ -77,7 +77,7 @@ public class ServicioServiceImpl implements ServicioService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<ServicioResponseDTO> obtenerServiciosPorCentroId(Long centroDeEsteticaId) {
         List<Servicio> servicios = servicioRepository.getByCentroDeEsteticaId(centroDeEsteticaId);
         return servicios.stream()

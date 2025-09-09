@@ -19,5 +19,5 @@ public class ProfesionalDTO {
 
     private String apellido;
 
-    private CentroDeEsteticaDTO centroDeEstetica;
+    private Long centroDeEsteticaId;
 }

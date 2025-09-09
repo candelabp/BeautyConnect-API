@@ -2,6 +2,7 @@ package com.example.beautyconnectapi.controller;
 
 import com.example.beautyconnectapi.model.dto.disponibilidad.DisponibilidadDTO;
 import com.example.beautyconnectapi.model.dto.disponibilidad.DisponibilidadResponseDTO;
+import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioResponseDTO;
 import com.example.beautyconnectapi.service.DisponibilidadService;
 import com.example.beautyconnectapi.service.ProfesionalServicioService;
 import org.springframework.web.bind.annotation.*;
@@ -39,10 +40,6 @@ public class DisponibilidadController {
         return disponibilidadService.deleteDisponibilidad(id);
     }
 
-    @GetMapping("/disponibles/prof/{profId}/servicio/{servicioId}")
-    public List<DisponibilidadResponseDTO> getByProfServicio(@PathVariable Long profId, @PathVariable Long servicioId){
-        return profesionalServicioService.getFechasDisponibles(profId, servicioId);
-    }
 
 
 }

@@ -6,7 +6,7 @@ import com.example.beautyconnectapi.model.entity.PrestadorDeServicio;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {UsuarioMapper.class})
 public interface PrestadorDeServicioMapper {
     @Mapping(target = "id", ignore = true)
     PrestadorDeServicio toEntity(PrestadorDeServicioDTO prestadorDeServicioDTO);

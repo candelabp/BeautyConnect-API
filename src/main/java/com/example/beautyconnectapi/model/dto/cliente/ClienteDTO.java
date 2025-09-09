@@ -1,6 +1,8 @@
 package com.example.beautyconnectapi.model.dto.cliente;
 
+import com.example.beautyconnectapi.model.dto.domicilio.DomicilioDTO;
 import com.example.beautyconnectapi.model.dto.usuario.UsuarioDTO;
+import com.example.beautyconnectapi.model.entity.Domicilio;
 import lombok.*;
 
 @NoArgsConstructor
@@ -16,4 +18,7 @@ public class ClienteDTO {
     private String telefono;
 
     private UsuarioDTO usuario;
+
+    private DomicilioDTO domicilio;
+
 }

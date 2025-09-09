@@ -1,6 +1,5 @@
 package com.example.beautyconnectapi.model.dto.servicio;
 
-import com.example.beautyconnectapi.model.dto.centroDeEstetica.CentroDeEsteticaResponseDTO;
 import com.example.beautyconnectapi.model.enums.TipoDeServicio;
 import lombok.*;
 
@@ -9,12 +8,8 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class ServicioResponseDTO {
-    private Long id;
-
+public class ServicioDTOSimple {
     private TipoDeServicio tipoDeServicio;
 
     private Double precio;
-
-    private CentroDeEsteticaResponseDTO centroDeEstetica;
 }

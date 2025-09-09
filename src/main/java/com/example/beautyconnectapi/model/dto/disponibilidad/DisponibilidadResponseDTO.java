@@ -11,7 +11,10 @@ import java.time.LocalTime;
 @Setter
 @Builder
 public class DisponibilidadResponseDTO {
+    private Long id;
     private LocalDate fecha;
     private LocalTime horaInicio;
     private LocalTime horaFinalizacion;
+    private Boolean disponible;
+
 }

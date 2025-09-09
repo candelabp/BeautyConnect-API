@@ -1,6 +1,5 @@
 package com.example.beautyconnectapi.model.dto.resenia;
 
-import com.example.beautyconnectapi.model.dto.centroDeEstetica.CentroDeEsteticaResponseDTO;
 import com.example.beautyconnectapi.model.dto.cliente.ClienteResponseDTO;
 import lombok.*;
 
@@ -9,12 +8,10 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class ReseniaResponseDTO {
+public class ReseniaResponseDTOSimple {
     private Integer puntuacion;
 
     private String comentario;
 
     private ClienteResponseDTO cliente;
-
-    private CentroDeEsteticaResponseDTO centroDeEstetica;
 }

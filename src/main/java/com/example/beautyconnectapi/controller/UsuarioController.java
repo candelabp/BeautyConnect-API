@@ -36,4 +36,9 @@ public class UsuarioController {
     public UsuarioResponseDTO findByMail(@PathVariable String mail){
         return usuarioService.findByMail(mail);
     }
+
+    @PatchMapping("/existePorUid/{uid}")
+    public boolean existsByUid(String uid) {
+        return usuarioService.existsByUid(uid);
+    }
 }

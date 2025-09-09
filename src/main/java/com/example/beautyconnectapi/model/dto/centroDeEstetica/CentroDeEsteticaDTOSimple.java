@@ -1,18 +1,17 @@
 package com.example.beautyconnectapi.model.dto.centroDeEstetica;
 
+import com.example.beautyconnectapi.model.dto.domicilio.DomicilioResponseDTO;
 import com.example.beautyconnectapi.model.dto.horarioCentro.HorarioCentroDTO;
-import com.example.beautyconnectapi.model.dto.profesional.ProfesionalDTOSimple;
-import com.example.beautyconnectapi.model.dto.servicio.ServicioDTOSimple;
+import com.example.beautyconnectapi.model.dto.horarioCentro.HorarioCentroResponseDTO;
+import com.example.beautyconnectapi.model.enums.Estado;
 import lombok.*;
-
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Builder
-public class CentroDeEsteticaDTO {
+public class CentroDeEsteticaDTOSimple {
     private Long id;
 
     private String nombre;
@@ -26,10 +25,6 @@ public class CentroDeEsteticaDTO {
     private Long cuit;
 
     private Long domicilio_id;
-
-    private List<ServicioDTOSimple> servicios;
-
-    private List<ProfesionalDTOSimple> profesionales;
 
     private HorarioCentroDTO horarioCentro;
 }

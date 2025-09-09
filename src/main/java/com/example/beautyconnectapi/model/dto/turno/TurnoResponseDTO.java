@@ -23,10 +23,10 @@ public class TurnoResponseDTO {
     @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime hora;
 
-    private ClienteResponseDTO clienteResponseDTO;
-
     private Estado estado;
 
-    private ProfesionalServicioResponseDTO profesionalServicioResponseDTO;
+    private ClienteResponseDTO cliente;
+
+    private ProfesionalServicioResponseDTO profesionalServicioResponse;
 
 }

@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import java.util.List;
 
@@ -27,5 +29,6 @@ public class ProfesionalServicio extends Base{
     private Profesional profesional;
 
     @OneToMany
+    @Cascade(CascadeType.ALL)
     private List<Disponibilidad> disponibilidades;
 }

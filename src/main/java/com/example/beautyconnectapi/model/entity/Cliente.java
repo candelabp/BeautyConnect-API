@@ -14,6 +14,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Entity
 public class Cliente extends Base{
+
     private String nombre;
 
     private String apellido;

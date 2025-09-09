@@ -28,7 +28,7 @@ public class SuperAdminImpl implements SuperAdminService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public SuperAdminResponseDTO getSuperAdminById(Long superAdminId){
         SuperAdmin superAdmin = superAdminRepository.findById(superAdminId)
                 .orElseThrow(() -> new RuntimeException("SuperAdmin no encontrado"));

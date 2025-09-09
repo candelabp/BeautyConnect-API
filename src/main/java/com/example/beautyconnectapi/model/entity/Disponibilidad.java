@@ -1,10 +1,7 @@
 package com.example.beautyconnectapi.model.entity;
 
 import jakarta.persistence.Entity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.time.DayOfWeek;
@@ -21,5 +18,7 @@ public class Disponibilidad extends Base{
     private LocalDate fecha;
     private LocalTime horaInicio;
     private LocalTime horaFinalizacion;
-    private Boolean disponible;
+
+    @Builder.Default
+    private Boolean disponible = true;
 }

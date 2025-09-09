@@ -9,6 +9,7 @@ import com.example.beautyconnectapi.repository.ClienteRepository;
 import com.example.beautyconnectapi.service.ClienteService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +25,7 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
+    @Transactional
     public ClienteResponseDTO registrarCliente(ClienteDTO dto) {
         Cliente cliente = clienteMapper.toEntity(dto);
         cliente.getUsuario().setRol(Rol.CLIENTE);
@@ -31,6 +33,7 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ClienteResponseDTO> listarClientes() {
         return clienteRepo.findAll().stream()
                 .map(clienteMapper::toResponseDto)
@@ -38,6 +41,7 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ClienteResponseDTO obtenerPorId(Long id) {
         Cliente cliente = clienteRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
@@ -45,6 +49,7 @@ public class ClienteServiceImpl implements ClienteService {
 
     }
     @Override
+    @Transactional
     public ClienteResponseDTO actualizarCliente(Long id, ClienteDTO dto) {
         Cliente cliente = clienteRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado"));
@@ -56,11 +61,14 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ClienteResponseDTO findByUsuarioId(Long idUsuario) {
         Cliente cliente = clienteRepo.getByUsuarioId(idUsuario);
         return clienteMapper.toResponseDto(cliente);
     }
+
     @Override
+    @Transactional(readOnly = true)
     public ClienteResponseDTO obtenerPorUid(String uid) {
         Cliente cliente = clienteRepo.findByUsuarioUid(uid)
                 .orElseThrow(() -> new RuntimeException("Cliente no encontrado para uid: " + uid));
@@ -68,6 +76,7 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
+    @Transactional
     public ClienteResponseDTO cambiarEstadoActive(Long id){
         Cliente cliente = clienteRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado"));

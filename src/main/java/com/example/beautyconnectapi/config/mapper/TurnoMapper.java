@@ -6,7 +6,7 @@ import com.example.beautyconnectapi.model.entity.Turno;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {ClienteMapper.class, ProfesionalMapper.class })
 public interface TurnoMapper {
     @Mapping(target = "id", ignore = true)
     Turno toEntity(TurnoDTO turnoDTO);

@@ -15,5 +15,5 @@ public class PrestadorDeServicioDTO {
 
     private String telefono;
 
-    private UsuarioDTO usuarioDTO;
+    private UsuarioDTO usuario;
 }

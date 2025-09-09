@@ -8,9 +8,15 @@ import java.util.List;
 
 public interface ProfesionalServicioService {
     ProfesionalServicioResponseDTO saveProfServico(ProfesionalServicioDTO profesionalServicioDto);
+
     ProfesionalServicioResponseDTO getProfServicoById(Long id);
+
     ProfesionalServicioResponseDTO updateProfServico(Long id, ProfesionalServicioDTO profesionalServicioDto);
+
     ProfesionalServicioResponseDTO deleteProfServico(Long id);
-    List<DisponibilidadResponseDTO> getFechasDisponibles(Long profId, Long servicioId);
+
+    ProfesionalServicioResponseDTO getFechasDisponibles(Long profId, Long servicioId);
+
     List<ProfesionalServicioResponseDTO> getAllByServicioId(Long servicioId);
+
 }

@@ -32,7 +32,7 @@ public class DomicilioServiceImpl implements DomicilioService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public DomicilioResponseDTO getDomicilioById(Long domicilioId){
         Domicilio domicilio = domicilioRepository.findById(domicilioId)
                 .orElseThrow(() -> new RuntimeException("Domicilio no encontrado"));
