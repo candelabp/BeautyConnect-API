@@ -11,6 +11,7 @@ import java.time.LocalTime;
 @Setter
 @Builder
 public class HorarioCentroResponseDTO {
+    private Long id;
     private DayOfWeek diaDesde;
     private DayOfWeek diaHasta;
     private LocalTime horaInicio;

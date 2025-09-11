@@ -4,6 +4,7 @@ import com.example.beautyconnectapi.config.mapper.PrestadorDeServicioMapper;
 import com.example.beautyconnectapi.model.dto.cliente.ClienteResponseDTO;
 import com.example.beautyconnectapi.model.dto.prestadorDeServicio.PrestadorDeServicioDTO;
 import com.example.beautyconnectapi.model.dto.prestadorDeServicio.PrestadorDeServicioResponseDTO;
+import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioResponseDTO;
 import com.example.beautyconnectapi.model.entity.Cliente;
 import com.example.beautyconnectapi.model.entity.PrestadorDeServicio;
 import com.example.beautyconnectapi.repository.PrestadorDeServicioRepository;
@@ -65,4 +66,12 @@ public class PrestadorDeServicioImpl implements PrestadorDeServicioService {
         PrestadorDeServicio prestadorDeServicio = prestadorDeServicioRepository.getByUsuarioId(idUsuario);
         return prestadorDeServicioMapper.toResponseDTO(prestadorDeServicio);
     }
+
+//    @Override
+//    @Transactional(readOnly = true)
+//    public PrestadorDeServicioResponseDTO obtenerPorUid(String uid) {
+//        PrestadorDeServicio prestadorDeServicio = prestadorDeServicioRepository.findByUsuarioUid(uid)
+//                .orElseThrow(() -> new RuntimeException("Prestador no encontrado para uid: " + uid));
+//        return prestadorDeServicioMapper.toResponseDTO(prestadorDeServicio);
+//    }
 }

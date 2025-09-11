@@ -9,6 +9,8 @@ import lombok.*;
 @Setter
 @Builder
 public class ReseniaResponseDTOSimple {
+    private Long id;
+
     private Integer puntuacion;
 
     private String comentario;

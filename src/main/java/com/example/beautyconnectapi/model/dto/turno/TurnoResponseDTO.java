@@ -27,6 +27,6 @@ public class TurnoResponseDTO {
 
     private ClienteResponseDTO cliente;
 
-    private ProfesionalServicioResponseDTO profesionalServicioResponse;
+    private ProfesionalServicioResponseDTO profesionalServicio;
 
 }
