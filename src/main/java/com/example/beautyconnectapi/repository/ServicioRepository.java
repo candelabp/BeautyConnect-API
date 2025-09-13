@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface ServicioRepository extends JpaRepository<Servicio, Long> {
     List<Servicio> getByCentroDeEsteticaId(Long centroDeEsteticaId);
+    List<Servicio> findByCentroDeEstetica_PrestadoresServicio_Usuario_Uid(String uid);
 }

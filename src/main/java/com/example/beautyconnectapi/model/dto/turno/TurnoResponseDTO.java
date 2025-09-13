@@ -1,7 +1,7 @@
 package com.example.beautyconnectapi.model.dto.turno;
 
 import com.example.beautyconnectapi.model.dto.cliente.ClienteResponseDTO;
-import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioResponseDTO;
+import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioResponseDTO;
 import com.example.beautyconnectapi.model.enums.Estado;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;

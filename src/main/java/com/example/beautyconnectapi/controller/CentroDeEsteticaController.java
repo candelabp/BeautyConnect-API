@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/centrodeestetica")
@@ -58,6 +59,12 @@ public class CentroDeEsteticaController {
     @PutMapping("/cambiarEstado/{id}")
     public ResponseEntity<CentroDeEsteticaResponseDTO> cambiarEstado(@PathVariable Long id, @RequestParam Estado estado) {
         return ResponseEntity.ok(centroDeEsteticaService.cambiarEstado(id, estado));
+    }
+
+    @GetMapping("/mi-centro-id/{uid}")
+    public ResponseEntity<Map<String, Long>> getMiCentroId(@PathVariable String uid) {
+        Long id = centroDeEsteticaService.obtenerIdPorUid(uid);
+        return ResponseEntity.ok(Map.of("id", id));
     }
 }
 

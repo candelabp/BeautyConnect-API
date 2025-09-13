@@ -1,4 +1,4 @@
-package com.example.beautyconnectapi.model.dto.profesionalServicio;
+package com.example.beautyconnectapi.model.dto.ProfesionalServicio;
 
 import com.example.beautyconnectapi.model.dto.disponibilidad.DisponibilidadResponseDTO;
 import com.example.beautyconnectapi.model.dto.profesional.ProfesionalResponseDTO;

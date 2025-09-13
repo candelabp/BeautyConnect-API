@@ -1,13 +1,14 @@
 package com.example.beautyconnectapi.controller;
 
-import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioDTO;
-import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioResponseDTO;
+import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioDTO;
+import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioResponseDTO;
 import com.example.beautyconnectapi.model.dto.servicio.ServicioDTO;
 import com.example.beautyconnectapi.model.dto.servicio.ServicioResponseDTO;
 import com.example.beautyconnectapi.model.entity.ProfesionalServicio;
 import com.example.beautyconnectapi.service.ProfesionalServicioService;
 import com.example.beautyconnectapi.service.ServicioService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,17 +26,17 @@ public class ServicioController {
         return servicioService.getAllServicios();
     }
 
-    @PostMapping
-    public ServicioResponseDTO create(@RequestBody ServicioDTO servicioDTO) {
-        return servicioService.saveServicio(servicioDTO);
-    }
+ //   @PostMapping
+   // public ServicioResponseDTO create(@RequestBody ServicioDTO servicioDTO) {
+     //   return servicioService.saveServicio(servicioDTO);
+    //}
 
     @GetMapping("/{id}")
     public ServicioResponseDTO getById(@PathVariable("id") Long servicioId) {
         return servicioService.getServicioById(servicioId);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ServicioResponseDTO update(@PathVariable("id") Long servicioId,
                                       @RequestBody ServicioDTO servicioDTO) {
         return servicioService.updateServicio(servicioId, servicioDTO);
@@ -50,4 +51,16 @@ public class ServicioController {
     public List<ServicioResponseDTO> obtenerPorCentro(@PathVariable("centroId") Long centroDeEsteticaId) {
         return servicioService.obtenerServiciosPorCentroId(centroDeEsteticaId);
     }
+
+    @GetMapping("/por-uid/{uid}")
+    public ResponseEntity<List<ServicioResponseDTO>> listarPorUid(@PathVariable String uid) {
+        List<ServicioResponseDTO> data = servicioService.listarPorUid(uid);
+        return ResponseEntity.ok(data);
+    }
+    @PostMapping
+    public ResponseEntity<ServicioResponseDTO> crear(@RequestBody ServicioDTO dto) {
+        return ResponseEntity.ok(servicioService.crear(dto));
+    }
+
+
 }

@@ -4,7 +4,7 @@ import com.example.beautyconnectapi.config.mapper.PrestadorDeServicioMapper;
 import com.example.beautyconnectapi.model.dto.cliente.ClienteResponseDTO;
 import com.example.beautyconnectapi.model.dto.prestadorDeServicio.PrestadorDeServicioDTO;
 import com.example.beautyconnectapi.model.dto.prestadorDeServicio.PrestadorDeServicioResponseDTO;
-import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioResponseDTO;
+import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioResponseDTO;
 import com.example.beautyconnectapi.model.entity.Cliente;
 import com.example.beautyconnectapi.model.entity.PrestadorDeServicio;
 import com.example.beautyconnectapi.repository.PrestadorDeServicioRepository;

@@ -1,8 +1,8 @@
 package com.example.beautyconnectapi.service;
 
 import com.example.beautyconnectapi.model.dto.disponibilidad.DisponibilidadResponseDTO;
-import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioDTO;
-import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioResponseDTO;
+import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioDTO;
+import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioResponseDTO;
 
 import java.util.List;
 

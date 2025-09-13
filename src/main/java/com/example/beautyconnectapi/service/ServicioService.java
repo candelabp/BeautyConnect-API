@@ -12,4 +12,8 @@ public interface ServicioService {
     ServicioResponseDTO deleteServicio(Long servicioId);
     List<ServicioResponseDTO> obtenerServiciosPorCentroId(Long centroDeEsteticaId);
     List<ServicioResponseDTO> getAllServicios();
+
+    List<ServicioResponseDTO> listarPorUid(String uid);
+
+    ServicioResponseDTO crear(ServicioDTO dto);
 }

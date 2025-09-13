@@ -14,4 +14,6 @@ public interface CentroDeEsteticaService {
     CentroDeEsteticaResponseDTO cambiarEstado(Long id, Estado nuevoEstado);
     CentroDeEsteticaResponseDTO obtenerPorId(Long id);
     CentroDeEsteticaResponseDTO actualizar(Long id, CentroDeEsteticaDTO dto);
+
+    Long obtenerIdPorUid(String uid);
 }

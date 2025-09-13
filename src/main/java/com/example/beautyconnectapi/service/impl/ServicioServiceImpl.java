@@ -3,12 +3,15 @@ package com.example.beautyconnectapi.service.impl;
 import com.example.beautyconnectapi.config.mapper.ServicioMapper;
 import com.example.beautyconnectapi.model.dto.servicio.ServicioDTO;
 import com.example.beautyconnectapi.model.dto.servicio.ServicioResponseDTO;
+import com.example.beautyconnectapi.model.entity.CentroDeEstetica;
 import com.example.beautyconnectapi.model.entity.Servicio;
+import com.example.beautyconnectapi.repository.CentroDeEsteticaRepository;
 import com.example.beautyconnectapi.repository.ServicioRepository;
 import com.example.beautyconnectapi.service.ServicioService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,10 +19,13 @@ import java.util.stream.Collectors;
 public class ServicioServiceImpl implements ServicioService {
     private final ServicioRepository servicioRepository;
     private final ServicioMapper servicioMapper;
+    private final CentroDeEsteticaRepository centroDeEsteticaRepository;
 
-    public ServicioServiceImpl(ServicioRepository servicioRepository, ServicioMapper servicioMapper) {
+    public ServicioServiceImpl(ServicioRepository servicioRepository, ServicioMapper servicioMapper,
+                               CentroDeEsteticaRepository centroDeEsteticaRepository) {
         this.servicioRepository = servicioRepository;
         this.servicioMapper = servicioMapper;
+        this.centroDeEsteticaRepository = centroDeEsteticaRepository;
     }
 
     @Override
@@ -83,5 +89,33 @@ public class ServicioServiceImpl implements ServicioService {
         return servicios.stream()
                 .map(servicioMapper::toResponseDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ServicioResponseDTO> listarPorUid(String uid) {
+        // Si tu repo retorna List<Servicio>, podés usar .stream().toList()
+        // Para ser 100% compatible si retorna Iterable, lo hacemos sin streams:
+        Iterable<Servicio> servicios = servicioRepository
+                .findByCentroDeEstetica_PrestadoresServicio_Usuario_Uid(uid);
+
+        List<ServicioResponseDTO> result = new ArrayList<>();
+        for (Servicio s : servicios) {
+            result.add(servicioMapper.toResponseDTO(s));
+        }
+        return result;
+    }
+
+    @Override
+    @Transactional
+    public ServicioResponseDTO crear(ServicioDTO dto) {
+        Servicio entity = servicioMapper.toEntity(dto);
+
+
+        CentroDeEstetica centroRef = centroDeEsteticaRepository.getReferenceById(dto.getCentroDeEsteticaId());
+        entity.setCentroDeEstetica(centroRef);
+
+        Servicio saved = servicioRepository.save(entity);
+        return servicioMapper.toResponseDTO(saved);
     }
 }

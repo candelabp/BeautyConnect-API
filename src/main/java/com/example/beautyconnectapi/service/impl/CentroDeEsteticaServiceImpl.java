@@ -85,5 +85,15 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
                 .orElseThrow(() -> new EntityNotFoundException("Centro no encontrado"));
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Long obtenerIdPorUid(String uid) {
+        Long id = centroDeEsteticaRepository.findIdByUsuarioUid(uid);
+        if (id == null) {
+            throw new RuntimeException("No se encontró Centro de Estética para el uid " + uid);
+        }
+        return id;
+    }
+
 
 }
