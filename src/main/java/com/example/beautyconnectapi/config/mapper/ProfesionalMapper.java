@@ -11,6 +11,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring", uses = {ProfesionalMapper.class, ServicioMapper.class, DisponibilidadMapper.class}) //, CentroDeEsteticaMapper.class
 public interface ProfesionalMapper {
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "centroDeEstetica", ignore = true)
     Profesional toEntity(ProfesionalDTO profesionalDTO);
     Profesional toEntity(ProfesionalDTOSimple profesionalDTOSimple);
     ProfesionalResponseDTO toResponseDTO(Profesional profesional);

@@ -3,12 +3,15 @@ package com.example.beautyconnectapi.service.impl;
 import com.example.beautyconnectapi.config.mapper.ProfesionalMapper;
 import com.example.beautyconnectapi.model.dto.profesional.ProfesionalDTO;
 import com.example.beautyconnectapi.model.dto.profesional.ProfesionalResponseDTO;
+import com.example.beautyconnectapi.model.entity.CentroDeEstetica;
 import com.example.beautyconnectapi.model.entity.Profesional;
+import com.example.beautyconnectapi.repository.CentroDeEsteticaRepository;
 import com.example.beautyconnectapi.repository.ProfesionalRepository;
 import com.example.beautyconnectapi.service.ProfesionalService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,9 +20,12 @@ public class ProfesionalServiceImpl implements ProfesionalService {
     private final ProfesionalRepository profesionalRepository;
     private final ProfesionalMapper profesionalMapper;
 
-    public ProfesionalServiceImpl(ProfesionalRepository profesionalRepository, ProfesionalMapper profesionalMapper) {
+    private final CentroDeEsteticaRepository centroDeEsteticaRepository;
+
+    public ProfesionalServiceImpl(ProfesionalRepository profesionalRepository, ProfesionalMapper profesionalMapper, CentroDeEsteticaRepository centroDeEsteticaRepository) {
         this.profesionalRepository = profesionalRepository;
         this.profesionalMapper = profesionalMapper;
+        this.centroDeEsteticaRepository = centroDeEsteticaRepository;
     }
 
     @Override
@@ -69,5 +75,26 @@ public class ProfesionalServiceImpl implements ProfesionalService {
         return profesionales.stream()
                 .map(profesionalMapper::toResponseDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ProfesionalResponseDTO> listarPorUid(String uid) {
+        List<Profesional> list = profesionalRepository.findByUsuarioUid(uid);
+        List<ProfesionalResponseDTO> out = new ArrayList<>();
+        for (Profesional p : list) out.add(profesionalMapper.toResponseDTO(p));
+        return out;
+    }
+
+    @Override
+    @Transactional
+    public ProfesionalResponseDTO crear(ProfesionalDTO dto) {
+        Profesional entity = profesionalMapper.toEntity(dto);
+        // ⚠️ clave: setear la relación NOT NULL antes del save
+        CentroDeEstetica centroRef = centroDeEsteticaRepository.getReferenceById(dto.getCentroDeEsteticaId());
+        entity.setCentroDeEstetica(centroRef);
+        entity.setActive(true); // si usás soft delete
+        Profesional saved = profesionalRepository.save(entity);
+        return profesionalMapper.toResponseDTO(saved);
     }
 }

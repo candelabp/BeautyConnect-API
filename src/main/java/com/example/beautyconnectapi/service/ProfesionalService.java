@@ -12,4 +12,6 @@ public interface ProfesionalService {
     ProfesionalResponseDTO updateProfesional(Long profesionalId, ProfesionalDTO profesionalDto);
     ProfesionalResponseDTO deleteProfesional(Long profesionalId);
     List<ProfesionalResponseDTO> getAllProfesionales();
+    List<ProfesionalResponseDTO> listarPorUid(String uid);
+    ProfesionalResponseDTO crear(ProfesionalDTO dto);
 }
