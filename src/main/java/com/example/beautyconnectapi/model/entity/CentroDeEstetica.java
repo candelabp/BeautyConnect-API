@@ -49,7 +49,12 @@ public class CentroDeEstetica extends Base {
     @Enumerated(EnumType.STRING)
     private Estado estado;
 
-    @OneToMany
+
+    @OneToMany(
+            mappedBy = "centroDeEstetica",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private List <Profesional> profesionales;
 
     @OneToOne(cascade = CascadeType.ALL)

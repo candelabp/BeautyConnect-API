@@ -2,7 +2,10 @@ package com.example.beautyconnectapi.controller;
 
 import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioDTO;
 import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioResponseDTO;
+import com.example.beautyconnectapi.model.entity.ProfesionalServicio;
 import com.example.beautyconnectapi.service.ProfesionalServicioService;
+import com.example.beautyconnectapi.service.impl.ProfesionalServicioServiceImpl;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +22,7 @@ public class ProfesionalServicioController {
 
     @PostMapping
     public ProfesionalServicioResponseDTO createProfesionalServicio(@RequestBody ProfesionalServicioDTO profesionalServicioDTO) {
-        return profesionalServicioService.saveProfServico(profesionalServicioDTO);
+        return profesionalServicioService.saveProfServicio(profesionalServicioDTO);
     }
 
     @GetMapping("/getProfServicio/{id}")
@@ -27,9 +30,29 @@ public class ProfesionalServicioController {
         return profesionalServicioService.getAllByServicioId(id);
     }
 
-    @GetMapping("/disponibles/prof/{profId}/servicio/{servicioId}")
+   /* @GetMapping("/disponibles/prof/{profId}/servicio/{servicioId}")
     public ProfesionalServicioResponseDTO getByProfServicio(@PathVariable Long profId, @PathVariable Long servicioId){
         return profesionalServicioService.getFechasDisponibles(profId, servicioId);
+    }*/
+
+    @DeleteMapping("/delete/{id}")
+    public ProfesionalServicioResponseDTO deleteProfServicio(@PathVariable Long id){
+        return profesionalServicioService.deleteProfServicio(id);
     }
+
+    @GetMapping("/getProfServicio")
+    public List<ProfesionalServicioResponseDTO> getByProfesional(Long profId){
+        return profesionalServicioService.getByProfesional(profId);
+    }
+
+    @GetMapping("/{profId}/servicios/{servicioId}")
+    public  ProfesionalServicioResponseDTO getByProfesionalAndServicio(
+            @PathVariable Long profId,
+            @PathVariable Long servicioId) {
+        return profesionalServicioService.getByProfesionalAndServicio(profId, servicioId);
+    }
+
+
+
 
 }

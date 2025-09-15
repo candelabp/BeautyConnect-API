@@ -2,15 +2,14 @@ package com.example.beautyconnectapi.service.impl;
 
 import com.example.beautyconnectapi.config.mapper.DisponibilidadMapper;
 import com.example.beautyconnectapi.config.mapper.ProfesionalServicioMapper;
-import com.example.beautyconnectapi.model.dto.disponibilidad.DisponibilidadResponseDTO;
 import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioDTO;
 import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioResponseDTO;
-import com.example.beautyconnectapi.model.entity.Disponibilidad;
 import com.example.beautyconnectapi.model.entity.ProfesionalServicio;
 import com.example.beautyconnectapi.repository.ProfesionalRepository;
 import com.example.beautyconnectapi.repository.ProfesionalServicioRepository;
 import com.example.beautyconnectapi.repository.ServicioRepository;
 import com.example.beautyconnectapi.service.ProfesionalServicioService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +36,7 @@ public class ProfesionalServicioServiceImpl implements ProfesionalServicioServic
     }
 
     @Override
-    public  ProfesionalServicioResponseDTO saveProfServico(ProfesionalServicioDTO profesionalServicioDto){
+    public  ProfesionalServicioResponseDTO saveProfServicio(ProfesionalServicioDTO profesionalServicioDto){
         ProfesionalServicio profesionalServicio = profesionalServicioMapper.toEntity(profesionalServicioDto);
 
         profesionalServicio.setProfesional(profesionalRepository.findById(profesionalServicioDto.getProfesionalId())
@@ -58,7 +57,7 @@ public class ProfesionalServicioServiceImpl implements ProfesionalServicioServic
     }
 
     @Override
-    public ProfesionalServicioResponseDTO updateProfServico(Long id, ProfesionalServicioDTO profesionalServicioDto){
+    public ProfesionalServicioResponseDTO updateProfServicio(Long id, ProfesionalServicioDTO profesionalServicioDto){
         ProfesionalServicio profesionalServicio = profesionalServicioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("ProfesionalServicio no encontrado"));
 
@@ -70,7 +69,7 @@ public class ProfesionalServicioServiceImpl implements ProfesionalServicioServic
     }
 
     @Override
-    public ProfesionalServicioResponseDTO deleteProfServico(Long id){
+    public ProfesionalServicioResponseDTO deleteProfServicio(Long id){
         ProfesionalServicio profesionalServicio = profesionalServicioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("ProfesionalServicio no encontrado"));
         profesionalServicio.setActive(false);
@@ -78,13 +77,21 @@ public class ProfesionalServicioServiceImpl implements ProfesionalServicioServic
         return profesionalServicioMapper.toResponseDTO(profesionalServicio);
     }
 
-    @Override
+   /* @Override
     @Transactional(readOnly = true)
     public ProfesionalServicioResponseDTO getFechasDisponibles(Long profId, Long servicioId){
         ProfesionalServicio profesionalServicio = profesionalServicioRepository.findByProfesional_IdAndServicio_Id(profId, servicioId)
                 .orElseThrow(() -> new RuntimeException("Profesional no encontrado"));
         return profesionalServicioMapper.toResponseDTO(profesionalServicio);
+    }*/
+
+    @Override
+    public ProfesionalServicioResponseDTO getByProfesionalAndServicio(Long profesionalId, Long servicioId) {
+        ProfesionalServicio profesionalServicio = profesionalServicioRepository.findByProfesional_IdAndServicio_Id(profesionalId, servicioId)
+                .orElseThrow(() -> new RuntimeException("ProfesionalServicio no encontrado"));
+        return profesionalServicioMapper.toResponseDTO(profesionalServicio);
     }
+
 
     @Override
     @Transactional(readOnly = true)
@@ -93,5 +100,28 @@ public class ProfesionalServicioServiceImpl implements ProfesionalServicioServic
                 .stream()
                 .map(profesionalServicioMapper::toResponseDTO)
                 .toList();
+    }
+
+  /*  @Override
+    @Transactional
+    public ProfesionalServicioResponseDTO update (Long profId){
+        Profesional profesional = profesionalRepository.findById(profId) .orElseThrow(() -> new RuntimeException("Profesional no encontrado"));
+        return null;
+    }
+
+    @Override
+    @Transactional
+    public ProfesionalServicioResponseDTO asignarServicio(Long profId , Long servicioId){
+        Profesional profesional = profesionalRepository.findById(profId) .orElseThrow(() -> new RuntimeException("Profesional no encontrado"));
+        Servicio servicio = servicioRepository.findById(servicioId).orElseThrow(() -> new RuntimeException("Servicio no encontrado"));
+        profesional
+    }*/
+
+    @Override
+    @Transactional
+    public  List<ProfesionalServicioResponseDTO> getByProfesional(Long profId){
+      return  profesionalServicioRepository.findByProfesional_Id(profId).stream()
+              .map(profesionalServicioMapper::toResponseDTO)
+              .toList();
     }
 }

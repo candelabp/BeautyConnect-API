@@ -67,11 +67,11 @@ public class PrestadorDeServicioImpl implements PrestadorDeServicioService {
         return prestadorDeServicioMapper.toResponseDTO(prestadorDeServicio);
     }
 
-//    @Override
-//    @Transactional(readOnly = true)
-//    public PrestadorDeServicioResponseDTO obtenerPorUid(String uid) {
-//        PrestadorDeServicio prestadorDeServicio = prestadorDeServicioRepository.findByUsuarioUid(uid)
-//                .orElseThrow(() -> new RuntimeException("Prestador no encontrado para uid: " + uid));
-//        return prestadorDeServicioMapper.toResponseDTO(prestadorDeServicio);
-//    }
+   @Override
+   @Transactional(readOnly = true)
+   public PrestadorDeServicioResponseDTO obtenerPorUid(String uid) {
+       PrestadorDeServicio prestadorDeServicio = prestadorDeServicioRepository.findByUsuarioUid(uid)
+              .orElseThrow(() -> new RuntimeException("Prestador no encontrado para uid: " + uid));
+       return prestadorDeServicioMapper.toResponseDTO(prestadorDeServicio);
+    }
 }

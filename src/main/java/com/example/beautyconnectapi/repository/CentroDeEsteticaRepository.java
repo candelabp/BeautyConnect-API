@@ -21,4 +21,7 @@ public interface CentroDeEsteticaRepository extends JpaRepository<CentroDeEsteti
         where u.uid = :uid
     """)
     Long findIdByUsuarioUid(@Param("uid") String uid);
+
+    CentroDeEstetica findByPrestadoresServicioId(Long prestadorId);
 }
+

@@ -33,10 +33,11 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
         CentroDeEstetica centroDeEstetica = centroDeEsteticaMapper.toEntity(centroDeEsteticadto);
         centroDeEstetica.setEstado(Estado.PENDIENTE);
         centroDeEstetica.getServicios()
-                .forEach(servicio -> {servicio.setCentroDeEstetica(centroDeEstetica);
-        });
+                .forEach(servicio -> {
+                    servicio.setCentroDeEstetica(centroDeEstetica);
+                });
         centroDeEstetica.setDomicilio(domicilioRepository.findById(centroDeEsteticadto.getDomicilio_id())
-        .orElseThrow(()  -> new RuntimeException("Domicilio no encontrado"))) ;
+                .orElseThrow(() -> new RuntimeException("Domicilio no encontrado")));
         return centroDeEsteticaMapper.toResponseDTO(centroDeEsteticaRepository.save(centroDeEstetica));
     }
 
@@ -95,5 +96,13 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
         return id;
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public CentroDeEsteticaResponseDTO obtenerPorPrestador(Long idPrestador) {
+        CentroDeEstetica centroDeEstetica = centroDeEsteticaRepository.findByPrestadoresServicioId(idPrestador);
 
+        return centroDeEsteticaMapper.toResponseDTO(centroDeEstetica);
+
+
+    }
 }

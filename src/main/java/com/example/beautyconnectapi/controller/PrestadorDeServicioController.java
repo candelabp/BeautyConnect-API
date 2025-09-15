@@ -38,4 +38,9 @@ public class PrestadorDeServicioController {
     public ResponseEntity<PrestadorDeServicioResponseDTO> actualizar(@PathVariable Long id, @RequestBody PrestadorDeServicioDTO dto) {
         return ResponseEntity.ok(prestadorDeServicioService.actualizar(id, dto));
     }
+    @GetMapping("/uid/{uid}")
+    public ResponseEntity<PrestadorDeServicioResponseDTO> obtenerPorUid(@PathVariable String uid) {
+        PrestadorDeServicioResponseDTO response = prestadorDeServicioService.obtenerPorUid(uid);
+        return ResponseEntity.ok(response);
+    }
 }

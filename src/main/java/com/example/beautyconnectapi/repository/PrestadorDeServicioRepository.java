@@ -12,6 +12,6 @@ import java.util.Optional;
 public interface PrestadorDeServicioRepository extends JpaRepository<PrestadorDeServicio, Long> {
     List<PrestadorDeServicio> findByActiveTrue();
     PrestadorDeServicio getByUsuarioId(Long id);
-    //Optional<PrestadorDeServicio> findByUsuarioUid(String uid);
+    Optional<PrestadorDeServicio> findByUsuarioUid(String uid);
 
 }

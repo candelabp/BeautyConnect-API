@@ -90,11 +90,15 @@ public class ProfesionalServiceImpl implements ProfesionalService {
     @Transactional
     public ProfesionalResponseDTO crear(ProfesionalDTO dto) {
         Profesional entity = profesionalMapper.toEntity(dto);
-        // ⚠️ clave: setear la relación NOT NULL antes del save
-        CentroDeEstetica centroRef = centroDeEsteticaRepository.getReferenceById(dto.getCentroDeEsteticaId());
+        CentroDeEstetica centroRef = centroDeEsteticaRepository.findById(dto.getCentroDeEsteticaId()).orElseThrow(()->new RuntimeException("no se encontro el centro de estetica"));
         entity.setCentroDeEstetica(centroRef);
-        entity.setActive(true); // si usás soft delete
+        centroRef.getProfesionales().add(entity);
+        System.out.println(centroRef.getNombre());
+        entity.setActive(true);
         Profesional saved = profesionalRepository.save(entity);
+        centroRef.getProfesionales().forEach(profesional -> {
+            System.out.println(profesional.getNombre());
+        });
         return profesionalMapper.toResponseDTO(saved);
     }
 }

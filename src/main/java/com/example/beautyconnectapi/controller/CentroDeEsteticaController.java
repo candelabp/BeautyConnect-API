@@ -41,7 +41,7 @@ public class CentroDeEsteticaController {
     }
 
     // PUT /api/centrodeestetica/update/{id}
-    @PutMapping("/update/{id}")
+    @PatchMapping("/update/{id}")
     public ResponseEntity<CentroDeEsteticaResponseDTO> actualizar(@PathVariable Long id, @RequestBody CentroDeEsteticaDTO dto) {
         return ResponseEntity.ok(centroDeEsteticaService.actualizar(id, dto));
     }
@@ -65,6 +65,11 @@ public class CentroDeEsteticaController {
     public ResponseEntity<Map<String, Long>> getMiCentroId(@PathVariable String uid) {
         Long id = centroDeEsteticaService.obtenerIdPorUid(uid);
         return ResponseEntity.ok(Map.of("id", id));
+    }
+
+    @GetMapping("/centro-prestador/{id}")
+    public CentroDeEsteticaResponseDTO obtenerPorPrestador(@PathVariable Long id){
+        return centroDeEsteticaService.obtenerPorPrestador(id);
     }
 }
 
