@@ -32,12 +32,11 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
     public CentroDeEsteticaResponseDTO registrar(CentroDeEsteticaDTO centroDeEsteticadto) {
         CentroDeEstetica centroDeEstetica = centroDeEsteticaMapper.toEntity(centroDeEsteticadto);
         centroDeEstetica.setEstado(Estado.PENDIENTE);
-        centroDeEstetica.getServicios()
-                .forEach(servicio -> {
-                    servicio.setCentroDeEstetica(centroDeEstetica);
-                });
-        centroDeEstetica.setDomicilio(domicilioRepository.findById(centroDeEsteticadto.getDomicilio_id())
-                .orElseThrow(() -> new RuntimeException("Domicilio no encontrado")));
+//        centroDeEstetica.getServicios()
+//                .forEach(servicio -> {servicio.setCentroDeEstetica(centroDeEstetica);
+//        });
+//        centroDeEstetica.setDomicilio(domicilioRepository.findById(centroDeEsteticadto.getDomicilio_id())
+//        .orElseThrow(()  -> new RuntimeException("Domicilio no encontrado"))) ;
         return centroDeEsteticaMapper.toResponseDTO(centroDeEsteticaRepository.save(centroDeEstetica));
     }
 

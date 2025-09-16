@@ -12,8 +12,14 @@ import java.time.LocalTime;
 @Builder
 public class HorarioCentroResponseDTO {
     private Long id;
-    private DayOfWeek diaDesde;
-    private DayOfWeek diaHasta;
-    private LocalTime horaInicio;
-    private LocalTime horaFinalizacion;
+
+    private DayOfWeek dia;
+
+    private LocalTime horaMInicio;
+
+    private LocalTime horaMFinalizacion;
+
+    private LocalTime horaTInicio;
+
+    private LocalTime horaTFinalizacion;
 }

@@ -82,6 +82,7 @@ public class UsuarioController {
                 clienteDTO.setNombre(request.getClienteDTO().getNombre());
                 clienteDTO.setApellido(request.getClienteDTO().getApellido());
                 clienteDTO.setTelefono(request.getClienteDTO().getTelefono());
+                clienteDTO.setDomicilio(request.getClienteDTO().getDomicilio());
                 clienteDTO.setUsuario(usuarioDto);
 
                 ClienteResponseDTO registrado = clienteService.registrarCliente(clienteDTO);
@@ -137,6 +138,7 @@ public class UsuarioController {
                     clienteDTO.setNombre("");
                     clienteDTO.setApellido("");
                     clienteDTO.setTelefono("");
+                    clienteDTO.setDomicilio(null);
                     clienteDTO.setUsuario(usuarioDto);
 
                     ClienteResponseDTO registrado = clienteService.registrarCliente(clienteDTO);

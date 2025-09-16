@@ -1,10 +1,13 @@
 package com.example.beautyconnectapi.model.dto.centroDeEstetica;
 
+import com.example.beautyconnectapi.model.dto.domicilio.DomicilioDTO;
 import com.example.beautyconnectapi.model.dto.domicilio.DomicilioResponseDTO;
 import com.example.beautyconnectapi.model.dto.horarioCentro.HorarioCentroDTO;
 import com.example.beautyconnectapi.model.dto.horarioCentro.HorarioCentroResponseDTO;
 import com.example.beautyconnectapi.model.enums.Estado;
 import lombok.*;
+
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,7 +27,7 @@ public class CentroDeEsteticaDTOSimple {
 
     private Long cuit;
 
-    private Long domicilio_id;
+    private DomicilioDTO domicilio;
 
-    private HorarioCentroDTO horarioCentro;
+    private List<HorarioCentroDTO> horariosCentro;
 }

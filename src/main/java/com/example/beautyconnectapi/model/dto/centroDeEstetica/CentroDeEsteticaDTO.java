@@ -1,5 +1,6 @@
 package com.example.beautyconnectapi.model.dto.centroDeEstetica;
 
+import com.example.beautyconnectapi.model.dto.domicilio.DomicilioDTO;
 import com.example.beautyconnectapi.model.dto.horarioCentro.HorarioCentroDTO;
 import com.example.beautyconnectapi.model.dto.profesional.ProfesionalDTOSimple;
 import com.example.beautyconnectapi.model.dto.servicio.ServicioDTOSimple;
@@ -13,7 +14,7 @@ import java.util.List;
 @Setter
 @Builder
 public class CentroDeEsteticaDTO {
-    private Long id;
+//    private Long id;
 
     private String nombre;
 
@@ -25,11 +26,11 @@ public class CentroDeEsteticaDTO {
 
     private Long cuit;
 
-    private Long domicilio_id;
+    private DomicilioDTO domicilio;
 
-    private List<ServicioDTOSimple> servicios;
+//    private List<ServicioDTOSimple> servicios;
+//
+//    private List<ProfesionalDTOSimple> profesionales;
 
-    private List<ProfesionalDTOSimple> profesionales;
-
-    private HorarioCentroDTO horarioCentro;
+    private List<HorarioCentroDTO> horariosCentro;
 }

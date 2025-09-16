@@ -1,6 +1,7 @@
 package com.example.beautyconnectapi.model.dto.centroDeEstetica;
 
 import com.example.beautyconnectapi.model.dto.domicilio.DomicilioResponseDTO;
+import com.example.beautyconnectapi.model.dto.horarioCentro.HorarioCentroDTO;
 import com.example.beautyconnectapi.model.dto.horarioCentro.HorarioCentroResponseDTO;
 import com.example.beautyconnectapi.model.dto.profesional.ProfesionalResponseDTO;
 import com.example.beautyconnectapi.model.dto.profesional.ProfesionalResponseDTOSimple;
@@ -41,5 +42,5 @@ public class CentroDeEsteticaResponseDTO {
 
     private List<ProfesionalResponseDTOSimple> profesionales;
 
-    private HorarioCentroResponseDTO horarioCentro;
+    private List<HorarioCentroResponseDTO> horariosCentro;
 }

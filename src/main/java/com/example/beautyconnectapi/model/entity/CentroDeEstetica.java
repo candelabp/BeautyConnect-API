@@ -57,6 +57,6 @@ public class CentroDeEstetica extends Base {
     )
     private List <Profesional> profesionales;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private HorarioCentro horarioCentro;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<HorarioCentro> horariosCentro;
 }
