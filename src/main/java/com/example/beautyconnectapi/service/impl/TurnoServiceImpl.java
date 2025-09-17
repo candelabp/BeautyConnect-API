@@ -5,6 +5,7 @@ import com.example.beautyconnectapi.model.dto.turno.TurnoDTO;
 import com.example.beautyconnectapi.model.dto.turno.TurnoResponseDTO;
 import com.example.beautyconnectapi.model.entity.Turno;
 import com.example.beautyconnectapi.model.enums.Estado;
+import com.example.beautyconnectapi.repository.CentroDeEsteticaRepository;
 import com.example.beautyconnectapi.repository.ClienteRepository;
 import com.example.beautyconnectapi.repository.ProfesionalServicioRepository;
 import com.example.beautyconnectapi.repository.TurnoRepository;
@@ -23,12 +24,15 @@ public class TurnoServiceImpl implements TurnoService {
     private final TurnoMapper turnoMapper;
     private final ClienteRepository clienteRepository;
     private final ProfesionalServicioRepository profesionalServicioRepository;
+    private final CentroDeEsteticaRepository centroDeEsteticaRepository;
 
-    public TurnoServiceImpl(TurnoRepository turnoRepository, TurnoMapper turnoMapper, ClienteRepository clienteRepository, ProfesionalServicioRepository profesionalServicioRepository) {
+    public TurnoServiceImpl(TurnoRepository turnoRepository, TurnoMapper turnoMapper, ClienteRepository clienteRepository, ProfesionalServicioRepository profesionalServicioRepository,
+                            CentroDeEsteticaRepository centroDeEsteticaRepository) {
         this.turnoRepository = turnoRepository;
         this.turnoMapper = turnoMapper;
         this.clienteRepository = clienteRepository;
         this.profesionalServicioRepository = profesionalServicioRepository;
+        this.centroDeEsteticaRepository = centroDeEsteticaRepository;
     }
 
     @Override
@@ -40,6 +44,8 @@ public class TurnoServiceImpl implements TurnoService {
                 .orElseThrow(()  -> new RuntimeException("Cliente no encontrado"))) ;
         turno.setProfesionalServicio(profesionalServicioRepository.findById(dto.getProfesionalServicioId())
                 .orElseThrow(()  -> new RuntimeException("ProfesionalServicio no encontrado"))) ;
+        turno.setCentroDeEstetica(centroDeEsteticaRepository.findById(dto.getCentroId())
+         .orElseThrow(()  -> new RuntimeException("ProfesionalServicio no encontrado")));
         return turnoMapper.toResponseDTO(turnoRepository.save(turno));
     }
 

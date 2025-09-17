@@ -34,4 +34,8 @@ public class Turno extends Base {
 
     @ManyToOne
     private ProfesionalServicio profesionalServicio;
+
+    @ManyToOne
+    @JoinColumn(name= "centroId")
+    private CentroDeEstetica centroDeEstetica;
 }

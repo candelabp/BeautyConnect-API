@@ -26,4 +26,6 @@ public class TurnoDTO {
     private Long clienteId;
 
     private Long profesionalServicioId;
+
+    private Long centroId;
 }

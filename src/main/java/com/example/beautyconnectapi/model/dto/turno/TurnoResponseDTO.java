@@ -1,5 +1,6 @@
 package com.example.beautyconnectapi.model.dto.turno;
 
+import com.example.beautyconnectapi.model.dto.centroDeEstetica.CentroDeEsteticaResponseDTO;
 import com.example.beautyconnectapi.model.dto.cliente.ClienteResponseDTO;
 import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioResponseDTO;
 import com.example.beautyconnectapi.model.enums.Estado;
@@ -28,5 +29,7 @@ public class TurnoResponseDTO {
     private ClienteResponseDTO cliente;
 
     private ProfesionalServicioResponseDTO profesionalServicio;
+
+    private CentroDeEsteticaResponseDTO centroDeEstetica;
 
 }
