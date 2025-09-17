@@ -50,14 +50,14 @@ public class CentroDeEsteticaController {
 
 
     // GET /api/centrodeestetica/listarEstado?estado=ACTIVO
-    @GetMapping("/listarEstado")
-    public ResponseEntity<List<CentroDeEsteticaResponseDTO>> listarPorEstado(@RequestParam Estado estado) {
+    @GetMapping("/listarEstado/estado/{estado}")
+    public ResponseEntity<List<CentroDeEsteticaResponseDTO>> listarPorEstado(@PathVariable Estado estado) {
         return ResponseEntity.ok(centroDeEsteticaService.listarPorEstado(estado));
     }
 
     // PUT /api/centrodeestetica/cambiarEstado?id=1&estado=ACTIVO
-    @PutMapping("/cambiarEstado/{id}")
-    public ResponseEntity<CentroDeEsteticaResponseDTO> cambiarEstado(@PathVariable Long id, @RequestParam Estado estado) {
+    @PutMapping("/cambiarEstado/centro/{id}/estado/{estado}")
+    public ResponseEntity<CentroDeEsteticaResponseDTO> cambiarEstado(@PathVariable Long id, @PathVariable Estado estado) {
         return ResponseEntity.ok(centroDeEsteticaService.cambiarEstado(id, estado));
     }
 

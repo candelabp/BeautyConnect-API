@@ -19,8 +19,6 @@ import lombok.experimental.SuperBuilder;
 public class Usuario extends Base {
     private String mail;
 
-
-
     private String uid;
 
     @Enumerated(EnumType.STRING)

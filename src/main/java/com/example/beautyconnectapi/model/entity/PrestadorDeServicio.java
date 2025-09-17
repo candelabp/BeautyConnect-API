@@ -1,5 +1,6 @@
 package com.example.beautyconnectapi.model.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
@@ -22,7 +23,7 @@ public class PrestadorDeServicio extends Base {
 
     private String telefono;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "usuarioId")
     private Usuario usuario;
 
