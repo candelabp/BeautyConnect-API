@@ -1,5 +1,6 @@
 package com.example.beautyconnectapi.controller;
 
+import com.example.beautyconnectapi.config.firebase.FirebaseConfig;
 import com.example.beautyconnectapi.model.dto.cliente.ClienteDTO;
 import com.example.beautyconnectapi.model.dto.cliente.ClienteResponseDTO;
 import com.example.beautyconnectapi.model.dto.prestadorDeServicio.PrestadorDeServicioDTO;
@@ -24,11 +25,13 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
     private final ClienteService clienteService;
     private final PrestadorDeServicioService prestadorServicioService;
+    private final FirebaseConfig firebaseConfig;
 
-    public UsuarioController(UsuarioService usuarioService, ClienteService clienteService, PrestadorDeServicioService prestadorServicioService) {
+    public UsuarioController(UsuarioService usuarioService, ClienteService clienteService, PrestadorDeServicioService prestadorServicioService, FirebaseConfig firebaseConfig) {
         this.usuarioService = usuarioService;
         this.clienteService = clienteService;
         this.prestadorServicioService = prestadorServicioService;
+        this.firebaseConfig = firebaseConfig;
     }
 
 
@@ -53,7 +56,7 @@ public class UsuarioController {
     }
 
     @PatchMapping("/existePorUid/{uid}")
-    public boolean existsByUid(String uid) {
+    public boolean existsByUid(@PathVariable String uid) {
         return usuarioService.existsByUid(uid);
     }
 
@@ -68,10 +71,11 @@ public class UsuarioController {
                 return ResponseEntity.ok("Usuario ya registrado");
             }
 
+            firebaseConfig.asignarRol(uid, request.getRol().toString());
+
             // 2. Guardar usuario en base de datos
             UsuarioDTO usuarioDto = (new UsuarioDTO(
                     request.getMail(),
-                    request.getContrasenia(),
                     request.getRol(),
                     uid
             ));
@@ -124,10 +128,10 @@ public class UsuarioController {
                     return ResponseEntity.ok(prestadorDTO);
                 }
             } else {
+
                 // 2. Guardar usuario si no existe
                 UsuarioDTO usuarioDto = (new UsuarioDTO(
                         email,
-                        request.getContrasenia(),
                         request.getRol(),
                         uid
                 ));

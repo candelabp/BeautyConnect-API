@@ -13,7 +13,6 @@ import lombok.Setter;
 public class Auth {
     private String idToken;
     private String mail;
-    private String contrasenia;
     private Rol rol;
     private String uid;
     private ClienteDTO clienteDTO;
