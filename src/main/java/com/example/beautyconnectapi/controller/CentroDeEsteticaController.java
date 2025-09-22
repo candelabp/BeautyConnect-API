@@ -71,6 +71,11 @@ public class CentroDeEsteticaController {
     public CentroDeEsteticaResponseDTO obtenerPorPrestador(@PathVariable Long id){
         return centroDeEsteticaService.obtenerPorPrestador(id);
     }
+
+    @PatchMapping("/activar_desactivar/{id}")
+    public ResponseEntity<CentroDeEsteticaResponseDTO> activar_descativar(@PathVariable Long id) {
+        return ResponseEntity.ok(centroDeEsteticaService.activar_desactivar(id));
+    }
 }
 
 

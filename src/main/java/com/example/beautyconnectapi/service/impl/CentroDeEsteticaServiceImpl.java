@@ -19,12 +19,10 @@ import java.util.stream.Collectors;
 public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
     private final CentroDeEsteticaRepository centroDeEsteticaRepository;
     private final CentroDeEsteticaMapper centroDeEsteticaMapper;
-    private final DomicilioRepository domicilioRepository;
 
-    public CentroDeEsteticaServiceImpl(CentroDeEsteticaRepository centroDeEsteticaRepository, CentroDeEsteticaMapper centroDeEsteticaMapper, DomicilioRepository domicilioRepository) {
+    public CentroDeEsteticaServiceImpl(CentroDeEsteticaRepository centroDeEsteticaRepository, CentroDeEsteticaMapper centroDeEsteticaMapper) {
         this.centroDeEsteticaRepository = centroDeEsteticaRepository;
         this.centroDeEsteticaMapper = centroDeEsteticaMapper;
-        this.domicilioRepository = domicilioRepository;
     }
 
     @Override
@@ -32,11 +30,6 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
     public CentroDeEsteticaResponseDTO registrar(CentroDeEsteticaDTO centroDeEsteticadto) {
         CentroDeEstetica centroDeEstetica = centroDeEsteticaMapper.toEntity(centroDeEsteticadto);
         centroDeEstetica.setEstado(Estado.PENDIENTE);
-//        centroDeEstetica.getServicios()
-//                .forEach(servicio -> {servicio.setCentroDeEstetica(centroDeEstetica);
-//        });
-//        centroDeEstetica.setDomicilio(domicilioRepository.findById(centroDeEsteticadto.getDomicilio_id())
-//        .orElseThrow(()  -> new RuntimeException("Domicilio no encontrado"))) ;
         return centroDeEsteticaMapper.toResponseDTO(centroDeEsteticaRepository.save(centroDeEstetica));
     }
 
@@ -60,7 +53,8 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
     @Override
     @Transactional
     public CentroDeEsteticaResponseDTO cambiarEstado(Long id, Estado estado) {
-        CentroDeEstetica centroDeEstetica = centroDeEsteticaRepository.findById(id).orElse(null);
+        CentroDeEstetica centroDeEstetica = centroDeEsteticaRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Centro no encontrado"));
         centroDeEstetica.setEstado(estado);
         return centroDeEsteticaMapper.toResponseDTO(centroDeEstetica);
     }
@@ -113,5 +107,15 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
         return centroDeEsteticaMapper.toResponseDTO(centroDeEstetica);
 
 
+    }
+
+    @Override
+    @Transactional
+    public CentroDeEsteticaResponseDTO activar_desactivar(Long id){
+        CentroDeEstetica centroDeEstetica = centroDeEsteticaRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Centro no encontrado"));
+
+        centroDeEstetica.setActive(!centroDeEstetica.getActive());
+        return centroDeEsteticaMapper.toResponseDTO(centroDeEstetica);
     }
 }
