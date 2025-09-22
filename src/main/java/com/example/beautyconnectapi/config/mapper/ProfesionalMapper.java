@@ -8,7 +8,7 @@ import com.example.beautyconnectapi.model.entity.Profesional;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = {ProfesionalMapper.class, ServicioMapper.class, DisponibilidadMapper.class}) //, CentroDeEsteticaMapper.class
+@Mapper(componentModel = "spring", uses = {ProfesionalMapper.class, ServicioMapper.class, DisponibilidadMapper.class, CentroDeEsteticaMapper.class})
 public interface ProfesionalMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "centroDeEstetica", ignore = true)

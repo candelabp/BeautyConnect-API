@@ -35,9 +35,9 @@ public class ProfesionalServicioController {
         return profesionalServicioService.getFechasDisponibles(profId, servicioId);
     }*/
 
-    @DeleteMapping("/delete/{id}")
-    public ProfesionalServicioResponseDTO deleteProfServicio(@PathVariable Long id){
-        return profesionalServicioService.deleteProfServicio(id);
+    @PatchMapping ("/cambiarEstado/{id}")
+    public ProfesionalServicioResponseDTO cambiarEstado(@PathVariable Long id){
+        return profesionalServicioService.cambiarEstado(id);
     }
 
     @GetMapping("/getProfServicio")

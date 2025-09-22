@@ -38,7 +38,7 @@ public class CentroDeEsteticaResponseDTO {
 
     private List<ServicioResponseDTOSimple> servicios;
 
-    private List<ProfesionalResponseDTOSimple> profesionales;
+    //private List<ProfesionalResponseDTOSimple> profesionales;
 
     private List<HorarioCentroResponseDTO> horariosCentro;
 }

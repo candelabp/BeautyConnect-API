@@ -14,7 +14,7 @@ public interface ProfesionalServicioService {
 
     ProfesionalServicioResponseDTO updateProfServicio(Long id, ProfesionalServicioDTO profesionalServicioDto);
 
-    ProfesionalServicioResponseDTO deleteProfServicio(Long id);
+    ProfesionalServicioResponseDTO cambiarEstado(Long id);
 
   //  ProfesionalServicioResponseDTO getFechasDisponibles(Long profId, Long servicioId);
 

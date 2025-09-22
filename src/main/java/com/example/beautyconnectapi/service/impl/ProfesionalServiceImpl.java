@@ -92,13 +92,9 @@ public class ProfesionalServiceImpl implements ProfesionalService {
         Profesional entity = profesionalMapper.toEntity(dto);
         CentroDeEstetica centroRef = centroDeEsteticaRepository.findById(dto.getCentroDeEsteticaId()).orElseThrow(()->new RuntimeException("no se encontro el centro de estetica"));
         entity.setCentroDeEstetica(centroRef);
-        centroRef.getProfesionales().add(entity);
-        System.out.println(centroRef.getNombre());
-        entity.setActive(true);
+
         Profesional saved = profesionalRepository.save(entity);
-        centroRef.getProfesionales().forEach(profesional -> {
-            System.out.println(profesional.getNombre());
-        });
+
         return profesionalMapper.toResponseDTO(saved);
     }
 }

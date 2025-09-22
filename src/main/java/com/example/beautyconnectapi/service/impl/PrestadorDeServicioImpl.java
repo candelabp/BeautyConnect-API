@@ -54,10 +54,16 @@ public class PrestadorDeServicioImpl implements PrestadorDeServicioService {
     public PrestadorDeServicioResponseDTO actualizar(Long id, PrestadorDeServicioDTO dto) {
         PrestadorDeServicio entity = prestadorDeServicioRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Prestador no encontrado"));
-
-        PrestadorDeServicio actualizado = prestadorDeServicioMapper.toEntity(dto);
-        actualizado.setId(id);
-        return prestadorDeServicioMapper.toResponseDTO(prestadorDeServicioRepository.save(actualizado));
+        if ((!entity.getNombre().equals(dto.getNombre()) && (!dto.getNombre().isBlank()))) {
+            entity.setNombre(dto.getNombre());
+        }
+        if((!entity.getApellido().equals(dto.getApellido())&& (!dto.getNombre().isBlank()))){
+            entity.setApellido(dto.getApellido());
+        }
+        if((!entity.getTelefono().equals(dto.getTelefono())&& (!dto.getNombre().isBlank()))){
+            entity.setTelefono(dto.getTelefono());
+        }
+        return prestadorDeServicioMapper.toResponseDTO(prestadorDeServicioRepository.save(entity));
     }
 
     @Override

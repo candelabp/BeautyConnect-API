@@ -69,10 +69,10 @@ public class ProfesionalServicioServiceImpl implements ProfesionalServicioServic
     }
 
     @Override
-    public ProfesionalServicioResponseDTO deleteProfServicio(Long id){
+    public ProfesionalServicioResponseDTO cambiarEstado(Long id){
         ProfesionalServicio profesionalServicio = profesionalServicioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("ProfesionalServicio no encontrado"));
-        profesionalServicio.setActive(false);
+        profesionalServicio.setActive(!profesionalServicio.getActive());
         profesionalServicioRepository.save(profesionalServicio);
         return profesionalServicioMapper.toResponseDTO(profesionalServicio);
     }

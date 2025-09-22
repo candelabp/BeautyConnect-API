@@ -70,10 +70,20 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
     public CentroDeEsteticaResponseDTO actualizar(Long id, CentroDeEsteticaDTO dto) {
         CentroDeEstetica entity = centroDeEsteticaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Centro no encontrado"));
+        if ((!entity.getNombre().equals(dto.getNombre()) && (!dto.getNombre().isBlank()))) {
+            entity.setNombre(dto.getNombre());
+        }
+        if((!entity.getCuit().equals(dto.getCuit()) && (!dto.getNombre().isBlank()))){
+            entity.setCuit(dto.getCuit());
+        }
+        if((!entity.getDescripcion().equals(dto.getDescripcion()) && (!dto.getDescripcion().isBlank()))){
+            entity.setDescripcion(dto.getDescripcion());
+        }
+        if((!entity.getImagen().equals(dto.getImagen()) && (dto.getImagen().isBlank()))){
+            entity.setImagen(dto.getImagen());
+        }
 
-        CentroDeEstetica actualizado = centroDeEsteticaMapper.toEntity(dto);
-        actualizado.setId(id);
-        return centroDeEsteticaMapper.toResponseDTO(centroDeEsteticaRepository.save(actualizado));
+        return centroDeEsteticaMapper.toResponseDTO(entity);
     }
 
 

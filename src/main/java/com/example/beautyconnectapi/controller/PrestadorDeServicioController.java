@@ -34,10 +34,13 @@ public class PrestadorDeServicioController {
         return ResponseEntity.ok(prestadorDeServicioService.buscarPorId(id));
     }
     // PUT /api/prestadordeservicio/update/{id}
-    @PutMapping("/update/{id}")
+
+    @PatchMapping("/update/{id}")
     public ResponseEntity<PrestadorDeServicioResponseDTO> actualizar(@PathVariable Long id, @RequestBody PrestadorDeServicioDTO dto) {
         return ResponseEntity.ok(prestadorDeServicioService.actualizar(id, dto));
     }
+
+
     @GetMapping("/uid/{uid}")
     public ResponseEntity<PrestadorDeServicioResponseDTO> obtenerPorUid(@PathVariable String uid) {
         PrestadorDeServicioResponseDTO response = prestadorDeServicioService.obtenerPorUid(uid);
