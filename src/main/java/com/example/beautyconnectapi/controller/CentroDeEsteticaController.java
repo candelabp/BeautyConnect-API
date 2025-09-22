@@ -41,7 +41,7 @@ public class CentroDeEsteticaController {
     }
 
     // PUT /api/centrodeestetica/update/{id}
-    @PatchMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<CentroDeEsteticaResponseDTO> actualizar(@PathVariable Long id, @RequestBody CentroDeEsteticaDTO dto) {
         return ResponseEntity.ok(centroDeEsteticaService.actualizar(id, dto));
     }

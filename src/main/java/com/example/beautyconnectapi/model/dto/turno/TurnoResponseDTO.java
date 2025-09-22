@@ -4,6 +4,7 @@ import com.example.beautyconnectapi.model.dto.centroDeEstetica.CentroDeEsteticaR
 import com.example.beautyconnectapi.model.dto.cliente.ClienteResponseDTO;
 import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioResponseDTO;
 import com.example.beautyconnectapi.model.enums.Estado;
+import com.example.beautyconnectapi.model.enums.EstadoTurno;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
@@ -24,7 +25,7 @@ public class TurnoResponseDTO {
     @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime hora;
 
-    private Estado estado;
+    private EstadoTurno estado;
 
     private ClienteResponseDTO cliente;
 

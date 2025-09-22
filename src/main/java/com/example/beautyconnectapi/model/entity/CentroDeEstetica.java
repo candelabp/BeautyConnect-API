@@ -43,19 +43,17 @@ public class CentroDeEstetica extends Base {
     )
     private List<Servicio> servicios = new ArrayList<>();
 
-    @OneToMany
-    private List<Resenia> resenias;
 
     @Enumerated(EnumType.STRING)
     private Estado estado;
 
 
-    @OneToMany(
-            mappedBy = "centroDeEstetica",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
+   @OneToMany(
+           mappedBy = "centroDeEstetica",
+           cascade = CascadeType.ALL,
+          orphanRemoval = true
     )
-    private List <Profesional> profesionales;
+   private List <Profesional> profesionales;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<HorarioCentro> horariosCentro;

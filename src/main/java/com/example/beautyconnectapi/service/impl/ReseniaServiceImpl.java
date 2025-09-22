@@ -3,7 +3,13 @@ package com.example.beautyconnectapi.service.impl;
 import com.example.beautyconnectapi.config.mapper.ReseniaMapper;
 import com.example.beautyconnectapi.model.dto.resenia.ReseniaDTO;
 import com.example.beautyconnectapi.model.dto.resenia.ReseniaResponseDTO;
+import com.example.beautyconnectapi.model.dto.turno.TurnoDTO;
+import com.example.beautyconnectapi.model.dto.turno.TurnoResponseDTO;
 import com.example.beautyconnectapi.model.entity.Resenia;
+import com.example.beautyconnectapi.model.entity.Turno;
+import com.example.beautyconnectapi.model.enums.EstadoTurno;
+import com.example.beautyconnectapi.repository.CentroDeEsteticaRepository;
+import com.example.beautyconnectapi.repository.ClienteRepository;
 import com.example.beautyconnectapi.repository.ReseniaRepository;
 import com.example.beautyconnectapi.service.ReseniaService;
 import jakarta.persistence.EntityNotFoundException;
@@ -17,18 +23,29 @@ import java.util.stream.Collectors;
 public class ReseniaServiceImpl implements ReseniaService {
     private final ReseniaRepository reseniaRepository;
     private final ReseniaMapper reseniaMapper;
+    private final ClienteRepository clienteRepository;
+    private  final CentroDeEsteticaRepository centroDeEsteticaRepository;
 
-    public ReseniaServiceImpl( ReseniaRepository reseniaRepository, ReseniaMapper reseniaMapper){
+    public ReseniaServiceImpl( ReseniaRepository reseniaRepository, ReseniaMapper reseniaMapper, ClienteRepository clienteRepository, CentroDeEsteticaRepository centroDeEsteticaRepository){
         this.reseniaMapper = reseniaMapper;
         this.reseniaRepository = reseniaRepository;
+        this.centroDeEsteticaRepository = centroDeEsteticaRepository;
+        this.clienteRepository = clienteRepository;
     }
     @Override
     @Transactional
     public ReseniaResponseDTO crear(ReseniaDTO dto){
         Resenia resenia = reseniaMapper.toEntity(dto);
+        resenia.setCliente(clienteRepository.findById(dto.getClienteId())
+                .orElseThrow(()  -> new RuntimeException("Cliente no encontrado"))) ;
+        resenia.setCentroDeEstetica(centroDeEsteticaRepository.findById(dto.getCentroDeEsteticaId())
+                .orElseThrow(()  -> new RuntimeException("Centro no encontrado"))) ;
         return reseniaMapper.toResponseDTO(reseniaRepository.save(resenia));
 
     }
+
+
+
     @Override
     @Transactional(readOnly = true)
     public List<ReseniaResponseDTO>listarPorCentro(Long centroId){

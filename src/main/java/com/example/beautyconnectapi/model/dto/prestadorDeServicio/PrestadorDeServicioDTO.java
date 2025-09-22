@@ -16,4 +16,6 @@ public class PrestadorDeServicioDTO {
     private String telefono;
 
     private UsuarioDTO usuario;
+
+    private Boolean active;
 }

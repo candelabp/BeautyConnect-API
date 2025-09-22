@@ -5,6 +5,7 @@ import com.example.beautyconnectapi.model.dto.turno.TurnoDTO;
 import com.example.beautyconnectapi.model.dto.turno.TurnoResponseDTO;
 import com.example.beautyconnectapi.model.entity.Turno;
 import com.example.beautyconnectapi.model.enums.Estado;
+import com.example.beautyconnectapi.model.enums.EstadoTurno;
 import com.example.beautyconnectapi.repository.CentroDeEsteticaRepository;
 import com.example.beautyconnectapi.repository.ClienteRepository;
 import com.example.beautyconnectapi.repository.ProfesionalServicioRepository;
@@ -26,6 +27,8 @@ public class TurnoServiceImpl implements TurnoService {
     private final ProfesionalServicioRepository profesionalServicioRepository;
     private final CentroDeEsteticaRepository centroDeEsteticaRepository;
 
+
+
     public TurnoServiceImpl(TurnoRepository turnoRepository, TurnoMapper turnoMapper, ClienteRepository clienteRepository, ProfesionalServicioRepository profesionalServicioRepository,
                             CentroDeEsteticaRepository centroDeEsteticaRepository) {
         this.turnoRepository = turnoRepository;
@@ -39,7 +42,7 @@ public class TurnoServiceImpl implements TurnoService {
     @Transactional
     public TurnoResponseDTO crear(TurnoDTO dto) {
         Turno turno = turnoMapper.toEntity(dto);
-        turno.setEstado(Estado.PENDIENTE);
+        turno.setEstado(EstadoTurno.PENDIENTE);
         turno.setCliente(clienteRepository.findById(dto.getClienteId())
                 .orElseThrow(()  -> new RuntimeException("Cliente no encontrado"))) ;
         turno.setProfesionalServicio(profesionalServicioRepository.findById(dto.getProfesionalServicioId())
@@ -74,7 +77,7 @@ public class TurnoServiceImpl implements TurnoService {
 
     @Override
     @Transactional
-    public TurnoResponseDTO cambiarEstado(Long turnoId, Estado nuevoEstado) {
+    public TurnoResponseDTO cambiarEstado(Long turnoId, EstadoTurno nuevoEstado) {
         Turno turno = turnoRepository.findById(turnoId)
                 .orElseThrow(() -> new RuntimeException("Turno no encontrado"));
         turno.setEstado(nuevoEstado);
@@ -99,5 +102,13 @@ public class TurnoServiceImpl implements TurnoService {
         actualizado.setId(id);
         return turnoMapper.toResponseDTO(turnoRepository.save(actualizado));
     }
+    @Override
+    @Transactional
+    public List<TurnoResponseDTO>obtenerPorCentro(Long centroId){
+        return turnoRepository.findByCentroDeEsteticaId(centroId).stream()
+                .map(turnoMapper::toResponseDTO)
+                .collect(Collectors.toList());
+    }
+
 
 }

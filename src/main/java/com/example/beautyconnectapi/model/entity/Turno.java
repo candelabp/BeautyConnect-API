@@ -1,6 +1,7 @@
 package com.example.beautyconnectapi.model.entity;
 
 import com.example.beautyconnectapi.model.enums.Estado;
+import com.example.beautyconnectapi.model.enums.EstadoTurno;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,7 +27,7 @@ public class Turno extends Base {
     private LocalTime hora;
 
     @Enumerated(EnumType.STRING)
-    private Estado estado;
+    private EstadoTurno estado;
 
     @ManyToOne
     @JoinColumn(name = "clienteId")

@@ -3,6 +3,7 @@ package com.example.beautyconnectapi.controller;
 import com.example.beautyconnectapi.model.dto.turno.TurnoDTO;
 import com.example.beautyconnectapi.model.dto.turno.TurnoResponseDTO;
 import com.example.beautyconnectapi.model.enums.Estado;
+import com.example.beautyconnectapi.model.enums.EstadoTurno;
 import com.example.beautyconnectapi.service.TurnoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -54,8 +55,12 @@ public class TurnoController {
     @PutMapping("/{id}/estado")
     public ResponseEntity<TurnoResponseDTO> cambiarEstado(
             @PathVariable Long id,
-            @RequestParam Estado estado
+            @RequestParam EstadoTurno estado
     ) {
         return ResponseEntity.ok(turnoService.cambiarEstado(id, estado));
+    }
+    @GetMapping("/centro/{id}")
+    public ResponseEntity<List<TurnoResponseDTO>> porCentro(@PathVariable Long id){
+        return ResponseEntity.ok(turnoService.obtenerPorCentro(id));
     }
 }

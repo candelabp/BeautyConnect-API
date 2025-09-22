@@ -8,7 +8,7 @@ import com.example.beautyconnectapi.model.entity.Resenia;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = {ClienteMapper.class}) //, CentroDeEsteticaMapper.class
+@Mapper(componentModel = "spring", uses = {ClienteMapper.class, CentroDeEsteticaMapper.class}) //, CentroDeEsteticaMapper.class
 public interface ReseniaMapper {
     @Mapping(target = "id", ignore = true)
     Resenia toEntity(ReseniaDTO reseniaDTO);
