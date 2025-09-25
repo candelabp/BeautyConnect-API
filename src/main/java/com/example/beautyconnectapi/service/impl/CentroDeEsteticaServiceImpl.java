@@ -7,6 +7,7 @@ import com.example.beautyconnectapi.model.entity.CentroDeEstetica;
 import com.example.beautyconnectapi.model.enums.Estado;
 import com.example.beautyconnectapi.repository.CentroDeEsteticaRepository;
 import com.example.beautyconnectapi.repository.DomicilioRepository;
+import com.example.beautyconnectapi.repository.PrestadorDeServicioRepository;
 import com.example.beautyconnectapi.service.CentroDeEsteticaService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -19,10 +20,12 @@ import java.util.stream.Collectors;
 public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
     private final CentroDeEsteticaRepository centroDeEsteticaRepository;
     private final CentroDeEsteticaMapper centroDeEsteticaMapper;
+    private final PrestadorDeServicioRepository prestadorDeServicioRepository;
 
-    public CentroDeEsteticaServiceImpl(CentroDeEsteticaRepository centroDeEsteticaRepository, CentroDeEsteticaMapper centroDeEsteticaMapper) {
+    public CentroDeEsteticaServiceImpl(CentroDeEsteticaRepository centroDeEsteticaRepository, CentroDeEsteticaMapper centroDeEsteticaMapper, PrestadorDeServicioRepository prestadorDeServicioRepository) {
         this.centroDeEsteticaRepository = centroDeEsteticaRepository;
         this.centroDeEsteticaMapper = centroDeEsteticaMapper;
+        this.prestadorDeServicioRepository = prestadorDeServicioRepository;
     }
 
     @Override
@@ -30,6 +33,8 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
     public CentroDeEsteticaResponseDTO registrar(CentroDeEsteticaDTO centroDeEsteticadto) {
         CentroDeEstetica centroDeEstetica = centroDeEsteticaMapper.toEntity(centroDeEsteticadto);
         centroDeEstetica.setEstado(Estado.PENDIENTE);
+        centroDeEstetica.setPrestadorDeServicio(prestadorDeServicioRepository.findById(centroDeEsteticadto.getPrestadorDeServicioId())
+                .orElseThrow(()  -> new RuntimeException("Prestador no encontrado"))) ;
         return centroDeEsteticaMapper.toResponseDTO(centroDeEsteticaRepository.save(centroDeEstetica));
     }
 
@@ -51,11 +56,22 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<CentroDeEsteticaResponseDTO> listarPorEstadoyActive(Estado estado, boolean active) {
+        return centroDeEsteticaRepository.findByEstadoAndActive(estado, active).stream()
+                .map(centroDeEsteticaMapper::toResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     @Transactional
     public CentroDeEsteticaResponseDTO cambiarEstado(Long id, Estado estado) {
         CentroDeEstetica centroDeEstetica = centroDeEsteticaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Centro no encontrado"));
         centroDeEstetica.setEstado(estado);
+        if (estado.equals(Estado.RECHAZADO)) {
+            centroDeEstetica.setActive(false);
+        }
         return centroDeEsteticaMapper.toResponseDTO(centroDeEstetica);
     }
 
@@ -102,7 +118,7 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
     @Override
     @Transactional(readOnly = true)
     public CentroDeEsteticaResponseDTO obtenerPorPrestador(Long idPrestador) {
-        CentroDeEstetica centroDeEstetica = centroDeEsteticaRepository.findByPrestadoresServicioId(idPrestador);
+        CentroDeEstetica centroDeEstetica = centroDeEsteticaRepository.findByPrestadorDeServicioId(idPrestador);
 
         return centroDeEsteticaMapper.toResponseDTO(centroDeEstetica);
 

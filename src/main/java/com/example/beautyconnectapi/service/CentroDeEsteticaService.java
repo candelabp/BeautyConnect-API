@@ -11,6 +11,7 @@ public interface CentroDeEsteticaService {
     CentroDeEsteticaResponseDTO registrar(CentroDeEsteticaDTO dto);
     List<CentroDeEsteticaResponseDTO> listar();
     List<CentroDeEsteticaResponseDTO> listarPorEstado(Estado estado);
+    List<CentroDeEsteticaResponseDTO> listarPorEstadoyActive(Estado estado, boolean active);
     CentroDeEsteticaResponseDTO cambiarEstado(Long id, Estado nuevoEstado);
     CentroDeEsteticaResponseDTO obtenerPorId(Long id);
     CentroDeEsteticaResponseDTO actualizar(Long id, CentroDeEsteticaDTO dto);

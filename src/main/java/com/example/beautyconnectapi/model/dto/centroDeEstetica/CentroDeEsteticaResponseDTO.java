@@ -3,6 +3,7 @@ package com.example.beautyconnectapi.model.dto.centroDeEstetica;
 import com.example.beautyconnectapi.model.dto.domicilio.DomicilioResponseDTO;
 import com.example.beautyconnectapi.model.dto.horarioCentro.HorarioCentroDTO;
 import com.example.beautyconnectapi.model.dto.horarioCentro.HorarioCentroResponseDTO;
+import com.example.beautyconnectapi.model.dto.prestadorDeServicio.PrestadorDeServicioResponseDTO;
 import com.example.beautyconnectapi.model.dto.profesional.ProfesionalResponseDTO;
 import com.example.beautyconnectapi.model.dto.profesional.ProfesionalResponseDTOSimple;
 import com.example.beautyconnectapi.model.dto.resenia.ReseniaResponseDTO;
@@ -33,6 +34,10 @@ public class CentroDeEsteticaResponseDTO {
     private Long cuit;
 
     private Estado estado;
+
+    private Boolean active;
+
+    private PrestadorDeServicioResponseDTO prestadorDeServicio;
 
     private DomicilioResponseDTO domicilio;
 

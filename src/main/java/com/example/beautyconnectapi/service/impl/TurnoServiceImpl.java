@@ -15,6 +15,10 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -108,6 +112,22 @@ public class TurnoServiceImpl implements TurnoService {
         return turnoRepository.findByCentroDeEsteticaId(centroId).stream()
                 .map(turnoMapper::toResponseDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public Long contarTurnosPorDia(LocalDate fecha, Long centroId) {
+        int cantidad = turnoRepository.findAllByFecha(fecha, centroId).size();
+        return Long.valueOf(cantidad);
+    }
+
+    @Override
+    @Transactional
+    public Long contarTurnosPorSemana(LocalDate fecha, Long centroId) {
+        LocalDate inicioSemana = fecha.with(DayOfWeek.MONDAY);
+        LocalDate finSemana = fecha.with(DayOfWeek.SUNDAY);
+        int cantidad = turnoRepository.findAllByRango(inicioSemana, finSemana, centroId).size();
+        return Long.valueOf(cantidad);
     }
 
 

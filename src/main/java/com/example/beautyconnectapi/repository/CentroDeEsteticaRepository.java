@@ -16,12 +16,14 @@ public interface CentroDeEsteticaRepository extends JpaRepository<CentroDeEsteti
     @Query("""
         select c.id
         from CentroDeEstetica c
-        join c.prestadoresServicio p
+        join c.prestadorDeServicio p
         join p.usuario u
         where u.uid = :uid
     """)
     Long findIdByUsuarioUid(@Param("uid") String uid);
 
-    CentroDeEstetica findByPrestadoresServicioId(Long prestadorId);
+    CentroDeEstetica findByPrestadorDeServicioId(Long prestadorId);
+
+    List<CentroDeEstetica> findByEstadoAndActive(Estado estado, Boolean active);
 }
 

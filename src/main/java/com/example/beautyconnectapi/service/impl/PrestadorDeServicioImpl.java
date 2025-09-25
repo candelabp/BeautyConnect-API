@@ -30,6 +30,7 @@ public class PrestadorDeServicioImpl implements PrestadorDeServicioService {
     @Transactional
     public PrestadorDeServicioResponseDTO registrar(PrestadorDeServicioDTO dto) {
         PrestadorDeServicio entity = prestadorDeServicioMapper.toEntity(dto);
+        entity.setActive(true);
         return prestadorDeServicioMapper.toResponseDTO(prestadorDeServicioRepository.save(entity));
     }
 

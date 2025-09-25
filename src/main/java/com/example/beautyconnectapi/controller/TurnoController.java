@@ -2,13 +2,16 @@ package com.example.beautyconnectapi.controller;
 
 import com.example.beautyconnectapi.model.dto.turno.TurnoDTO;
 import com.example.beautyconnectapi.model.dto.turno.TurnoResponseDTO;
+import com.example.beautyconnectapi.model.entity.CentroDeEstetica;
 import com.example.beautyconnectapi.model.enums.Estado;
 import com.example.beautyconnectapi.model.enums.EstadoTurno;
 import com.example.beautyconnectapi.service.TurnoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -52,15 +55,25 @@ public class TurnoController {
 //        return ResponseEntity.ok(turnoService.listarPorPrestador(prestadorId));
 //    }
 
-    @PutMapping("/{id}/estado")
-    public ResponseEntity<TurnoResponseDTO> cambiarEstado(
-            @PathVariable Long id,
-            @RequestParam EstadoTurno estado
-    ) {
+    @PutMapping("/{id}/estado/{estado}")
+    public ResponseEntity<TurnoResponseDTO> cambiarEstado(@PathVariable Long id, @PathVariable EstadoTurno estado) {
         return ResponseEntity.ok(turnoService.cambiarEstado(id, estado));
     }
+
     @GetMapping("/centro/{id}")
     public ResponseEntity<List<TurnoResponseDTO>> porCentro(@PathVariable Long id){
         return ResponseEntity.ok(turnoService.obtenerPorCentro(id));
+    }
+
+    @GetMapping("/centro/{id}/fecha/{fecha}")
+    public ResponseEntity<Long> contarPorFecha(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha, @PathVariable Long id){
+        Long cantidad = turnoService.contarTurnosPorDia(fecha, id);
+        return ResponseEntity.ok(cantidad);
+    }
+
+    @GetMapping("/centro/{id}/semana/{fecha}")
+    public ResponseEntity<Long>  contarPorRango(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha, @PathVariable Long id){
+        Long cantidad = turnoService.contarTurnosPorSemana(fecha, id);
+        return ResponseEntity.ok(cantidad);
     }
 }

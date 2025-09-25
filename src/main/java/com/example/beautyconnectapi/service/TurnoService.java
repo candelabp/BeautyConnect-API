@@ -5,6 +5,8 @@ import com.example.beautyconnectapi.model.dto.turno.TurnoResponseDTO;
 import com.example.beautyconnectapi.model.enums.Estado;
 import com.example.beautyconnectapi.model.enums.EstadoTurno;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface TurnoService {
@@ -16,4 +18,6 @@ public interface TurnoService {
     TurnoResponseDTO obtenerPorId(Long id);
     TurnoResponseDTO actualizar(Long id, TurnoDTO dto);
     List<TurnoResponseDTO> obtenerPorCentro(Long idCentro);
+    Long contarTurnosPorDia(LocalDate fecha, Long centroId);
+    Long contarTurnosPorSemana(LocalDate fecha, Long centroId);
 }

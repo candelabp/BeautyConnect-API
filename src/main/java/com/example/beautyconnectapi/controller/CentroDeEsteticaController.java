@@ -55,6 +55,11 @@ public class CentroDeEsteticaController {
         return ResponseEntity.ok(centroDeEsteticaService.listarPorEstado(estado));
     }
 
+    @GetMapping("/listarEstado/estado/{estado}/activo/{active}")
+    public ResponseEntity<List<CentroDeEsteticaResponseDTO>> listarPorEstadoyActive(@PathVariable Estado estado, @PathVariable boolean active) {
+        return ResponseEntity.ok(centroDeEsteticaService.listarPorEstadoyActive(estado, active));
+    }
+    
     // PUT /api/centrodeestetica/cambiarEstado?id=1&estado=ACTIVO
     @PutMapping("/cambiarEstado/centro/{id}/estado/{estado}")
     public ResponseEntity<CentroDeEsteticaResponseDTO> cambiarEstado(@PathVariable Long id, @PathVariable Estado estado) {

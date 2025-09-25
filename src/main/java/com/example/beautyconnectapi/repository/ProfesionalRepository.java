@@ -14,7 +14,7 @@ public interface ProfesionalRepository extends JpaRepository<Profesional, Long> 
         SELECT pr
         FROM Profesional pr
         JOIN pr.centroDeEstetica c
-        JOIN c.prestadoresServicio p
+        JOIN c.prestadorDeServicio p
         JOIN p.usuario u
         WHERE u.uid = :uid
     """)

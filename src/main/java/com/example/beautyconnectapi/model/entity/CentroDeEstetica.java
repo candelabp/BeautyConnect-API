@@ -30,7 +30,7 @@ public class CentroDeEstetica extends Base {
     private Long cuit;
 
     @OneToOne
-    private PrestadorDeServicio prestadoresServicio;
+    private PrestadorDeServicio prestadorDeServicio;
 
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "domicilio_id")

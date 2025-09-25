@@ -14,9 +14,7 @@ import com.example.beautyconnectapi.service.PrestadorDeServicioService;
 import com.example.beautyconnectapi.service.UsuarioService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

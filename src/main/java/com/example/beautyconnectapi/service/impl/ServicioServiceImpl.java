@@ -97,7 +97,7 @@ public class ServicioServiceImpl implements ServicioService {
         // Si tu repo retorna List<Servicio>, podés usar .stream().toList()
         // Para ser 100% compatible si retorna Iterable, lo hacemos sin streams:
         Iterable<Servicio> servicios = servicioRepository
-                .findByCentroDeEstetica_PrestadoresServicio_Usuario_Uid(uid);
+                .findByCentroDeEstetica_PrestadorDeServicio_Usuario_Uid(uid);
 
         List<ServicioResponseDTO> result = new ArrayList<>();
         for (Servicio s : servicios) {
