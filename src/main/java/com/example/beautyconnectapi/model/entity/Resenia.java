@@ -3,6 +3,7 @@ package com.example.beautyconnectapi.model.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,4 +27,9 @@ public class Resenia extends Base {
 
     @ManyToOne
     private CentroDeEstetica centroDeEstetica;
+
+    @OneToOne
+    @JoinColumn(name = "turnoId")
+    private Turno turno;
+
 }

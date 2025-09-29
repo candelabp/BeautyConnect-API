@@ -16,4 +16,5 @@ public class DomicilioDTO {
     private String localidad;
 
     private Integer codigoPostal;
+    private String provincia;
 }

@@ -71,7 +71,7 @@ public class ClienteServiceImpl implements ClienteService {
     @Transactional(readOnly = true)
     public ClienteResponseDTO obtenerPorUid(String uid) {
         Cliente cliente = clienteRepo.findByUsuarioUid(uid)
-                .orElseThrow(() -> new RuntimeException("Cliente no encontrado para uid: " + uid));
+                .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado para uid: " + uid));
         return clienteMapper.toResponseDto(cliente);
     }
 

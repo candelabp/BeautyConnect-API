@@ -17,4 +17,6 @@ public class ReseniaDTO {
     private Long clienteId;
 
     private Long centroDeEsteticaId;
+
+    private Long turnoId;
 }
