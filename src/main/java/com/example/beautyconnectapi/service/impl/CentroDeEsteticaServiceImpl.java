@@ -33,6 +33,7 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
     public CentroDeEsteticaResponseDTO registrar(CentroDeEsteticaDTO centroDeEsteticadto) {
         CentroDeEstetica centroDeEstetica = centroDeEsteticaMapper.toEntity(centroDeEsteticadto);
         centroDeEstetica.setEstado(Estado.PENDIENTE);
+//        centroDeEstetica.setActive(false);
         centroDeEstetica.setPrestadorDeServicio(prestadorDeServicioRepository.findById(centroDeEsteticadto.getPrestadorDeServicioId())
                 .orElseThrow(()  -> new RuntimeException("Prestador no encontrado"))) ;
         return centroDeEsteticaMapper.toResponseDTO(centroDeEsteticaRepository.save(centroDeEstetica));
@@ -69,6 +70,9 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
         CentroDeEstetica centroDeEstetica = centroDeEsteticaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Centro no encontrado"));
         centroDeEstetica.setEstado(estado);
+//        if (estado.equals(Estado.ACEPTADO)) {
+//            centroDeEstetica.setActive(true);
+//        }
         if (estado.equals(Estado.RECHAZADO)) {
             centroDeEstetica.setActive(false);
         }
