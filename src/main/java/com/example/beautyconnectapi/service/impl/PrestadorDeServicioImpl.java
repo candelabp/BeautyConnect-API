@@ -1,11 +1,8 @@
 package com.example.beautyconnectapi.service.impl;
 
 import com.example.beautyconnectapi.config.mapper.PrestadorDeServicioMapper;
-import com.example.beautyconnectapi.model.dto.cliente.ClienteResponseDTO;
 import com.example.beautyconnectapi.model.dto.prestadorDeServicio.PrestadorDeServicioDTO;
 import com.example.beautyconnectapi.model.dto.prestadorDeServicio.PrestadorDeServicioResponseDTO;
-import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioResponseDTO;
-import com.example.beautyconnectapi.model.entity.Cliente;
 import com.example.beautyconnectapi.model.entity.PrestadorDeServicio;
 import com.example.beautyconnectapi.repository.PrestadorDeServicioRepository;
 import com.example.beautyconnectapi.service.PrestadorDeServicioService;
@@ -32,6 +29,14 @@ public class PrestadorDeServicioImpl implements PrestadorDeServicioService {
         PrestadorDeServicio entity = prestadorDeServicioMapper.toEntity(dto);
         entity.setActive(true);
         return prestadorDeServicioMapper.toResponseDTO(prestadorDeServicioRepository.save(entity));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<PrestadorDeServicioResponseDTO> getPrestadoresDeServicios() {
+        return prestadorDeServicioRepository.findAll().stream()
+                .map(prestadorDeServicioMapper::toResponseDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -80,5 +85,15 @@ public class PrestadorDeServicioImpl implements PrestadorDeServicioService {
        PrestadorDeServicio prestadorDeServicio = prestadorDeServicioRepository.findByUsuarioUid(uid)
               .orElseThrow(() -> new RuntimeException("Prestador no encontrado para uid: " + uid));
        return prestadorDeServicioMapper.toResponseDTO(prestadorDeServicio);
+    }
+
+    @Override
+    @Transactional
+    public PrestadorDeServicioResponseDTO cambiarEstadoActive(Long id){
+        PrestadorDeServicio prestador = prestadorDeServicioRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Prestador no encontrado"));
+        prestador.setActive(!prestador.getActive());
+        prestador.getUsuario().setActive(prestador.getActive());
+        return prestadorDeServicioMapper.toResponseDTO(prestadorDeServicioRepository.save(prestador));
     }
 }

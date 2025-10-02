@@ -2,9 +2,7 @@ package com.example.beautyconnectapi.controller;
 
 import com.example.beautyconnectapi.model.dto.prestadorDeServicio.PrestadorDeServicioDTO;
 import com.example.beautyconnectapi.model.dto.prestadorDeServicio.PrestadorDeServicioResponseDTO;
-import com.example.beautyconnectapi.model.entity.PrestadorDeServicio;
 import com.example.beautyconnectapi.service.PrestadorDeServicioService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +23,11 @@ public class PrestadorDeServicioController {
     }
 
     @GetMapping
+    public ResponseEntity<List<PrestadorDeServicioResponseDTO>> listar() {
+        return ResponseEntity.ok(prestadorDeServicioService.getPrestadoresDeServicios());
+    }
+
+    @GetMapping("/activos")
     public ResponseEntity<List<PrestadorDeServicioResponseDTO>> listarActivos() {
         return ResponseEntity.ok(prestadorDeServicioService.listarActivos());
     }
@@ -45,5 +48,10 @@ public class PrestadorDeServicioController {
     public ResponseEntity<PrestadorDeServicioResponseDTO> obtenerPorUid(@PathVariable String uid) {
         PrestadorDeServicioResponseDTO response = prestadorDeServicioService.obtenerPorUid(uid);
         return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/cambiarEstadoActivo/{id}")
+    public ResponseEntity<PrestadorDeServicioResponseDTO> cambiarEstadoActivo(@PathVariable Long id) {
+        return ResponseEntity.ok(prestadorDeServicioService.cambiarEstadoActive(id));
     }
 }

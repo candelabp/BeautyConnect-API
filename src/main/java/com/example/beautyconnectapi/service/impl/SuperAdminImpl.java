@@ -1,8 +1,10 @@
 package com.example.beautyconnectapi.service.impl;
 
 import com.example.beautyconnectapi.config.mapper.SuperAdminMapper;
+import com.example.beautyconnectapi.model.dto.prestadorDeServicio.PrestadorDeServicioResponseDTO;
 import com.example.beautyconnectapi.model.dto.superAdmin.SuperAdminDTO;
 import com.example.beautyconnectapi.model.dto.superAdmin.SuperAdminResponseDTO;
+import com.example.beautyconnectapi.model.entity.PrestadorDeServicio;
 import com.example.beautyconnectapi.model.entity.SuperAdmin;
 import com.example.beautyconnectapi.repository.SuperAdminRepository;
 import com.example.beautyconnectapi.service.SuperAdminService;
@@ -47,6 +49,14 @@ public class SuperAdminImpl implements SuperAdminService {
             superAdmin.setTelefono(superAdminDTO.getTelefono());
         }
         superAdminRepository.save(superAdmin);
+        return superAdminMapper.toResponseDTO(superAdmin);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public SuperAdminResponseDTO obtenerPorUid(String uid) {
+        SuperAdmin superAdmin = superAdminRepository.findByUsuarioUid(uid)
+                .orElseThrow(() -> new RuntimeException("Admin no encontrado para uid: " + uid));
         return superAdminMapper.toResponseDTO(superAdmin);
     }
 }

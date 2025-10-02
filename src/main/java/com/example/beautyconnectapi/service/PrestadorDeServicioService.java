@@ -9,9 +9,11 @@ import java.util.List;
 
 public interface PrestadorDeServicioService {
     PrestadorDeServicioResponseDTO registrar(PrestadorDeServicioDTO dto);
+    List<PrestadorDeServicioResponseDTO> getPrestadoresDeServicios();
     List<PrestadorDeServicioResponseDTO> listarActivos();
     PrestadorDeServicioResponseDTO buscarPorId(Long id);
     PrestadorDeServicioResponseDTO actualizar(Long id, PrestadorDeServicioDTO dto);
     PrestadorDeServicioResponseDTO findByUsuarioId(Long id);
     PrestadorDeServicioResponseDTO obtenerPorUid(String uid);
+    PrestadorDeServicioResponseDTO cambiarEstadoActive(Long id);
 }

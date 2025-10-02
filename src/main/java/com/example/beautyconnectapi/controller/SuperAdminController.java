@@ -3,6 +3,7 @@ package com.example.beautyconnectapi.controller;
 import com.example.beautyconnectapi.model.dto.superAdmin.SuperAdminDTO;
 import com.example.beautyconnectapi.model.dto.superAdmin.SuperAdminResponseDTO;
 import com.example.beautyconnectapi.service.SuperAdminService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -28,4 +29,10 @@ public class SuperAdminController {
     public SuperAdminResponseDTO updateSuperAdmin(@PathVariable Long superAdminId, SuperAdminDTO superAdminDTO){
         return superAdminService.updateSuperAdmin(superAdminId, superAdminDTO);
     }
+
+    @GetMapping("/by-uid/{uid}")
+    public ResponseEntity<SuperAdminResponseDTO> getByUid(@PathVariable String uid) {
+        return ResponseEntity.ok(superAdminService.obtenerPorUid(uid));
+    }
+
 }
