@@ -92,6 +92,9 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
         if((!entity.getImagen().equals(dto.getImagen()) && (dto.getImagen().isBlank()))){
             entity.setImagen(dto.getImagen());
         }
+        if((!entity.getDocValido().equals(dto.getDocValido()) && (!dto.getDocValido().isBlank()))){
+            entity.setDocValido(dto.getDocValido());
+        }
 
         return centroDeEsteticaMapper.toResponseDTO(entity);
     }
