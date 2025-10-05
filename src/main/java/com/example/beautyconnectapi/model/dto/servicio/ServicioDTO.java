@@ -14,10 +14,13 @@ import lombok.*;
 public class ServicioDTO {
     @NotNull(message = "El campo tipoDeServicio no puede ser null")
     private TipoDeServicio tipoDeServicio;
+    private Boolean active;
 
     @NotNull(message = "El campo precio no puede ser null")
     @Positive(message = "El campo precio debe ser positivo")
     private Double precio;
+    private String descripcion;
+    private String titulo;
 
     @NotNull(message = "El campo centroDeEstetica no puede ser null")
     @Positive(message = "El campo centroDeEstetica debe ser positivo")

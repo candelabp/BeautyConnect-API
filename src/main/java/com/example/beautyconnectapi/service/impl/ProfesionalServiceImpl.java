@@ -52,19 +52,26 @@ public class ProfesionalServiceImpl implements ProfesionalService {
 
         if(!profesional.getNombre().equals(profesionalDto.getNombre())){
             profesional.setNombre(profesionalDto.getNombre());
+
+        }
+        if(!profesional.getApellido().equals(profesionalDto.getApellido())){
+            profesional.setApellido(profesionalDto.getApellido());
+        }
+        if(!profesional.getContacto().equals(profesionalDto.getContacto())){
+            profesional.setContacto(profesionalDto.getContacto());
         }
 
         profesionalRepository.save(profesional);
         return profesionalMapper.toResponseDTO(profesional);
     }
 
+
     @Override
     @Transactional
     public ProfesionalResponseDTO deleteProfesional(Long profesionalId){
         Profesional profesional = profesionalRepository.findById(profesionalId)
                 .orElseThrow(() -> new RuntimeException("Profesional no encontrado"));
-
-        profesional.setActive(false);
+        profesional.setActive(!profesional.getActive());
         profesionalRepository.save(profesional);
         return profesionalMapper.toResponseDTO(profesional);
     }

@@ -10,7 +10,8 @@ import lombok.*;
 @Builder
 public class ServicioResponseDTOSimple {
     private Long id;
-
+    private String descripcion;
+    private String titulo;
     private TipoDeServicio tipoDeServicio;
 
     private Double precio;

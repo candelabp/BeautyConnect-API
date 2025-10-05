@@ -66,7 +66,12 @@ public class ServicioServiceImpl implements ServicioService {
         if (!servicio.getTipoDeServicio().equals(servicioDto.getTipoDeServicio())){
             servicio.setTipoDeServicio(servicioDto.getTipoDeServicio());
         }
-
+        if(!servicio.getDescripcion().equals(servicioDto.getDescripcion())){
+            servicio.setDescripcion(servicioDto.getDescripcion());
+        }
+        if(!servicio.getTitulo().equals(servicioDto.getTitulo())){
+            servicio.setTitulo(servicioDto.getTitulo());
+        }
         servicioRepository.save(servicio);
         return servicioMapper.toResponseDTO(servicio);
     }
@@ -76,8 +81,7 @@ public class ServicioServiceImpl implements ServicioService {
     public ServicioResponseDTO deleteServicio(Long servicioId){
         Servicio servicio = servicioRepository.findById(servicioId)
                 .orElseThrow(() -> new RuntimeException("Servicio no encontrado"));
-
-        servicio.setActive(false);
+        servicio.setActive(!servicio.getActive());
         servicioRepository.save(servicio);
         return servicioMapper.toResponseDTO(servicio);
     }
