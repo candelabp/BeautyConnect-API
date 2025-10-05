@@ -14,10 +14,13 @@ import java.util.List;
 @Builder
 public class ProfesionalDTO {
     private Long id;
+    private Boolean active;
 
     private String nombre;
 
     private String apellido;
+    private Long contacto;
+
 
     private Long centroDeEsteticaId;
 }

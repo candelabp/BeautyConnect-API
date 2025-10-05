@@ -18,8 +18,10 @@ import lombok.experimental.SuperBuilder;
 public class Servicio extends Base {
     @Enumerated(EnumType.STRING)
     private TipoDeServicio tipoDeServicio;
+    private String titulo;
 
     private Double precio;
+    private String descripcion;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "centro_id", nullable = false)

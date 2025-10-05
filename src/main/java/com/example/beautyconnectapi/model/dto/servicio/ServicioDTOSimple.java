@@ -10,6 +10,8 @@ import lombok.*;
 @Builder
 public class ServicioDTOSimple {
     private TipoDeServicio tipoDeServicio;
+    private String descripcion;
+    private String titulo;
 
     private Double precio;
 }

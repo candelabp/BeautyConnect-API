@@ -87,13 +87,13 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
         if ((!entity.getNombre().equals(dto.getNombre()) && (!dto.getNombre().isBlank()))) {
             entity.setNombre(dto.getNombre());
         }
-        if((!entity.getCuit().equals(dto.getCuit()) && (!dto.getNombre().isBlank()))){
+        if(!entity.getCuit().equals(dto.getCuit() )){
             entity.setCuit(dto.getCuit());
         }
         if((!entity.getDescripcion().equals(dto.getDescripcion()) && (!dto.getDescripcion().isBlank()))){
             entity.setDescripcion(dto.getDescripcion());
         }
-        if((!entity.getImagen().equals(dto.getImagen()) && (dto.getImagen().isBlank()))){
+        if((!entity.getImagen().equals(dto.getImagen()) && (!dto.getImagen().isBlank()))){
             entity.setImagen(dto.getImagen());
         }
         if((!entity.getDocValido().equals(dto.getDocValido()) && (!dto.getDocValido().isBlank()))){

@@ -19,6 +19,7 @@ public class Profesional extends Base{
     private String nombre;
 
     private String apellido;
+    private Long contacto;
 
     @ManyToOne
     private CentroDeEstetica centroDeEstetica;

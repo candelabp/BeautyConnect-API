@@ -3,6 +3,7 @@ package com.example.beautyconnectapi.service.impl;
 import com.example.beautyconnectapi.model.dto.HorarioDisponible.HorariosDisponiblesResponse;
 import com.example.beautyconnectapi.model.entity.JornadaLaboral;
 import com.example.beautyconnectapi.model.entity.Turno;
+import com.example.beautyconnectapi.model.enums.EstadoTurno; // ✅ IMPORTANTE
 import com.example.beautyconnectapi.repository.JornadaLaboralRepository;
 import com.example.beautyconnectapi.repository.ProfesionalServicioRepository;
 import com.example.beautyconnectapi.repository.TurnoRepository;
@@ -23,7 +24,6 @@ public class DisponibilidadOnDemandServiceImpl implements DisponibilidadOnDemand
     private final TurnoRepository turnoRepo;
     private final ProfesionalServicioRepository profServRepo;
 
-    // Activa/desactiva logs fácilmente
     private static final boolean DEBUG = true;
 
     @Override
@@ -47,8 +47,11 @@ public class DisponibilidadOnDemandServiceImpl implements DisponibilidadOnDemand
                     .fecha(fecha).duracionMin(duracion).inicios(List.of()).build();
         }
 
-        // 3) turnos ya reservados del día (cualquier servicio)
-        var ocupados = turnoRepo.findAllByProfesionalServicio_Profesional_IdAndFecha(profId, fecha);
+        // 3) turnos ya reservados del día (cualquier servicio) -> FILTRAR ESTADOS
+        var ocupados = turnoRepo.findAllByProfesionalServicio_Profesional_IdAndFecha(profId, fecha)
+                .stream()
+                .filter(t -> t.getEstado() != EstadoTurno.CANCELADO && t.getEstado() != EstadoTurno.FINALIZADO) // ✅ cambio clave
+                .toList();
 
         // DEBUG: estado de entrada
         if (DEBUG) {
@@ -62,23 +65,20 @@ public class DisponibilidadOnDemandServiceImpl implements DisponibilidadOnDemand
                 System.out.println("    - " + f.getDia() + " " + f.getHoraInicio() + " -> " + f.getHoraFin() + " activo=" + f.getActivo());
             }
 
-            System.out.println("  turnos=" + ocupados.size());
+            System.out.println("  turnos (activos)=" + ocupados.size());
             for (var t : ocupados) {
                 var psTurno = t.getProfesionalServicio();
                 int d = (psTurno != null && psTurno.getDuracion() != null) ? psTurno.getDuracion() : 0;
                 int start = toMin(t.getHora());
                 int end = start + d;
-                System.out.println("    - turno: " + t.getHora() + " -> " + toHHmm(end) + " (dur=" + d + "m)");
+                System.out.println("    - turno: " + t.getHora() + " -> " + toHHmm(end) + " (dur=" + d + "m, estado=" + t.getEstado() + ")");
             }
         }
 
         // 4) restar ocupados a la jornada → bloques libres
         List<Rango> jornada = franjasToRangos(franjas);
         List<Rango> busy = turnosToRangos(ocupados);
-
-        // BYPASS DE PRUEBA (para descartar problemas en subtract):
-        // List<Rango> libres = new ArrayList<>(jornada); // <- descomenta esto SOLO para probar
-        List<Rango> libres = subtract(jornada, busy);     // <- lógica real
+        List<Rango> libres = subtract(jornada, busy); // lógica real
 
         if (DEBUG) {
             System.out.println("  jornada(min)=" + jornadaToStr(jornada));
@@ -121,16 +121,13 @@ public class DisponibilidadOnDemandServiceImpl implements DisponibilidadOnDemand
     private static List<Rango> turnosToRangos(List<Turno> turnos) {
         List<Rango> res = new ArrayList<>();
         for (Turno t : turnos) {
-            // Caso típico: Turno tiene LocalDate fecha y LocalTime hora (inicio)
-            // y la duración está en el ProfesionalServicio asociado al turno.
             var ps = t.getProfesionalServicio();
-            if (ps == null || ps.getDuracion() == null) continue; // o lanzar error si corresponde
+            if (ps == null || ps.getDuracion() == null) continue;
 
-            int start = toMin(t.getHora());    // ajusta el getter si tu campo se llama distinto
+            int start = toMin(t.getHora());
             int end   = start + ps.getDuracion();
             res.add(new Rango(start, end));
         }
-        // ordenar por inicio
         res.sort(Comparator.comparingInt(r -> r.start));
         return res;
     }
@@ -141,22 +138,18 @@ public class DisponibilidadOnDemandServiceImpl implements DisponibilidadOnDemand
         for (Rango o : rest) {
             List<Rango> next = new ArrayList<>();
             for (Rango b : result) {
-                // sin superposición
-                if (o.end <= b.start || o.start >= b.end) {
+                if (o.end <= b.start || o.start >= b.end) { // sin superposición
                     next.add(b);
                     continue;
                 }
-                // recortes
-                if (o.start > b.start) next.add(new Rango(b.start, Math.min(o.start, b.end)));
-                if (o.end   < b.end)   next.add(new Rango(Math.max(o.end, b.start), b.end));
+                if (o.start > b.start) next.add(new Rango(b.start, Math.min(o.start, b.end))); // recorte izq
+                if (o.end   < b.end)   next.add(new Rango(Math.max(o.end, b.start), b.end));   // recorte der
             }
             result = next;
         }
-        // limpiar vacíos
         return result.stream().filter(r -> r.end > r.start).toList();
     }
 
-    // Utilidad para logs legibles
     private static String jornadaToStr(List<Rango> xs) {
         if (xs == null || xs.isEmpty()) return "[]";
         StringBuilder sb = new StringBuilder("[");

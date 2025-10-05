@@ -9,8 +9,11 @@ import lombok.*;
 @Builder
 public class ProfesionalResponseDTOSimple {
     private Long id;
+    private Boolean active;
 
     private String nombre;
+    private Long contacto;
+
 
     private String apellido;
 }

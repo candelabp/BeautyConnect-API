@@ -11,8 +11,11 @@ import lombok.*;
 @Builder
 public class ServicioDTO {
     private TipoDeServicio tipoDeServicio;
+    private Boolean active;
 
     private Double precio;
+    private String descripcion;
+    private String titulo;
 
     private Long centroDeEsteticaId;
 }

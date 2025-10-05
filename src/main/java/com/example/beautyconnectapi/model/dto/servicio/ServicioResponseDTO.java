@@ -11,9 +11,10 @@ import lombok.*;
 @Builder
 public class ServicioResponseDTO {
     private Long id;
-
+    private Boolean active;
     private TipoDeServicio tipoDeServicio;
-
+    private String descripcion;
+    private String titulo;
     private Double precio;
 
     private CentroDeEsteticaResponseDTO centroDeEstetica;

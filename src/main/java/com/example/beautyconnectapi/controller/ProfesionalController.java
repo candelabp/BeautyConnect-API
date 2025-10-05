@@ -32,7 +32,7 @@ public class ProfesionalController {
         return profesionalService.updateProfesional(profesionalId, profesionalDto);
     }
 
-    @PostMapping("/delete/{profesionalId}")
+    @DeleteMapping("/delete/{profesionalId}")
     public ProfesionalResponseDTO deleteProfesional(@PathVariable Long profesionalId){
         return profesionalService.deleteProfesional(profesionalId);
     }
