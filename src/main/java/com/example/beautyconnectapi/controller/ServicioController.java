@@ -7,6 +7,7 @@ import com.example.beautyconnectapi.model.dto.servicio.ServicioResponseDTO;
 import com.example.beautyconnectapi.model.entity.ProfesionalServicio;
 import com.example.beautyconnectapi.service.ProfesionalServicioService;
 import com.example.beautyconnectapi.service.ServicioService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -58,7 +59,7 @@ public class ServicioController {
         return ResponseEntity.ok(data);
     }
     @PostMapping
-    public ResponseEntity<ServicioResponseDTO> crear(@RequestBody ServicioDTO dto) {
+    public ResponseEntity<ServicioResponseDTO> crear(@Valid @RequestBody ServicioDTO dto) {
         return ResponseEntity.ok(servicioService.crear(dto));
     }
 

@@ -12,9 +12,14 @@ import lombok.Setter;
 @Setter
 public class Auth {
     private String idToken;
+
     private String mail;
+
     private Rol rol;
+
     private String uid;
+
     private ClienteDTO clienteDTO;
+
     private PrestadorDeServicioDTO prestadorDTO;
 }

@@ -3,6 +3,7 @@ package com.example.beautyconnectapi.controller;
 import com.example.beautyconnectapi.model.dto.profesional.ProfesionalDTO;
 import com.example.beautyconnectapi.model.dto.profesional.ProfesionalResponseDTO;
 import com.example.beautyconnectapi.service.ProfesionalService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,7 @@ public class ProfesionalController {
     }
 
     @PostMapping("/update/{profesionalId}")
-    public ProfesionalResponseDTO updateProfesional(@PathVariable Long profesionalId, @RequestBody ProfesionalDTO profesionalDto){
+    public ProfesionalResponseDTO updateProfesional(@PathVariable Long profesionalId, @Valid @RequestBody ProfesionalDTO profesionalDto){
         return profesionalService.updateProfesional(profesionalId, profesionalDto);
     }
 
@@ -48,7 +49,7 @@ public class ProfesionalController {
     }
 
     @PostMapping
-    public ResponseEntity<ProfesionalResponseDTO> crear(@RequestBody ProfesionalDTO dto) {
+    public ResponseEntity<ProfesionalResponseDTO> crear(@Valid @RequestBody ProfesionalDTO dto) {
         return ResponseEntity.ok(profesionalService.crear(dto));
     }
 

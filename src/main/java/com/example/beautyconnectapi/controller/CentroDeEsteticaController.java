@@ -5,6 +5,8 @@ import com.example.beautyconnectapi.model.dto.centroDeEstetica.CentroDeEsteticaR
 import com.example.beautyconnectapi.model.entity.CentroDeEstetica;
 import com.example.beautyconnectapi.model.enums.Estado;
 import com.example.beautyconnectapi.service.CentroDeEsteticaService;
+import jakarta.mail.MessagingException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +26,7 @@ public class CentroDeEsteticaController {
 
     // POST /api/centrodeestetica
     @PostMapping
-    public ResponseEntity<CentroDeEsteticaResponseDTO> registrar(@RequestBody CentroDeEsteticaDTO dto) {
+    public ResponseEntity<CentroDeEsteticaResponseDTO> registrar(@Valid @RequestBody CentroDeEsteticaDTO dto) {
         return ResponseEntity.ok(centroDeEsteticaService.registrar(dto));
     }
 
@@ -42,7 +44,7 @@ public class CentroDeEsteticaController {
 
     // PUT /api/centrodeestetica/update/{id}
     @PatchMapping("/update/{id}")
-    public ResponseEntity<CentroDeEsteticaResponseDTO> actualizar(@PathVariable Long id, @RequestBody CentroDeEsteticaDTO dto) {
+    public ResponseEntity<CentroDeEsteticaResponseDTO> actualizar(@PathVariable Long id, @Valid @RequestBody CentroDeEsteticaDTO dto) {
         return ResponseEntity.ok(centroDeEsteticaService.actualizar(id, dto));
     }
 
@@ -62,7 +64,7 @@ public class CentroDeEsteticaController {
     
     // PUT /api/centrodeestetica/cambiarEstado?id=1&estado=ACTIVO
     @PutMapping("/cambiarEstado/centro/{id}/estado/{estado}")
-    public ResponseEntity<CentroDeEsteticaResponseDTO> cambiarEstado(@PathVariable Long id, @PathVariable Estado estado) {
+    public ResponseEntity<CentroDeEsteticaResponseDTO> cambiarEstado(@PathVariable Long id, @PathVariable Estado estado) throws MessagingException {
         return ResponseEntity.ok(centroDeEsteticaService.cambiarEstado(id, estado));
     }
 

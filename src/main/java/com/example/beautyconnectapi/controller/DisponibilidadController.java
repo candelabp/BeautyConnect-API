@@ -5,6 +5,7 @@ import com.example.beautyconnectapi.model.dto.disponibilidad.DisponibilidadRespo
 import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioResponseDTO;
 import com.example.beautyconnectapi.service.DisponibilidadService;
 import com.example.beautyconnectapi.service.ProfesionalServicioService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,15 +14,13 @@ import java.util.List;
 @RequestMapping("/api/disponibilidad")
 public class DisponibilidadController {
     private final DisponibilidadService disponibilidadService;
-    private final ProfesionalServicioService profesionalServicioService;
 
-    public DisponibilidadController(DisponibilidadService disponibilidadService, ProfesionalServicioService profesionalServicioService) {
+    public DisponibilidadController(DisponibilidadService disponibilidadService) {
         this.disponibilidadService = disponibilidadService;
-        this.profesionalServicioService = profesionalServicioService;
     }
 
     @PostMapping("/save")
-    public DisponibilidadResponseDTO saveDisponibilidad(@RequestBody DisponibilidadDTO disponibilidadDto){
+    public DisponibilidadResponseDTO saveDisponibilidad(@Valid @RequestBody DisponibilidadDTO disponibilidadDto){
         return disponibilidadService.saveDisponibilidad(disponibilidadDto);
     }
 
@@ -31,7 +30,7 @@ public class DisponibilidadController {
     }
 
     @PostMapping("/update/{id}")
-    public DisponibilidadResponseDTO updateDisponibilidad(@PathVariable Long id, @RequestBody DisponibilidadDTO disponibilidadDto){
+    public DisponibilidadResponseDTO updateDisponibilidad(@PathVariable Long id, @Valid @RequestBody DisponibilidadDTO disponibilidadDto){
         return disponibilidadService.updateDisponibilidad(id, disponibilidadDto);
     }
 

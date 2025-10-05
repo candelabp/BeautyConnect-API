@@ -1,12 +1,8 @@
 package com.example.beautyconnectapi.controller;
 
-import com.example.beautyconnectapi.model.dto.HorarioDisponible.HorariosDisponiblesResponse;
-import com.example.beautyconnectapi.model.dto.domicilio.DomicilioDTO;
-import com.example.beautyconnectapi.model.dto.domicilio.DomicilioResponseDTO;
+import com.example.beautyconnectapi.model.dto.horarioDisponible.HorariosDisponiblesResponse;
 import com.example.beautyconnectapi.service.impl.DisponibilidadOnDemandServiceImpl;
-import jakarta.annotation.security.PermitAll;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

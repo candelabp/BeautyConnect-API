@@ -1,7 +1,7 @@
 package com.example.beautyconnectapi.service;
 
 
-import com.example.beautyconnectapi.model.dto.HorarioDisponible.HorariosDisponiblesResponse;
+import com.example.beautyconnectapi.model.dto.horarioDisponible.HorariosDisponiblesResponse;
 
 import java.time.LocalDate;
 

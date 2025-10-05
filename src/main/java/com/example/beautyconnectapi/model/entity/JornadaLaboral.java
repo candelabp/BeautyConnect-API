@@ -1,6 +1,7 @@
 package com.example.beautyconnectapi.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,8 +18,7 @@ import java.time.LocalTime;
 @SuperBuilder
 @Entity
 public class JornadaLaboral  extends Base{
-
-@ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Profesional profesional;
 
     @Enumerated(EnumType.STRING)

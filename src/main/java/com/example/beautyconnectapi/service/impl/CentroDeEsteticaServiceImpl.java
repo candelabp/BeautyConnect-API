@@ -6,14 +6,16 @@ import com.example.beautyconnectapi.model.dto.centroDeEstetica.CentroDeEsteticaR
 import com.example.beautyconnectapi.model.entity.CentroDeEstetica;
 import com.example.beautyconnectapi.model.enums.Estado;
 import com.example.beautyconnectapi.repository.CentroDeEsteticaRepository;
-import com.example.beautyconnectapi.repository.DomicilioRepository;
 import com.example.beautyconnectapi.repository.PrestadorDeServicioRepository;
 import com.example.beautyconnectapi.service.CentroDeEsteticaService;
+import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,11 +23,13 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
     private final CentroDeEsteticaRepository centroDeEsteticaRepository;
     private final CentroDeEsteticaMapper centroDeEsteticaMapper;
     private final PrestadorDeServicioRepository prestadorDeServicioRepository;
+    private final EmailServiceImpl emailService;
 
-    public CentroDeEsteticaServiceImpl(CentroDeEsteticaRepository centroDeEsteticaRepository, CentroDeEsteticaMapper centroDeEsteticaMapper, PrestadorDeServicioRepository prestadorDeServicioRepository) {
+    public CentroDeEsteticaServiceImpl(CentroDeEsteticaRepository centroDeEsteticaRepository, CentroDeEsteticaMapper centroDeEsteticaMapper, PrestadorDeServicioRepository prestadorDeServicioRepository, EmailServiceImpl emailService) {
         this.centroDeEsteticaRepository = centroDeEsteticaRepository;
         this.centroDeEsteticaMapper = centroDeEsteticaMapper;
         this.prestadorDeServicioRepository = prestadorDeServicioRepository;
+        this.emailService = emailService;
     }
 
     @Override
@@ -33,7 +37,7 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
     public CentroDeEsteticaResponseDTO registrar(CentroDeEsteticaDTO centroDeEsteticadto) {
         CentroDeEstetica centroDeEstetica = centroDeEsteticaMapper.toEntity(centroDeEsteticadto);
         centroDeEstetica.setEstado(Estado.PENDIENTE);
-//        centroDeEstetica.setActive(false);
+        centroDeEstetica.setActive(false);
         centroDeEstetica.setPrestadorDeServicio(prestadorDeServicioRepository.findById(centroDeEsteticadto.getPrestadorDeServicioId())
                 .orElseThrow(()  -> new RuntimeException("Prestador no encontrado"))) ;
         return centroDeEsteticaMapper.toResponseDTO(centroDeEsteticaRepository.save(centroDeEstetica));
@@ -66,15 +70,35 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
 
     @Override
     @Transactional
-    public CentroDeEsteticaResponseDTO cambiarEstado(Long id, Estado estado) {
+    public CentroDeEsteticaResponseDTO cambiarEstado(Long id, Estado estado) throws MessagingException {
         CentroDeEstetica centroDeEstetica = centroDeEsteticaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Centro no encontrado"));
         centroDeEstetica.setEstado(estado);
-//        if (estado.equals(Estado.ACEPTADO)) {
-//            centroDeEstetica.setActive(true);
-//        }
+        if (estado.equals(Estado.ACEPTADO)) {
+            Map<String, Object> variables = new HashMap<>();
+            variables.put("nombrePrestador", centroDeEstetica.getPrestadorDeServicio().getNombre());
+            variables.put("nombreCentro", centroDeEstetica.getNombre());
+
+            // Usar la ruta correcta: "email/centro-aprobado"
+            emailService.enviarMailConTemplate(
+                    centroDeEstetica.getPrestadorDeServicio().getUsuario().getMail(),
+                    "¡Tu centro ha sido aprobado! - BeautyConnect",
+                    "email/centroAprobado",  // ← Ruta correcta
+                    variables
+            );
+        }
         if (estado.equals(Estado.RECHAZADO)) {
             centroDeEstetica.setActive(false);
+            Map<String, Object> variables = new HashMap<>();
+            variables.put("nombrePrestador", centroDeEstetica.getPrestadorDeServicio().getNombre());
+            variables.put("nombreCentro", centroDeEstetica.getNombre());
+
+            emailService.enviarMailConTemplate(
+                    "beautyconnect16@gmail.com",
+                    "Centro rechazado en BeautyConnect",
+                    "email/centroRechazado",
+                    variables
+            );
         }
         return centroDeEsteticaMapper.toResponseDTO(centroDeEstetica);
     }
@@ -141,4 +165,6 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
         centroDeEstetica.setActive(!centroDeEstetica.getActive());
         return centroDeEsteticaMapper.toResponseDTO(centroDeEstetica);
     }
+
+
 }

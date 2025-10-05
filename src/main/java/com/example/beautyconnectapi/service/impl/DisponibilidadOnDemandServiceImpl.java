@@ -1,6 +1,6 @@
 package com.example.beautyconnectapi.service.impl;
 
-import com.example.beautyconnectapi.model.dto.HorarioDisponible.HorariosDisponiblesResponse;
+import com.example.beautyconnectapi.model.dto.horarioDisponible.HorariosDisponiblesResponse;
 import com.example.beautyconnectapi.model.entity.JornadaLaboral;
 import com.example.beautyconnectapi.model.entity.Turno;
 import com.example.beautyconnectapi.repository.JornadaLaboralRepository;

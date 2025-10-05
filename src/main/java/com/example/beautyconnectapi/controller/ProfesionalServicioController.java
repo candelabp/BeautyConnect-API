@@ -5,6 +5,7 @@ import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalSer
 import com.example.beautyconnectapi.model.entity.ProfesionalServicio;
 import com.example.beautyconnectapi.service.ProfesionalServicioService;
 import com.example.beautyconnectapi.service.impl.ProfesionalServicioServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public class ProfesionalServicioController {
     }
 
     @PostMapping
-    public ProfesionalServicioResponseDTO createProfesionalServicio(@RequestBody ProfesionalServicioDTO profesionalServicioDTO) {
+    public ProfesionalServicioResponseDTO createProfesionalServicio(@Valid @RequestBody ProfesionalServicioDTO profesionalServicioDTO) {
         return profesionalServicioService.saveProfServicio(profesionalServicioDTO);
     }
 

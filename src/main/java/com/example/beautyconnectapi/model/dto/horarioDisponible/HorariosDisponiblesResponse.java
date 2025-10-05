@@ -1,4 +1,4 @@
-package com.example.beautyconnectapi.model.dto.HorarioDisponible;
+package com.example.beautyconnectapi.model.dto.horarioDisponible;
 
 import lombok.*;
 

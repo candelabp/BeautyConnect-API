@@ -5,6 +5,7 @@ import com.example.beautyconnectapi.model.dto.jornadaLaboral.JornadaLaboralCreat
 import com.example.beautyconnectapi.model.dto.jornadaLaboral.JornadaLaboralResponseDTO;
 import com.example.beautyconnectapi.model.dto.jornadaLaboral.JornadaLaboralUpdateDTO;
 import com.example.beautyconnectapi.service.JornadaLaboralService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +20,12 @@ public class JornadaLaboralController {
     private final JornadaLaboralService service;
 
     @PostMapping
-    public ResponseEntity<JornadaLaboralResponseDTO> create(@RequestBody JornadaLaboralCreateDTO dto) {
+    public ResponseEntity<JornadaLaboralResponseDTO> create(@Valid @RequestBody JornadaLaboralCreateDTO dto) {
         return ResponseEntity.ok(service.create(dto));
     }
 
     @PostMapping("/bulk")
-    public ResponseEntity<List<JornadaLaboralResponseDTO>> bulk(@RequestBody List<JornadaLaboralCreateDTO> dtos) {
+    public ResponseEntity<List<JornadaLaboralResponseDTO>> bulk(@Valid @RequestBody List<JornadaLaboralCreateDTO> dtos) {
         return ResponseEntity.ok(service.bulkCreate(dtos));
     }
 
@@ -47,7 +48,7 @@ public class JornadaLaboralController {
     @PutMapping("/{id}")
     public ResponseEntity<JornadaLaboralResponseDTO> update(
             @PathVariable Long id,
-             @RequestBody JornadaLaboralUpdateDTO dto) {
+            @Valid @RequestBody JornadaLaboralUpdateDTO dto) {
         return ResponseEntity.ok(service.update(id, dto));
     }
 

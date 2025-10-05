@@ -3,6 +3,9 @@ package com.example.beautyconnectapi.model.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +22,7 @@ import java.util.List;
 @Setter
 @SuperBuilder
 @Entity
-public class ProfesionalServicio extends Base{
+public class ProfesionalServicio extends Base {
     private Integer duracion;
 
     @ManyToOne

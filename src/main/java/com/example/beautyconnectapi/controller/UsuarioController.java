@@ -14,6 +14,7 @@ import com.example.beautyconnectapi.service.PrestadorDeServicioService;
 import com.example.beautyconnectapi.service.UsuarioService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,7 @@ public class UsuarioController {
     private final FirebaseRoleService roleService;
 
     @PostMapping("/save")
-    public UsuarioResponseDTO saveUsuario(@RequestBody UsuarioDTO usuarioDto) {
+    public UsuarioResponseDTO saveUsuario(@Valid @RequestBody UsuarioDTO usuarioDto) {
         return usuarioService.saveUsuario(usuarioDto);
     }
 
@@ -68,16 +69,16 @@ public class UsuarioController {
             // 1) Verificar ID token
             FirebaseToken decoded = firebaseAuth.verifyIdToken(request.getIdToken());
             String uid = decoded.getUid();
-            String email = request.getMail() != null ? request.getMail() : decoded.getEmail();
+            String mail = request.getMail() != null ? request.getMail() : decoded.getEmail();
 
-            if (email == null) {
+            if (mail == null) {
                 return ResponseEntity.badRequest().body("Email no disponible en token ni en request");
             }
 
             // 2) Evitar duplicados
-            if (usuarioService.existsByMail(email) || usuarioService.existsByUid(uid)) {
+            if (usuarioService.existsByMail(mail) || usuarioService.existsByUid(uid)) {
                 // devolver entidad asociada al rol existente
-                UsuarioResponseDTO usuario = usuarioService.findByMail(email);
+                UsuarioResponseDTO usuario = usuarioService.findByMail(mail);
                 return ResponseEntity.ok(resolveEntidadPorRol(usuario));
             }
 
@@ -88,7 +89,7 @@ public class UsuarioController {
             roleService.asignarRol(uid, rol.name());
 
             // 5) Persistir usuario
-            UsuarioDTO usuarioDto = new UsuarioDTO(email, rol, uid);
+            UsuarioDTO usuarioDto = new UsuarioDTO(mail, rol, uid);
 
             // 6) Crear entidad según rol
             return ResponseEntity.ok(crearEntidadPorRol(rol, usuarioDto, request));
@@ -105,14 +106,14 @@ public class UsuarioController {
         try {
             FirebaseToken decoded = firebaseAuth.verifyIdToken(request.getIdToken());
             String uid = decoded.getUid();
-            String email = decoded.getEmail();
+            String mail = decoded.getEmail();
 
-            if (email == null) {
+            if (mail == null) {
                 return ResponseEntity.badRequest().body("Email de Google no disponible en el token");
             }
 
-            if (usuarioService.existsByMail(email) || usuarioService.existsByUid(uid)) {
-                UsuarioResponseDTO usuario = usuarioService.findByMail(email);
+            if (usuarioService.existsByMail(mail) || usuarioService.existsByUid(uid)) {
+                UsuarioResponseDTO usuario = usuarioService.findByMail(mail);
                 return ResponseEntity.ok(resolveEntidadPorRol(usuario));
             }
 
@@ -121,7 +122,7 @@ public class UsuarioController {
 
             roleService.asignarRol(uid, rol.name());
 
-            UsuarioDTO usuarioDto = new UsuarioDTO(email, rol, uid);
+            UsuarioDTO usuarioDto = new UsuarioDTO(mail, rol, uid);
 
             return ResponseEntity.ok(crearEntidadPorRol(rol, usuarioDto, request));
         } catch (Exception e) {
