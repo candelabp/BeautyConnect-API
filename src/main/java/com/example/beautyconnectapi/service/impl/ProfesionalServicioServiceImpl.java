@@ -2,7 +2,7 @@ package com.example.beautyconnectapi.service.impl;
 
 import com.example.beautyconnectapi.config.mapper.DisponibilidadMapper;
 import com.example.beautyconnectapi.config.mapper.ProfesionalServicioMapper;
-import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioDTO;
+import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioDTO;
 import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioResponseDTO;
 import com.example.beautyconnectapi.model.entity.ProfesionalServicio;
 import com.example.beautyconnectapi.repository.ProfesionalRepository;

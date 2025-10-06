@@ -62,7 +62,7 @@ public class DisponibilidadOnDemandServiceImpl implements DisponibilidadOnDemand
 
             System.out.println("  franjas=" + franjas.size());
             for (var f : franjas) {
-                System.out.println("    - " + f.getDia() + " " + f.getHoraInicio() + " -> " + f.getHoraFin() + " activo=" + f.getActivo());
+                System.out.println("    - " + f.getDia() + " " + f.getHoraInicio() + " -> " + f.getHoraFin() + " activo=" + f.getActive());
             }
 
             System.out.println("  turnos (activos)=" + ocupados.size());

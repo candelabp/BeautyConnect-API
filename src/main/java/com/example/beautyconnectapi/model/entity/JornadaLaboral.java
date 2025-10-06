@@ -31,7 +31,4 @@ public class JornadaLaboral  extends Base{
     @Column(nullable = false)
     private LocalTime horaFin;
 
-    @Column(nullable = false)
-    private Boolean activo = true;
-
 }

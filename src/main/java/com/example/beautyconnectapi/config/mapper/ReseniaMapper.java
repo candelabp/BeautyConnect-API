@@ -11,7 +11,6 @@ import org.mapstruct.Mapping;
 public interface ReseniaMapper {
     @Mapping(target = "id", ignore = true)
     Resenia toEntity(ReseniaDTO reseniaDTO);
-    Resenia toEntity(ReseniaDTOSimple reseniaDTO);
     ReseniaResponseDTO toResponseDTO(Resenia resenia);
     ReseniaResponseDTOSimple toResponseDTOSimple(Resenia resenia);
 }

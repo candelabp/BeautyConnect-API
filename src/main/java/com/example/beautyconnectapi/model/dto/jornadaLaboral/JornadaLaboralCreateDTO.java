@@ -23,5 +23,5 @@ public class JornadaLaboralCreateDTO {
     private  LocalTime horaFin;
 
     @NotNull(message = "El campo activo no puede ser null")
-    private Boolean activo;
+    private Boolean active;
 }
