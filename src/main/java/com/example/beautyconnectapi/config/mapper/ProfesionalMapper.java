@@ -12,7 +12,6 @@ public interface ProfesionalMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "centroDeEstetica", ignore = true)
     Profesional toEntity(ProfesionalDTO profesionalDTO);
-    Profesional toEntity(ProfesionalDTOSimple profesionalDTOSimple);
     ProfesionalResponseDTO toResponseDTO(Profesional profesional);
     ProfesionalResponseDTOSimple toResponseDTOSimple(Profesional profesional);
 }
