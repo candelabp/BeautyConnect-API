@@ -3,6 +3,7 @@ package com.example.beautyconnectapi.controller;
 import com.example.beautyconnectapi.model.dto.resenia.ReseniaDTO;
 import com.example.beautyconnectapi.model.dto.resenia.ReseniaResponseDTO;
 import com.example.beautyconnectapi.service.ReseniaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class ReseniaController {
 
     // POST /api/resenia
     @PostMapping
-    public ResponseEntity<ReseniaResponseDTO> crear(@RequestBody ReseniaDTO dto){
+    public ResponseEntity<ReseniaResponseDTO> crear(@Valid @RequestBody ReseniaDTO dto){
         return ResponseEntity.ok(reseniaService.crear(dto));
     }
 
@@ -39,11 +40,9 @@ public class ReseniaController {
 
     // PUT /api/resenia/update/{id}
     @PutMapping("/update/{id}")
-    public ResponseEntity<ReseniaResponseDTO> actualizar(@PathVariable Long id, @RequestBody ReseniaDTO dto) {
+    public ResponseEntity<ReseniaResponseDTO> actualizar(@PathVariable Long id, @Valid @RequestBody ReseniaDTO dto) {
         return ResponseEntity.ok(reseniaService.actualizar(id, dto));
     }
-
-
 
     // GET /api/resenia/centro/{centroId}
     @GetMapping("/centro/{centroId}")

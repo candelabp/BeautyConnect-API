@@ -1,11 +1,9 @@
 package com.example.beautyconnectapi.controller;
 
-import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioDTO;
-import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioResponseDTO;
-import com.example.beautyconnectapi.model.entity.ProfesionalServicio;
+import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioDTO;
+import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioResponseDTO;
 import com.example.beautyconnectapi.service.ProfesionalServicioService;
-import com.example.beautyconnectapi.service.impl.ProfesionalServicioServiceImpl;
-import org.springframework.http.ResponseEntity;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +19,7 @@ public class ProfesionalServicioController {
     }
 
     @PostMapping
-    public ProfesionalServicioResponseDTO createProfesionalServicio(@RequestBody ProfesionalServicioDTO profesionalServicioDTO) {
+    public ProfesionalServicioResponseDTO createProfesionalServicio(@Valid @RequestBody ProfesionalServicioDTO profesionalServicioDTO) {
         return profesionalServicioService.saveProfServicio(profesionalServicioDTO);
     }
 

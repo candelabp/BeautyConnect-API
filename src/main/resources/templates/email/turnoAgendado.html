@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Turno Agendado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fafafa;
+        }
+        .header {
+            background-color: #C19BA8;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+        }
+        .content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #666;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #a27e8f;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>BeautyConnect</h1>
+    <h2>¡Tu turno ya esta agendado!</h2>
+</div>
+
+<div class="content">
+    <p>Hola <strong th:text="${nombreCliente}">[Nombre del Cliente]</strong>,</p>
+
+    <p>Te confirmamos que tu turno con el centro
+        <strong th:text="${nombreCentro}">[Nombre del Centro]</strong> fue <strong>agendado correctamente</strong>.</p>
+
+    <p>📅 <strong>Detalles del turno:</strong></p>
+    <ul>
+        <li><strong>Servicio:</strong> <span th:text="${servicio}">[Servicio]</span></li>
+        <li><strong>Profesional:</strong> <span th:text="${profesional}">[Profesional]</span></li>
+        <li><strong>Fecha:</strong> <span th:text="${fecha}">[Fecha]</span></li>
+        <li><strong>Hora:</strong> <span th:text="${hora}">[Hora]</span></li>
+        <li><strong>Dirección:</strong> <span th:text="${direccionCentro}">[Dirección]</span></li>
+    </ul>
+
+    <p>Te esperamos para tu turno 💇‍♀️</p>
+
+    <a th:href="${linkCentro}" class="btn">Ver mi turno</a>
+</div>
+
+<div class="footer">
+    <p>Este es un mensaje automático, por favor no respondas a este correo.</p>
+    <p>&copy; 2025 BeautyConnect. Todos los derechos reservados.</p>
+</div>
+</body>
+</html>

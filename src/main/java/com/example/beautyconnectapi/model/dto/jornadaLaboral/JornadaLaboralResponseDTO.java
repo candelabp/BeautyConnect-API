@@ -13,5 +13,5 @@ public class JornadaLaboralResponseDTO {
     private  DayOfWeek dia;
     private  LocalTime horaInicio;
     private  LocalTime horaFin;
-    private Boolean activo;
+    private Boolean active;
 }

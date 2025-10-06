@@ -2,6 +2,10 @@ package com.example.beautyconnectapi.model.entity;
 
 import com.example.beautyconnectapi.model.enums.Estado;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,18 +40,11 @@ public class CentroDeEstetica extends Base {
     @JoinColumn(name = "domicilio_id")
     private Domicilio domicilio;
 
-    @OneToMany(
-            mappedBy = "centroDeEstetica",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
+    @OneToMany(mappedBy = "centroDeEstetica", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Servicio> servicios = new ArrayList<>();
-
 
     @Enumerated(EnumType.STRING)
     private Estado estado;
-
-
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<HorarioCentro> horariosCentro;

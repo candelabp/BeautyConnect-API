@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Centro Aprobado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #C19BA8;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+        }
+        .content {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>BeautyConnect</h1>
+    <h2>¡Centro Aprobado!</h2>
+</div>
+
+<div class="content">
+    <p>Hola <span th:text="${nombrePrestador}">[Nombre del Prestador]</span>,</p>
+
+    <p>Nos complace informarte que tu centro <strong th:text="${nombreCentro}">[Nombre del Centro]</strong>
+        ha sido <strong>aprobado</strong> y ya está visible en nuestra plataforma.</p>
+
+    <p>Los usuarios ahora pueden:</p>
+    <ul>
+        <li>Ver tu centro en el listado</li>
+        <li>Reservar turnos</li>
+    </ul>
+
+    <p>Puedes acceder a tu panel de control para gestionar tus servicios y turnos.</p>
+
+    <p>¡Gracias por ser parte de BeautyConnect!</p>
+</div>
+
+<div class="footer">
+    <p>Este es un mensaje automático, por favor no respondas a este correo.</p>
+    <p>&copy; 2024 BeautyConnect. Todos los derechos reservados.</p>
+</div>
+</body>
+</html>

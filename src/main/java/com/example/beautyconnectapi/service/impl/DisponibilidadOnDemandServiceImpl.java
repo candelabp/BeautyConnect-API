@@ -1,6 +1,6 @@
 package com.example.beautyconnectapi.service.impl;
 
-import com.example.beautyconnectapi.model.dto.HorarioDisponible.HorariosDisponiblesResponse;
+import com.example.beautyconnectapi.model.dto.horarioDisponible.HorariosDisponiblesResponse;
 import com.example.beautyconnectapi.model.entity.JornadaLaboral;
 import com.example.beautyconnectapi.model.entity.Turno;
 import com.example.beautyconnectapi.model.enums.EstadoTurno; // ✅ IMPORTANTE
@@ -35,7 +35,7 @@ public class DisponibilidadOnDemandServiceImpl implements DisponibilidadOnDemand
         if (duracion <= 0) throw new IllegalArgumentException("Duración de servicio inválida");
 
         // 2) franjas de jornada para el día
-        var franjas = jornadaRepo.findAllByProfesional_IdAndDiaAndActivoTrue(profId, fecha.getDayOfWeek());
+        var franjas = jornadaRepo.findAllByProfesional_IdAndDiaAndActiveTrue(profId, fecha.getDayOfWeek());
         if (franjas.isEmpty()) {
             if (DEBUG) {
                 System.out.println("[DEBUG] generarIniciosDisponibles()");
@@ -62,7 +62,7 @@ public class DisponibilidadOnDemandServiceImpl implements DisponibilidadOnDemand
 
             System.out.println("  franjas=" + franjas.size());
             for (var f : franjas) {
-                System.out.println("    - " + f.getDia() + " " + f.getHoraInicio() + " -> " + f.getHoraFin() + " activo=" + f.getActivo());
+                System.out.println("    - " + f.getDia() + " " + f.getHoraInicio() + " -> " + f.getHoraFin() + " activo=" + f.getActive());
             }
 
             System.out.println("  turnos (activos)=" + ocupados.size());

@@ -25,8 +25,6 @@ public class JornadaLaboralServiceImpl implements JornadaLaboralService {
     private final JornadaLaboralRepository repo;
     private final ProfesionalRepository profesionalRepo;
 
-    // ❌ Eliminar el constructor manual incorrecto
-
     @Override
     @Transactional
     public JornadaLaboralResponseDTO create(JornadaLaboralCreateDTO dto) {
@@ -41,7 +39,7 @@ public class JornadaLaboralServiceImpl implements JornadaLaboralService {
         j.setDia(dto.getDia());
         j.setHoraInicio(normalize(dto.getHoraInicio()));
         j.setHoraFin(normalize(dto.getHoraFin()));
-        j.setActivo(dto.getActivo() == null ? Boolean.TRUE : dto.getActivo());
+        j.setActive(dto.getActive() == null ? Boolean.TRUE : dto.getActive());
         return toDTO(repo.save(j));
     }
 
@@ -90,16 +88,16 @@ public class JornadaLaboralServiceImpl implements JornadaLaboralService {
         j.setDia(dto.getDia());
         j.setHoraInicio(normalize(dto.getHoraInicio()));
         j.setHoraFin(normalize(dto.getHoraFin()));
-        if (dto.getActivo() != null) j.setActivo(dto.getActivo());
+        if (dto.getActive() != null) j.setActive(dto.getActive());
         return toDTO(repo.save(j));
     }
 
     @Override
     @Transactional
-    public JornadaLaboralResponseDTO toggleActivo(Long id, boolean activo) {
+    public JornadaLaboralResponseDTO toggleActive(Long id, boolean active) {
         JornadaLaboral j = repo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Jornada no encontrada"));
-        j.setActivo(activo);
+        j.setActive(active);
         return toDTO(repo.save(j));
     }
 
@@ -150,7 +148,7 @@ public class JornadaLaboralServiceImpl implements JornadaLaboralService {
         dto.setDia(j.getDia());
         dto.setHoraInicio(j.getHoraInicio());
         dto.setHoraFin(j.getHoraFin());
-        dto.setActivo(j.getActivo() != null ? j.getActivo() : Boolean.TRUE);
+        dto.setActive(j.getActive() != null ? j.getActive() : Boolean.TRUE);
         return dto;
 
     }

@@ -1,9 +1,7 @@
-package com.example.beautyconnectapi.model.dto.ProfesionalServicio;
+package com.example.beautyconnectapi.model.dto.profesionalServicio;
 
 import com.example.beautyconnectapi.model.dto.disponibilidad.DisponibilidadResponseDTO;
-import com.example.beautyconnectapi.model.dto.profesional.ProfesionalResponseDTO;
 import com.example.beautyconnectapi.model.dto.profesional.ProfesionalResponseDTOSimple;
-import com.example.beautyconnectapi.model.dto.servicio.ServicioResponseDTO;
 import com.example.beautyconnectapi.model.dto.servicio.ServicioResponseDTOSimple;
 import lombok.*;
 

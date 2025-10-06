@@ -6,6 +6,7 @@ import com.example.beautyconnectapi.model.entity.CentroDeEstetica;
 import com.example.beautyconnectapi.model.enums.Estado;
 import com.example.beautyconnectapi.model.enums.EstadoTurno;
 import com.example.beautyconnectapi.service.TurnoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class TurnoController {
     }
 
     @PostMapping
-    public ResponseEntity<TurnoResponseDTO> crear(@RequestBody TurnoDTO dto) {
+    public ResponseEntity<TurnoResponseDTO> crear(@Valid @RequestBody TurnoDTO dto) {
         return ResponseEntity.ok(turnoService.crear(dto));
     }
 
@@ -40,7 +41,7 @@ public class TurnoController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<TurnoResponseDTO> actualizar(@PathVariable Long id, @RequestBody TurnoDTO dto) {
+    public ResponseEntity<TurnoResponseDTO> actualizar(@PathVariable Long id, @Valid @RequestBody TurnoDTO dto) {
         return ResponseEntity.ok(turnoService.actualizar(id, dto));
     }
 

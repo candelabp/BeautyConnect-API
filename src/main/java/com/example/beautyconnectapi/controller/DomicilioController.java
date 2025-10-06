@@ -3,6 +3,7 @@ package com.example.beautyconnectapi.controller;
 import com.example.beautyconnectapi.model.dto.domicilio.DomicilioDTO;
 import com.example.beautyconnectapi.model.dto.domicilio.DomicilioResponseDTO;
 import com.example.beautyconnectapi.service.DomicilioService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class DomicilioController {
 
     // CREATE
     @PostMapping
-    public ResponseEntity<DomicilioResponseDTO> saveDomicilio(@RequestBody DomicilioDTO domicilioDto){
+    public ResponseEntity<DomicilioResponseDTO> saveDomicilio(@Valid @RequestBody DomicilioDTO domicilioDto){
         DomicilioResponseDTO resp = domicilioService.saveDomicilio(domicilioDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(resp);
     }
@@ -33,7 +34,7 @@ public class DomicilioController {
 
     // UPDATE
     @PutMapping("/{id}")
-    public ResponseEntity<DomicilioResponseDTO> updateDomicilio(@PathVariable("id") Long domicilioId, @RequestBody DomicilioDTO domicilioDto){
+    public ResponseEntity<DomicilioResponseDTO> updateDomicilio(@PathVariable("id") Long domicilioId, @Valid @RequestBody DomicilioDTO domicilioDto){
         DomicilioResponseDTO resp = domicilioService.updateDomicilio(domicilioId, domicilioDto);
         return ResponseEntity.ok(resp);
     }

@@ -1,8 +1,8 @@
 package com.example.beautyconnectapi.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.google.firebase.database.annotations.NotNull;
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,13 +18,8 @@ import java.time.LocalTime;
 @Setter
 @SuperBuilder
 @Entity
-public class HorarioCentro extends Base{
-
-    @NotNull("El día desde es obligatorio")
+public class HorarioCentro extends Base {
     private DayOfWeek dia;
-
-//    @NotNull("El día hasta es obligatorio")
-//    private DayOfWeek diaHasta;
 
     @JsonFormat(pattern = "HH:mm")
     private LocalTime horaMInicio;

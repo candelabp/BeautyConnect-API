@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fafafa;
+            padding: 20px;
+        }
+        .header {
+            background-color: #C19BA8;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>BeautyConnect</h1>
+</div>
+
+<div class="container">
+    <p>Hola <span th:text="${nombrePrestador}">[Nombre del Prestador]</span>,</p>
+
+    <p>Lamentamos informarte que tu centro <strong th:text="${nombreCentro}">[Nombre del Centro]</strong>
+        no fue aprobado.</p>
+
+    <p>Podés volver a postularte corrigiendo la información.</p>
+</div>
+
+<div class="footer">
+    <p>Este es un mensaje automático, por favor no respondas a este correo.</p>
+    <p>&copy; 2024 BeautyConnect. Todos los derechos reservados.</p>
+</div>
+</body>
+</html>

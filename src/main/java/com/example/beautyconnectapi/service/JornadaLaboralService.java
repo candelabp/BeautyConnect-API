@@ -13,6 +13,6 @@ public interface JornadaLaboralService {
     List<JornadaLaboralResponseDTO> listByProfesional(Long profesionalId);
     List<JornadaLaboralResponseDTO> listByProfesionalAndDia(Long profesionalId, String dia); // opcional
     JornadaLaboralResponseDTO update(Long id, JornadaLaboralUpdateDTO dto);
-    JornadaLaboralResponseDTO toggleActivo(Long id, boolean activo);
+    JornadaLaboralResponseDTO toggleActive(Long id, boolean active);
     void delete(Long id);
 }

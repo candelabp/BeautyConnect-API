@@ -3,6 +3,7 @@ package com.example.beautyconnectapi.controller;
 import com.example.beautyconnectapi.model.dto.superAdmin.SuperAdminDTO;
 import com.example.beautyconnectapi.model.dto.superAdmin.SuperAdminResponseDTO;
 import com.example.beautyconnectapi.service.SuperAdminService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ public class SuperAdminController {
     }
 
     @PostMapping("/save")
-    public SuperAdminResponseDTO saveSuperAdmin(@RequestBody SuperAdminDTO superAdminDTO){
+    public SuperAdminResponseDTO saveSuperAdmin(@Valid @RequestBody SuperAdminDTO superAdminDTO){
         return superAdminService.saveSuperAdmin(superAdminDTO);
     }
 
@@ -26,7 +27,7 @@ public class SuperAdminController {
     }
 
     @PatchMapping("/update/{superAdminId}")
-    public SuperAdminResponseDTO updateSuperAdmin(@PathVariable Long superAdminId, SuperAdminDTO superAdminDTO){
+    public SuperAdminResponseDTO updateSuperAdmin(@PathVariable Long superAdminId, @Valid @RequestBody SuperAdminDTO superAdminDTO){
         return superAdminService.updateSuperAdmin(superAdminId, superAdminDTO);
     }
 

@@ -2,6 +2,7 @@ package com.example.beautyconnectapi.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -17,7 +18,9 @@ import java.time.LocalTime;
 @Entity
 public class Disponibilidad extends Base{
     private LocalDate fecha;
+
     private LocalTime horaInicio;
+
     private LocalTime horaFinalizacion;
 
     @Builder.Default
