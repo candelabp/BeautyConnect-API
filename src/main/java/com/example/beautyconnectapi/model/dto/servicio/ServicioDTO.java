@@ -16,7 +16,7 @@ public class ServicioDTO {
     @NotNull(message = "El campo tipoDeServicio no puede ser null")
     private TipoDeServicio tipoDeServicio;
 
-    @NotNull(message = "El campo tipoDeServicio no puede ser null")
+//    @NotNull(message = "El campo active no puede ser null")
     private Boolean active;
 
     @NotNull(message = "El campo precio no puede ser null")

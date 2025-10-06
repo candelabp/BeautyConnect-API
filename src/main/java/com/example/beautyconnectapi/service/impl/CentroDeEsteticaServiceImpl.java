@@ -94,7 +94,7 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
             variables.put("nombreCentro", centroDeEstetica.getNombre());
 
             emailService.enviarMailConTemplate(
-                    "beautyconnect16@gmail.com",
+                    centroDeEstetica.getPrestadorDeServicio().getUsuario().getMail(),
                     "Centro rechazado en BeautyConnect",
                     "email/centroRechazado",
                     variables

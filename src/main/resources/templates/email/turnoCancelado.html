@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Centro Aprobado</title>
+    <title>Turno Cancelado</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -36,24 +36,26 @@
 <body>
 <div class="header">
     <h1>BeautyConnect</h1>
-    <h2>¡Centro Aprobado!</h2>
+    <h2>Turno Cancelado</h2>
 </div>
 
 <div class="content">
-    <p>Hola <span th:text="${nombrePrestador}">[Nombre del Prestador]</span>,</p>
+    <p>Hola <span th:text="${nombreCliente}">[Nombre del Cliente]</span>,</p>
 
-    <p>Nos complace informarte que tu centro <strong th:text="${nombreCentro}">[Nombre del Centro]</strong>
-        ha sido <strong>aprobado</strong> y ya está visible en nuestra plataforma.</p>
+    <p>Te informamos que tu turno con <strong th:text="${nombreProfesional}">[Nombre del Profesional]</strong>
+        en el centro <strong th:text="${nombreCentro}">[Nombre del Centro]</strong>
+        ha sido <strong>cancelado</strong>.</p>
 
-    <p>Los usuarios ahora pueden:</p>
+    <p>Detalles del turno:</p>
     <ul>
-        <li>Ver tu centro en el listado</li>
-        <li>Reservar turnos</li>
+        <li><strong>Servicio:</strong> <span th:text="${servicio}">[Servicio]</span></li>
+        <li><strong>Fecha:</strong> <span th:text="${fecha}">[Fecha]</span></li>
+        <li><strong>Hora:</strong> <span th:text="${hora}">[Hora]</span></li>
     </ul>
 
-    <p>Puedes acceder a tu panel de control para gestionar tus servicios y turnos.</p>
+    <p>Lamentamos los inconvenientes. Podés volver a reservar otro turno cuando quieras.</p>
 
-    <p>¡Gracias por ser parte de BeautyConnect!</p>
+    <p>Gracias por confiar en BeautyConnect 💅</p>
 </div>
 
 <div class="footer">

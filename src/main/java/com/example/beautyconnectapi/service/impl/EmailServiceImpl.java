@@ -44,6 +44,29 @@ import java.util.Map;
                 throw new RuntimeException("Error enviando mail con template", e);
             }
         }
+
+//        @Async
+//        @Override
+//        @Transactional
+//        public void enviarMailTurnoConfirmado(String destinatario, Map<String, Object> variables) {
+//            try {
+//                Context context = new Context();
+//                context.setVariables(variables);
+//
+//                String htmlContent = templateEngine.process("email/turno-confirmado", context);
+//
+//                MimeMessage message = mailSender.createMimeMessage();
+//                MimeMessageHelper helper = new MimeMessageHelper(message, true);
+//                helper.setTo(destinatario);
+//                helper.setSubject("Tu turno fue confirmado 💅");
+//                helper.setText(htmlContent, true);
+//
+//                mailSender.send(message);
+//                System.out.println("✅ Mail de confirmación enviado a " + destinatario);
+//            } catch (MessagingException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
 

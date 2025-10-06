@@ -1,7 +1,7 @@
 package com.example.beautyconnectapi.controller;
 
 import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioDTO;
-import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioResponseDTO;
+import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioResponseDTO;
 import com.example.beautyconnectapi.service.ProfesionalServicioService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;

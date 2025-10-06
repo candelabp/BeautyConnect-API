@@ -18,7 +18,6 @@ import java.util.List;
 public class ProfesionalDTO {
     private Long id;
 
-    @NotNull(message = "El campo activo no puede ser null")
     private Boolean active;
 
     @NotBlank(message = "El campo nombre no puede ser null ni estar vacio")

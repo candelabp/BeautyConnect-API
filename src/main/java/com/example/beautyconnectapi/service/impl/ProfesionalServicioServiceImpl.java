@@ -3,13 +3,12 @@ package com.example.beautyconnectapi.service.impl;
 import com.example.beautyconnectapi.config.mapper.DisponibilidadMapper;
 import com.example.beautyconnectapi.config.mapper.ProfesionalServicioMapper;
 import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioDTO;
-import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioResponseDTO;
+import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioResponseDTO;
 import com.example.beautyconnectapi.model.entity.ProfesionalServicio;
 import com.example.beautyconnectapi.repository.ProfesionalRepository;
 import com.example.beautyconnectapi.repository.ProfesionalServicioRepository;
 import com.example.beautyconnectapi.repository.ServicioRepository;
 import com.example.beautyconnectapi.service.ProfesionalServicioService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +35,7 @@ public class ProfesionalServicioServiceImpl implements ProfesionalServicioServic
     }
 
     @Override
-    public  ProfesionalServicioResponseDTO saveProfServicio(ProfesionalServicioDTO profesionalServicioDto){
+    public ProfesionalServicioResponseDTO saveProfServicio(ProfesionalServicioDTO profesionalServicioDto){
         ProfesionalServicio profesionalServicio = profesionalServicioMapper.toEntity(profesionalServicioDto);
 
         profesionalServicio.setProfesional(profesionalRepository.findById(profesionalServicioDto.getProfesionalId())

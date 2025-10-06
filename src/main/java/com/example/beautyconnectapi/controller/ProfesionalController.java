@@ -29,7 +29,7 @@ public class ProfesionalController {
     }
 
     @PostMapping("/update/{profesionalId}")
-    public ProfesionalResponseDTO updateProfesional(@PathVariable Long profesionalId, @Valid @RequestBody ProfesionalDTO profesionalDto){
+    public ProfesionalResponseDTO updateProfesional(@PathVariable Long profesionalId, @RequestBody ProfesionalDTO profesionalDto){
         return profesionalService.updateProfesional(profesionalId, profesionalDto);
     }
 
