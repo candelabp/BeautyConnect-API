@@ -11,6 +11,7 @@ import com.example.beautyconnectapi.model.enums.EstadoTurno;
 import com.example.beautyconnectapi.repository.CentroDeEsteticaRepository;
 import com.example.beautyconnectapi.repository.ClienteRepository;
 import com.example.beautyconnectapi.repository.ReseniaRepository;
+import com.example.beautyconnectapi.repository.TurnoRepository;
 import com.example.beautyconnectapi.service.ReseniaService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -25,12 +26,15 @@ public class ReseniaServiceImpl implements ReseniaService {
     private final ReseniaMapper reseniaMapper;
     private final ClienteRepository clienteRepository;
     private  final CentroDeEsteticaRepository centroDeEsteticaRepository;
+    private final TurnoRepository turnoRepository;
 
-    public ReseniaServiceImpl( ReseniaRepository reseniaRepository, ReseniaMapper reseniaMapper, ClienteRepository clienteRepository, CentroDeEsteticaRepository centroDeEsteticaRepository){
+    public ReseniaServiceImpl( ReseniaRepository reseniaRepository, ReseniaMapper reseniaMapper, ClienteRepository clienteRepository, CentroDeEsteticaRepository centroDeEsteticaRepository,
+                               TurnoRepository turnoRepository){
         this.reseniaMapper = reseniaMapper;
         this.reseniaRepository = reseniaRepository;
         this.centroDeEsteticaRepository = centroDeEsteticaRepository;
         this.clienteRepository = clienteRepository;
+        this.turnoRepository = turnoRepository;
     }
     @Override
     @Transactional
@@ -40,6 +44,8 @@ public class ReseniaServiceImpl implements ReseniaService {
                 .orElseThrow(()  -> new RuntimeException("Cliente no encontrado"))) ;
         resenia.setCentroDeEstetica(centroDeEsteticaRepository.findById(dto.getCentroDeEsteticaId())
                 .orElseThrow(()  -> new RuntimeException("Centro no encontrado"))) ;
+        resenia.setTurno(turnoRepository.findById(dto.getTurnoId())
+                .orElseThrow(()  -> new RuntimeException("Turno no encontrado"))); ;
         return reseniaMapper.toResponseDTO(reseniaRepository.save(resenia));
 
     }
