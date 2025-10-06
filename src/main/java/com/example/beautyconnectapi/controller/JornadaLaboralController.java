@@ -54,7 +54,7 @@ public class JornadaLaboralController {
 
     @PatchMapping("/{id}/activo")
     public ResponseEntity<JornadaLaboralResponseDTO> toggle(@PathVariable Long id, @RequestParam boolean activo) {
-        return ResponseEntity.ok(service.toggleActivo(id, activo));
+        return ResponseEntity.ok(service.toggleActive(id, activo));
     }
 
     @DeleteMapping("/{id}")

@@ -12,7 +12,6 @@ public interface ServicioMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "centroDeEstetica", ignore = true)
     Servicio toEntity(ServicioDTO servicioDTO);
-    Servicio toEntity(ServicioDTOSimple servicioDTOSimple);
     ServicioResponseDTO toResponseDTO(Servicio servicio);
     ServicioResponseDTOSimple toResponseDTOSimple(Servicio servicio);
 }

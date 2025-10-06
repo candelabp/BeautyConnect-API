@@ -35,7 +35,7 @@ public class DisponibilidadOnDemandServiceImpl implements DisponibilidadOnDemand
         if (duracion <= 0) throw new IllegalArgumentException("Duración de servicio inválida");
 
         // 2) franjas de jornada para el día
-        var franjas = jornadaRepo.findAllByProfesional_IdAndDiaAndActivoTrue(profId, fecha.getDayOfWeek());
+        var franjas = jornadaRepo.findAllByProfesional_IdAndDiaAndActiveTrue(profId, fecha.getDayOfWeek());
         if (franjas.isEmpty()) {
             if (DEBUG) {
                 System.out.println("[DEBUG] generarIniciosDisponibles()");

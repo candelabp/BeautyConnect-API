@@ -1,12 +1,9 @@
 package com.example.beautyconnectapi.controller;
 
-import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioDTO;
+import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioDTO;
 import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioResponseDTO;
-import com.example.beautyconnectapi.model.entity.ProfesionalServicio;
 import com.example.beautyconnectapi.service.ProfesionalServicioService;
-import com.example.beautyconnectapi.service.impl.ProfesionalServicioServiceImpl;
 import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -1,7 +1,6 @@
 package com.example.beautyconnectapi.controller;
 
-import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioDTO;
-import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioResponseDTO;
+import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioDTO;
 import com.example.beautyconnectapi.model.dto.servicio.ServicioDTO;
 import com.example.beautyconnectapi.model.dto.servicio.ServicioResponseDTO;
 import com.example.beautyconnectapi.model.entity.ProfesionalServicio;

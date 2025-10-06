@@ -94,10 +94,10 @@ public class JornadaLaboralServiceImpl implements JornadaLaboralService {
 
     @Override
     @Transactional
-    public JornadaLaboralResponseDTO toggleActivo(Long id, boolean activo) {
+    public JornadaLaboralResponseDTO toggleActive(Long id, boolean active) {
         JornadaLaboral j = repo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Jornada no encontrada"));
-        j.setActive(activo);
+        j.setActive(active);
         return toDTO(repo.save(j));
     }
 

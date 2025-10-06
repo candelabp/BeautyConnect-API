@@ -2,8 +2,6 @@ package com.example.beautyconnectapi.model.dto.profesionalServicio;
 
 
 import com.example.beautyconnectapi.model.dto.disponibilidad.DisponibilidadDTO;
-import com.example.beautyconnectapi.model.dto.profesional.ProfesionalDTO;
-import com.example.beautyconnectapi.model.dto.servicio.ServicioDTO;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
