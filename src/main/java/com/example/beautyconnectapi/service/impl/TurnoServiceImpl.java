@@ -19,6 +19,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,16 +57,20 @@ public class TurnoServiceImpl implements TurnoService {
                 .orElseThrow(()  -> new RuntimeException("ProfesionalServicio no encontrado"))) ;
         turno.setCentroDeEstetica(centroDeEsteticaRepository.findById(dto.getCentroId())
          .orElseThrow(()  -> new RuntimeException("ProfesionalServicio no encontrado")));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         Map<String, Object> variables = Map.of(
                 "nombreCliente", turno.getCliente().getNombre(),
                 "nombreCentro", turno.getCentroDeEstetica().getNombre(),
-                "direccionCentro", turno.getCentroDeEstetica().getDomicilio(),
-                "servicio", turno.getProfesionalServicio().getServicio().getTipoDeServicio(),
+                "direccionCentro", turno.getCentroDeEstetica().getDomicilio().getCalle() + " " +
+                        turno.getCentroDeEstetica().getDomicilio().getNumero() + ", " +
+                        turno.getCentroDeEstetica().getDomicilio().getLocalidad() + ", " +
+                        turno.getCentroDeEstetica().getDomicilio().getProvincia(),
+                "servicio", capitalizar(turno.getProfesionalServicio().getServicio().getTipoDeServicio().toString()),
                 "profesional", turno.getProfesionalServicio().getProfesional().getNombre(),
-                "fecha", turno.getFecha().toString(),
+                "fecha", turno.getFecha().format(formatter),
                 "hora", turno.getHora().toString(),
-                "linkCentro", "https://beautyconnect.com/mis-turnos"
+                "linkCentro", ""
         );
 
         emailService.enviarMailConTemplate(turno.getCliente().getUsuario().getMail(), "Turno agendado", "email/turnoAgendado", variables);
@@ -101,14 +106,15 @@ public class TurnoServiceImpl implements TurnoService {
         Turno turno = turnoRepository.findById(turnoId)
                 .orElseThrow(() -> new RuntimeException("Turno no encontrado"));
         turno.setEstado(nuevoEstado);
-
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        
         if (nuevoEstado == EstadoTurno.CANCELADO) {
             Map<String, Object> variables = Map.of(
                     "nombreCliente", turno.getCliente().getNombre(),
                     "nombreCentro", turno.getCentroDeEstetica().getNombre(),
-                    "servicio", turno.getProfesionalServicio().getServicio().getTipoDeServicio(),
+                    "servicio", capitalizar(turno.getProfesionalServicio().getServicio().getTipoDeServicio().toString()),
                     "profesional", turno.getProfesionalServicio().getProfesional().getNombre(),
-                    "fecha", turno.getFecha().toString(),
+                    "fecha", turno.getFecha().format(formatter),
                     "hora", turno.getHora().toString()
             );
 
@@ -159,5 +165,9 @@ public class TurnoServiceImpl implements TurnoService {
         return Long.valueOf(cantidad);
     }
 
+    public static String capitalizar(String texto) {
+        if (texto == null || texto.isEmpty()) return texto;
+        return texto.substring(0, 1).toUpperCase() + texto.substring(1).toLowerCase();
+    }
 
 }
