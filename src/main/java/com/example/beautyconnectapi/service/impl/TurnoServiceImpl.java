@@ -67,7 +67,7 @@ public class TurnoServiceImpl implements TurnoService {
                         turno.getCentroDeEstetica().getDomicilio().getLocalidad() + ", " +
                         turno.getCentroDeEstetica().getDomicilio().getProvincia(),
                 "servicio", capitalizar(turno.getProfesionalServicio().getServicio().getTipoDeServicio().toString()),
-                "profesional", turno.getProfesionalServicio().getProfesional().getNombre(),
+                "profesional", turno.getProfesionalServicio().getProfesional().getNombre() + " " + turno.getProfesionalServicio().getProfesional().getApellido(),
                 "fecha", turno.getFecha().format(formatter),
                 "hora", turno.getHora().toString(),
                 "linkCentro", ""
@@ -107,13 +107,13 @@ public class TurnoServiceImpl implements TurnoService {
                 .orElseThrow(() -> new RuntimeException("Turno no encontrado"));
         turno.setEstado(nuevoEstado);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        
+
         if (nuevoEstado == EstadoTurno.CANCELADO) {
             Map<String, Object> variables = Map.of(
                     "nombreCliente", turno.getCliente().getNombre(),
                     "nombreCentro", turno.getCentroDeEstetica().getNombre(),
                     "servicio", capitalizar(turno.getProfesionalServicio().getServicio().getTipoDeServicio().toString()),
-                    "profesional", turno.getProfesionalServicio().getProfesional().getNombre(),
+                    "profesional", turno.getProfesionalServicio().getProfesional().getNombre() + " " + turno.getProfesionalServicio().getProfesional().getApellido(),
                     "fecha", turno.getFecha().format(formatter),
                     "hora", turno.getHora().toString()
             );
