@@ -19,6 +19,4 @@ public class ClienteDTO {
 
     private UsuarioDTO usuario;
 
-    private DomicilioDTO domicilio;
-
 }

@@ -140,12 +140,12 @@ public class UsuarioController {
                     c.setNombre(nz(request.getClienteDTO().getNombre()));
                     c.setApellido(nz(request.getClienteDTO().getApellido()));
                     c.setTelefono(nz(request.getClienteDTO().getTelefono()));
-                    c.setDomicilio(request.getClienteDTO().getDomicilio()); // puede ser null y está bien
+                     // puede ser null y está bien
                 } else {
                     c.setNombre("");
                     c.setApellido("");
                     c.setTelefono("");
-                    c.setDomicilio(null);
+
                 }
                 c.setUsuario(usuarioDto);
                 ClienteResponseDTO registrado = clienteService.registrarCliente(c);

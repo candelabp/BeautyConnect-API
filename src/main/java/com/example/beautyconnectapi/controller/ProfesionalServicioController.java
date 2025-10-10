@@ -1,9 +1,10 @@
 package com.example.beautyconnectapi.controller;
 
-import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioDTO;
-import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioResponseDTO;
+import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioDTO;
+import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioResponseDTO;
 import com.example.beautyconnectapi.service.ProfesionalServicioService;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,8 +50,25 @@ public class ProfesionalServicioController {
             @PathVariable Long servicioId) {
         return profesionalServicioService.getByProfesionalAndServicio(profId, servicioId);
     }
+    @PatchMapping("/{id}")
+    public ProfesionalServicioResponseDTO updateProfServicio (
+            @PathVariable Long id,
+            @RequestBody  ProfesionalServicioDTO profesionalServicioDTO){
+        return profesionalServicioService.updateProfServicio(id, profesionalServicioDTO);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+        profesionalServicioService.eliminar(id);
+        return ResponseEntity.noContent().build(); // Devuelve HTTP 204 No Content
+    }
+@GetMapping
+    public List<ProfesionalServicioResponseDTO> getAll() {
 
-
-
-
+    return profesionalServicioService.getAll();
 }
+}
+
+
+
+
+

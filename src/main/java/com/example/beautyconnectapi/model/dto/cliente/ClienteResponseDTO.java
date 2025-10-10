@@ -22,5 +22,4 @@ public class ClienteResponseDTO {
 
     private UsuarioResponseDTO usuario;
 
-    private DomicilioResponseDTO domicilio;
 }

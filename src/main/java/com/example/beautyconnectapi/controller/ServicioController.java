@@ -1,6 +1,6 @@
 package com.example.beautyconnectapi.controller;
 
-import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioDTO;
+import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioDTO;
 import com.example.beautyconnectapi.model.dto.servicio.ServicioDTO;
 import com.example.beautyconnectapi.model.dto.servicio.ServicioResponseDTO;
 import com.example.beautyconnectapi.model.entity.ProfesionalServicio;
@@ -36,7 +36,7 @@ public class ServicioController {
         return servicioService.getServicioById(servicioId);
     }
 
-    @PutMapping("/update/{id}")
+    @PatchMapping("/update/{id}")
     public ServicioResponseDTO update(@PathVariable("id") Long servicioId,
                                       @RequestBody ServicioDTO servicioDTO) {
         return servicioService.updateServicio(servicioId, servicioDTO);

@@ -1,7 +1,7 @@
 package com.example.beautyconnectapi.service;
 
-import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioDTO;
-import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioResponseDTO;
+import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioDTO;
+import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioResponseDTO;
 
 import java.util.List;
 
@@ -19,6 +19,8 @@ public interface ProfesionalServicioService {
     List<ProfesionalServicioResponseDTO> getAllByServicioId(Long servicioId);
     List<ProfesionalServicioResponseDTO> getByProfesional(Long profId);
     ProfesionalServicioResponseDTO getByProfesionalAndServicio(Long profesionalId, Long servicioId);
+    void eliminar (Long id);
+    List <ProfesionalServicioResponseDTO> getAll();
 
    /* ProfesionalServicioResponseDTO update(Long profId);
 

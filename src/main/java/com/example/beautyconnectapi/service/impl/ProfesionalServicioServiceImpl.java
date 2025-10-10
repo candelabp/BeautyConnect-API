@@ -2,17 +2,19 @@ package com.example.beautyconnectapi.service.impl;
 
 import com.example.beautyconnectapi.config.mapper.DisponibilidadMapper;
 import com.example.beautyconnectapi.config.mapper.ProfesionalServicioMapper;
-import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioDTO;
-import com.example.beautyconnectapi.model.dto.profesionalServicio.ProfesionalServicioResponseDTO;
+import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioDTO;
+import com.example.beautyconnectapi.model.dto.ProfesionalServicio.ProfesionalServicioResponseDTO;
 import com.example.beautyconnectapi.model.entity.ProfesionalServicio;
 import com.example.beautyconnectapi.repository.ProfesionalRepository;
 import com.example.beautyconnectapi.repository.ProfesionalServicioRepository;
 import com.example.beautyconnectapi.repository.ServicioRepository;
 import com.example.beautyconnectapi.service.ProfesionalServicioService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProfesionalServicioServiceImpl implements ProfesionalServicioService {
@@ -122,5 +124,21 @@ public class ProfesionalServicioServiceImpl implements ProfesionalServicioServic
       return  profesionalServicioRepository.findByProfesional_Id(profId).stream()
               .map(profesionalServicioMapper::toResponseDTO)
               .toList();
+    }
+    @Override
+    @Transactional
+    public void eliminar(Long id) {
+        ProfesionalServicio profesionalServicio = profesionalServicioRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("ProfesionalServicio no encontrado con id: " + id));
+
+        profesionalServicioRepository.delete(profesionalServicio);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ProfesionalServicioResponseDTO> getAll() {
+        return profesionalServicioRepository.findAll().stream()
+                .map(profesionalServicioMapper::toResponseDTO)
+                .collect(Collectors.toList());
     }
 }

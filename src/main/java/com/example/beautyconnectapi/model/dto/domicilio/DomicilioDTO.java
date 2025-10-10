@@ -25,4 +25,7 @@ public class DomicilioDTO {
 
     //@NotBlank(message = "El campo provincia no puede ser null ni estar vacio")
     private String provincia;
+
+    private Integer latitud;
+    private Integer longitud;
 }

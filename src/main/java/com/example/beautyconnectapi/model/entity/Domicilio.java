@@ -31,4 +31,6 @@ public class Domicilio extends Base {
     private Integer codigoPostal;
 
     private String provincia;
+    private Integer latitud;
+    private Integer longitud;
 }

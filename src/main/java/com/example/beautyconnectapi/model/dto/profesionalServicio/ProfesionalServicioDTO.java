@@ -1,4 +1,4 @@
-package com.example.beautyconnectapi.model.dto.profesionalServicio;
+package com.example.beautyconnectapi.model.dto.ProfesionalServicio;
 
 
 import com.example.beautyconnectapi.model.dto.disponibilidad.DisponibilidadDTO;
@@ -29,7 +29,5 @@ public class ProfesionalServicioDTO {
     @Positive(message = "El campo profesional debe ser positivo")
     private Long profesionalId;
 
-    @NotNull(message = "El campo disponibilidad no puede ser null")
-    @NotEmpty(message = "La disponibiliada no puede estar vacia")
-    private List<DisponibilidadDTO> disponibilidades;
+
 }

@@ -1,8 +1,6 @@
 package com.example.beautyconnectapi.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -18,20 +16,16 @@ import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Getter @Setter
 @SuperBuilder
 @Entity
+@Table(
+        name = "profesional_servicio",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"profesional_id","servicio_id"})
+)
 public class ProfesionalServicio extends Base {
     private Integer duracion;
 
-    @ManyToOne
-    private Servicio servicio;
-
-    @ManyToOne
-    private Profesional profesional;
-
-    @OneToMany
-    @Cascade(CascadeType.ALL)
-    private List<Disponibilidad> disponibilidades;
+    @ManyToOne private Servicio servicio;
+    @ManyToOne private Profesional profesional;
 }

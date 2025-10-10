@@ -26,6 +26,6 @@ public class Cliente extends Base{
     @OneToOne(cascade = CascadeType.PERSIST)
     private Usuario usuario;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Domicilio domicilio;
+
+
 }
