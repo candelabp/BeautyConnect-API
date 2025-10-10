@@ -70,7 +70,7 @@ public class TurnoServiceImpl implements TurnoService {
                 "profesional", turno.getProfesionalServicio().getProfesional().getNombre() + " " + turno.getProfesionalServicio().getProfesional().getApellido(),
                 "fecha", turno.getFecha().format(formatter),
                 "hora", turno.getHora().toString(),
-                "linkCentro", ""
+                "linkCentro", "https://beauty-connect.vercel.app/misTurnos"
         );
 
         emailService.enviarMailConTemplate(turno.getCliente().getUsuario().getMail(), "Turno agendado", "email/turnoAgendado", variables);
