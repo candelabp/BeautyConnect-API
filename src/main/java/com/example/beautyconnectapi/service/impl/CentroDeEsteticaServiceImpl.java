@@ -4,10 +4,8 @@ import com.example.beautyconnectapi.config.mapper.CentroDeEsteticaMapper;
 import com.example.beautyconnectapi.model.dto.centroDeEstetica.CentroDeEsteticaDTO;
 import com.example.beautyconnectapi.model.dto.centroDeEstetica.CentroDeEsteticaResponseDTO;
 import com.example.beautyconnectapi.model.entity.CentroDeEstetica;
-import com.example.beautyconnectapi.model.entity.HorarioCentro;
 import com.example.beautyconnectapi.model.enums.Estado;
 import com.example.beautyconnectapi.repository.CentroDeEsteticaRepository;
-import com.example.beautyconnectapi.repository.HorarioCentroRepository;
 import com.example.beautyconnectapi.repository.PrestadorDeServicioRepository;
 import com.example.beautyconnectapi.service.CentroDeEsteticaService;
 import jakarta.mail.MessagingException;
@@ -25,16 +23,13 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
     private final CentroDeEsteticaRepository centroDeEsteticaRepository;
     private final CentroDeEsteticaMapper centroDeEsteticaMapper;
     private final PrestadorDeServicioRepository prestadorDeServicioRepository;
-    private final HorarioCentroRepository horarioCentroRepository;
     private final EmailServiceImpl emailService;
 
-
-    public CentroDeEsteticaServiceImpl(CentroDeEsteticaRepository centroDeEsteticaRepository, CentroDeEsteticaMapper centroDeEsteticaMapper, PrestadorDeServicioRepository prestadorDeServicioRepository, EmailServiceImpl emailService, HorarioCentroRepository horarioCentroRepository) {
+    public CentroDeEsteticaServiceImpl(CentroDeEsteticaRepository centroDeEsteticaRepository, CentroDeEsteticaMapper centroDeEsteticaMapper, PrestadorDeServicioRepository prestadorDeServicioRepository, EmailServiceImpl emailService) {
         this.centroDeEsteticaRepository = centroDeEsteticaRepository;
         this.centroDeEsteticaMapper = centroDeEsteticaMapper;
         this.prestadorDeServicioRepository = prestadorDeServicioRepository;
         this.emailService = emailService;
-        this.horarioCentroRepository = horarioCentroRepository;
     }
 
     @Override
@@ -113,8 +108,6 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
     public CentroDeEsteticaResponseDTO actualizar(Long id, CentroDeEsteticaDTO dto) {
         CentroDeEstetica entity = centroDeEsteticaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Centro no encontrado"));
-
-        // Actualizar campos básicos
         if ((!entity.getNombre().equals(dto.getNombre()) && (!dto.getNombre().isBlank()))) {
             entity.setNombre(dto.getNombre());
         }
@@ -131,30 +124,7 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
             entity.setDocValido(dto.getDocValido());
         }
 
-        // ACTUALIZAR HORARIOS - Esto es lo que falta
-        if (dto.getHorariosCentro() != null && !dto.getHorariosCentro().isEmpty()) {
-            // Eliminar horarios existentes
-            horarioCentroRepository.deleteByCentroDeEsteticaId(id);
-
-            // Agregar nuevos horarios
-            List<HorarioCentro> nuevosHorarios = dto.getHorariosCentro().stream()
-                    .map(horarioDTO -> {
-                        HorarioCentro horario = new HorarioCentro();
-                        horario.setDia(horarioDTO.getDia());
-                        horario.setHoraMInicio(horarioDTO.getHoraMInicio());
-                        horario.setHoraMFinalizacion(horarioDTO.getHoraMFinalizacion());
-                        horario.setHoraTInicio(horarioDTO.getHoraTInicio());
-                        horario.setHoraTFinalizacion(horarioDTO.getHoraTFinalizacion());
-                        horario.setCentroDeEstetica(entity);
-                        return horario;
-                    })
-                    .collect(Collectors.toList());
-
-            horarioCentroRepository.saveAll(nuevosHorarios);
-        }
-
-        CentroDeEstetica centroActualizado = centroDeEsteticaRepository.save(entity);
-        return centroDeEsteticaMapper.toResponseDTO(centroActualizado);
+        return centroDeEsteticaMapper.toResponseDTO(entity);
     }
 
 
