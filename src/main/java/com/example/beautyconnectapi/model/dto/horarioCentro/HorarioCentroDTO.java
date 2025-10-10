@@ -13,6 +13,8 @@ import java.time.LocalTime;
 @Setter
 @Builder
 public class HorarioCentroDTO {
+    private Long id;
+
     @NotNull(message = "El día desde es obligatorio")
     private DayOfWeek dia;
 

@@ -19,6 +19,7 @@ public class HorarioCentroServiceImpl implements HorarioCentroService {
         this.horarioCentroRepository = horarioCentroRepository;
         this.horarioCentroMapper = horarioCentroMapper;
     }
+
     @Override
     @Transactional
     public HorarioCentroResponseDTO updateHorarioCentro(HorarioCentroDTO dto, Long horarioId){

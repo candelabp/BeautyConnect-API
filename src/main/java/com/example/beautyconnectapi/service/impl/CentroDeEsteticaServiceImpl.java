@@ -4,10 +4,13 @@ import com.example.beautyconnectapi.config.mapper.CentroDeEsteticaMapper;
 import com.example.beautyconnectapi.model.dto.centroDeEstetica.CentroDeEsteticaDTO;
 import com.example.beautyconnectapi.model.dto.centroDeEstetica.CentroDeEsteticaResponseDTO;
 import com.example.beautyconnectapi.model.entity.CentroDeEstetica;
+import com.example.beautyconnectapi.model.entity.HorarioCentro;
 import com.example.beautyconnectapi.model.enums.Estado;
 import com.example.beautyconnectapi.repository.CentroDeEsteticaRepository;
+import com.example.beautyconnectapi.repository.HorarioCentroRepository;
 import com.example.beautyconnectapi.repository.PrestadorDeServicioRepository;
 import com.example.beautyconnectapi.service.CentroDeEsteticaService;
+import com.example.beautyconnectapi.service.HorarioCentroService;
 import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -24,12 +27,14 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
     private final CentroDeEsteticaMapper centroDeEsteticaMapper;
     private final PrestadorDeServicioRepository prestadorDeServicioRepository;
     private final EmailServiceImpl emailService;
+    private final HorarioCentroRepository horarioCentroRepository;
 
-    public CentroDeEsteticaServiceImpl(CentroDeEsteticaRepository centroDeEsteticaRepository, CentroDeEsteticaMapper centroDeEsteticaMapper, PrestadorDeServicioRepository prestadorDeServicioRepository, EmailServiceImpl emailService) {
+    public CentroDeEsteticaServiceImpl(CentroDeEsteticaRepository centroDeEsteticaRepository, CentroDeEsteticaMapper centroDeEsteticaMapper, PrestadorDeServicioRepository prestadorDeServicioRepository, EmailServiceImpl emailService, HorarioCentroRepository horarioCentroRepository) {
         this.centroDeEsteticaRepository = centroDeEsteticaRepository;
         this.centroDeEsteticaMapper = centroDeEsteticaMapper;
         this.prestadorDeServicioRepository = prestadorDeServicioRepository;
         this.emailService = emailService;
+        this.horarioCentroRepository = horarioCentroRepository;
     }
 
     @Override
@@ -124,6 +129,25 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
             entity.setDocValido(dto.getDocValido());
         }
 
+        if (dto.getHorariosCentro() != null && !dto.getHorariosCentro().isEmpty()) {
+            horarioCentroRepository.deleteAll(entity.getHorariosCentro());
+            entity.getHorariosCentro().clear();
+
+                // Mapear los nuevos DTOs a entidades
+                List<HorarioCentro> nuevosHorarios = dto.getHorariosCentro().stream().map(horarioDTO -> {
+                    HorarioCentro horario = new HorarioCentro();
+                    horario.setId(horarioDTO.getId()); // importante para actualizar existentes
+                    horario.setDia(horarioDTO.getDia());
+                    horario.setHoraMInicio(horarioDTO.getHoraMInicio());
+                    horario.setHoraMFinalizacion(horarioDTO.getHoraMFinalizacion());
+                    horario.setHoraTInicio(horarioDTO.getHoraTInicio());
+                    horario.setHoraTFinalizacion(horarioDTO.getHoraTFinalizacion());
+                    return horario;
+                }).collect(Collectors.toList());
+                entity.getHorariosCentro().clear();
+                entity.getHorariosCentro().addAll(nuevosHorarios);
+        }
+        centroDeEsteticaRepository.save(entity);
         return centroDeEsteticaMapper.toResponseDTO(entity);
     }
 
