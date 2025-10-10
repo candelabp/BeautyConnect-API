@@ -6,9 +6,7 @@ import com.example.beautyconnectapi.model.dto.centroDeEstetica.CentroDeEsteticaR
 import com.example.beautyconnectapi.model.entity.CentroDeEstetica;
 import com.example.beautyconnectapi.model.entity.HorarioCentro;
 import com.example.beautyconnectapi.model.enums.Estado;
-import com.example.beautyconnectapi.repository.CentroDeEsteticaRepository;
-import com.example.beautyconnectapi.repository.HorarioCentroRepository;
-import com.example.beautyconnectapi.repository.PrestadorDeServicioRepository;
+import com.example.beautyconnectapi.repository.*;
 import com.example.beautyconnectapi.service.CentroDeEsteticaService;
 import com.example.beautyconnectapi.service.HorarioCentroService;
 import jakarta.mail.MessagingException;
@@ -28,13 +26,19 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
     private final PrestadorDeServicioRepository prestadorDeServicioRepository;
     private final EmailServiceImpl emailService;
     private final HorarioCentroRepository horarioCentroRepository;
+    private final ServicioRepository servicioRepository;
+    private final ProfesionalRepository profesionalRepository;
+    private final ProfesionalServicioRepository profesionalServicioRepository;
 
-    public CentroDeEsteticaServiceImpl(CentroDeEsteticaRepository centroDeEsteticaRepository, CentroDeEsteticaMapper centroDeEsteticaMapper, PrestadorDeServicioRepository prestadorDeServicioRepository, EmailServiceImpl emailService, HorarioCentroRepository horarioCentroRepository) {
+    public CentroDeEsteticaServiceImpl(CentroDeEsteticaRepository centroDeEsteticaRepository, CentroDeEsteticaMapper centroDeEsteticaMapper, PrestadorDeServicioRepository prestadorDeServicioRepository, EmailServiceImpl emailService, HorarioCentroRepository horarioCentroRepository, ServicioRepository servicioRepository, ProfesionalRepository profesionalRepository, ProfesionalServicioRepository profesionalServicioRepository) {
         this.centroDeEsteticaRepository = centroDeEsteticaRepository;
         this.centroDeEsteticaMapper = centroDeEsteticaMapper;
         this.prestadorDeServicioRepository = prestadorDeServicioRepository;
         this.emailService = emailService;
         this.horarioCentroRepository = horarioCentroRepository;
+        this.servicioRepository = servicioRepository;
+        this.profesionalRepository = profesionalRepository;
+        this.profesionalServicioRepository = profesionalServicioRepository;
     }
 
     @Override
@@ -186,9 +190,26 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
         CentroDeEstetica centroDeEstetica = centroDeEsteticaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Centro no encontrado"));
 
+        if (!centroDeEstetica.getActive()) {
+
+            boolean tieneProfesionales = !profesionalRepository.findByCentroDeEsteticaId(centroDeEstetica.getId()).isEmpty();
+            boolean tieneServicios = !servicioRepository.getByCentroDeEsteticaId(centroDeEstetica.getId()).isEmpty();
+
+            if (!tieneProfesionales || !tieneServicios) {
+                throw new RuntimeException("El centro debe tener al menos un profesional y un servicio antes de activarse.");
+            }
+
+            boolean tieneRelacion = centroDeEstetica.getServicios().stream()
+                    .anyMatch(servicio ->
+                            !profesionalServicioRepository.findByServicio_Id(servicio.getId()).isEmpty()
+                    );
+
+            if (!tieneRelacion) {
+                throw new RuntimeException("No se puede activar el centro: no existe ninguna relación entre prestador y servicio.");
+            }
+        }
         centroDeEstetica.setActive(!centroDeEstetica.getActive());
         return centroDeEsteticaMapper.toResponseDTO(centroDeEstetica);
     }
-
 
 }
