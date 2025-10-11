@@ -24,7 +24,7 @@ import java.util.Map;
         public EmailServiceImpl(
                 TemplateEngine templateEngine,
                 @Value("${RESEND_API_KEY}") String apiKey,
-                @Value("${SPRING_MAIL_USER}") String from
+                @Value("${MAIL_FROM}") String from
         ) {
             this.templateEngine = templateEngine;
             this.resend = new Resend(apiKey);

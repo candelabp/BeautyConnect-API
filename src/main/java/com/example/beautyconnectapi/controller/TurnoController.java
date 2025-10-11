@@ -2,12 +2,9 @@ package com.example.beautyconnectapi.controller;
 
 import com.example.beautyconnectapi.model.dto.turno.TurnoDTO;
 import com.example.beautyconnectapi.model.dto.turno.TurnoResponseDTO;
-import com.example.beautyconnectapi.model.entity.CentroDeEstetica;
-import com.example.beautyconnectapi.model.enums.Estado;
 import com.example.beautyconnectapi.model.enums.EstadoTurno;
 import com.example.beautyconnectapi.service.TurnoService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
