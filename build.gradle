@@ -60,7 +60,7 @@ dependencies {
 
 	//Dependencia para mandar mail
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation("com.resend:resend-java:3.0.0")
 
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
