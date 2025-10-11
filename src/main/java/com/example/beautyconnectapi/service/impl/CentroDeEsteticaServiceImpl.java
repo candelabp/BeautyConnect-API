@@ -8,8 +8,6 @@ import com.example.beautyconnectapi.model.entity.HorarioCentro;
 import com.example.beautyconnectapi.model.enums.Estado;
 import com.example.beautyconnectapi.repository.*;
 import com.example.beautyconnectapi.service.CentroDeEsteticaService;
-import com.example.beautyconnectapi.service.HorarioCentroService;
-import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -79,7 +77,7 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
 
     @Override
     @Transactional
-    public CentroDeEsteticaResponseDTO cambiarEstado(Long id, Estado estado) throws MessagingException {
+    public CentroDeEsteticaResponseDTO cambiarEstado(Long id, Estado estado) {
         CentroDeEstetica centroDeEstetica = centroDeEsteticaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Centro no encontrado"));
         centroDeEstetica.setEstado(estado);
