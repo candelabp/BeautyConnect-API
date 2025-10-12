@@ -20,4 +20,5 @@ public class ProfesionalServicioResponseDTO {
     private ServicioResponseDTOSimple servicio;
 
     private ProfesionalResponseDTOSimple profesional;
+    private Boolean active;
 }

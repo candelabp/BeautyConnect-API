@@ -65,6 +65,7 @@ public class ProfesionalServicioServiceImpl implements ProfesionalServicioServic
         if (!profesionalServicio.getDuracion().equals(profesionalServicioDto.getDuracion())){
             profesionalServicio.setDuracion(profesionalServicioDto.getDuracion());
         }
+
         profesionalServicioRepository.save(profesionalServicio);
         return profesionalServicioMapper.toResponseDTO(profesionalServicio);
     }
