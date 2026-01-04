@@ -28,7 +28,6 @@ public class UsuarioController {
     private final ClienteService clienteService;
     private final PrestadorDeServicioService prestadorServicioService;
 
-    // Beans inyectados (definidos en tu FirebaseConfig nuevo)
     private final FirebaseAuth firebaseAuth;
     private final FirebaseRoleService roleService;
 
@@ -42,7 +41,6 @@ public class UsuarioController {
         return usuarioService.getUsuarioById(usuarioId);
     }
 
-    // ✅ Lecturas deben ser GET
     @GetMapping("/obtenerPorEmail/{mail}")
     public UsuarioResponseDTO findByMail(@PathVariable String mail) {
         return usuarioService.findByMail(mail);
@@ -53,20 +51,15 @@ public class UsuarioController {
         return usuarioService.existsByUid(uid);
     }
 
-    // ✅ Baja lógica: mejor usar DELETE (si es soft delete, podés dejar PATCH pero semánticamente no es ideal)
     @PatchMapping("/delete/{usuarioId}")
     public UsuarioResponseDTO deleteUsuario(@PathVariable Long usuarioId) {
         return usuarioService.deleteUsuario(usuarioId);
     }
 
-    /**
-     * Registro por email/password (idToken viene del login de Firebase en el front)
-     * Recomendación: NO confiar en request.getRol(); definilo según el flujo.
-     */
+
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody Auth request) {
         try {
-            // 1) Verificar ID token
             FirebaseToken decoded = firebaseAuth.verifyIdToken(request.getIdToken());
             String uid = decoded.getUid();
             String mail = request.getMail() != null ? request.getMail() : decoded.getEmail();
@@ -75,32 +68,24 @@ public class UsuarioController {
                 return ResponseEntity.badRequest().body("Email no disponible en token ni en request");
             }
 
-            // 2) Evitar duplicados
             if (usuarioService.existsByMail(mail) || usuarioService.existsByUid(uid)) {
-                // devolver entidad asociada al rol existente
                 UsuarioResponseDTO usuario = usuarioService.findByMail(mail);
                 return ResponseEntity.ok(resolveEntidadPorRol(usuario));
             }
 
-            // 3) Determinar rol (SUGERENCIA: decidilo en backend)
             Rol rol = request.getRol() != null ? request.getRol() : Rol.CLIENTE;
 
-            // 4) Setear custom claim
             roleService.asignarRol(uid, rol.name());
 
-            // 5) Persistir usuario
             UsuarioDTO usuarioDto = new UsuarioDTO(mail, rol, uid);
 
-            // 6) Crear entidad según rol
             return ResponseEntity.ok(crearEntidadPorRol(rol, usuarioDto, request));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error al registrar usuario: " + e.getMessage());
         }
     }
 
-    /**
-     * Registro con Google (idToken de Google via Firebase)
-     */
+
     @PostMapping("/google")
     public ResponseEntity<?> registerWithGoogle(@RequestBody Auth request) {
         try {
@@ -117,7 +102,6 @@ public class UsuarioController {
                 return ResponseEntity.ok(resolveEntidadPorRol(usuario));
             }
 
-            // Definí rol por defecto o por flujo de UI (NO confiar ciegamente en request.rol)
             Rol rol = request.getRol() != null ? request.getRol() : Rol.CLIENTE;
 
             roleService.asignarRol(uid, rol.name());

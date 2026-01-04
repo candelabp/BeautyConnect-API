@@ -1,4 +1,4 @@
-package com.example.beautyconnectapi.model.dto.error;
+package com.example.beautyconnectapi.exception;
 
 
 import jakarta.servlet.http.HttpServletRequest;

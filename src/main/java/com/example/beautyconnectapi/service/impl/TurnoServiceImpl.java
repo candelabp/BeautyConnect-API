@@ -5,23 +5,19 @@ import com.example.beautyconnectapi.exception.ResourceNotFoundException;
 import com.example.beautyconnectapi.model.dto.turno.TurnoDTO;
 import com.example.beautyconnectapi.model.dto.turno.TurnoResponseDTO;
 import com.example.beautyconnectapi.model.entity.Turno;
-import com.example.beautyconnectapi.model.enums.Estado;
 import com.example.beautyconnectapi.model.enums.EstadoTurno;
 import com.example.beautyconnectapi.repository.CentroDeEsteticaRepository;
 import com.example.beautyconnectapi.repository.ClienteRepository;
 import com.example.beautyconnectapi.repository.ProfesionalServicioRepository;
 import com.example.beautyconnectapi.repository.TurnoRepository;
+import com.example.beautyconnectapi.service.EmailService; // ✅ IMPORT NUEVO
 import com.example.beautyconnectapi.service.TurnoService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -34,11 +30,17 @@ public class TurnoServiceImpl implements TurnoService {
     private final ClienteRepository clienteRepository;
     private final ProfesionalServicioRepository profesionalServicioRepository;
     private final CentroDeEsteticaRepository centroDeEsteticaRepository;
-    private final EmailServiceImpl emailService;
 
+    private final EmailService emailService;
 
-    public TurnoServiceImpl(TurnoRepository turnoRepository, TurnoMapper turnoMapper, ClienteRepository clienteRepository, ProfesionalServicioRepository profesionalServicioRepository,
-                            CentroDeEsteticaRepository centroDeEsteticaRepository, EmailServiceImpl emailService) {
+    public TurnoServiceImpl(
+            TurnoRepository turnoRepository,
+            TurnoMapper turnoMapper,
+            ClienteRepository clienteRepository,
+            ProfesionalServicioRepository profesionalServicioRepository,
+            CentroDeEsteticaRepository centroDeEsteticaRepository,
+            EmailService emailService
+    ) {
         this.turnoRepository = turnoRepository;
         this.turnoMapper = turnoMapper;
         this.clienteRepository = clienteRepository;
@@ -52,12 +54,16 @@ public class TurnoServiceImpl implements TurnoService {
     public TurnoResponseDTO crear(TurnoDTO dto) {
         Turno turno = turnoMapper.toEntity(dto);
         turno.setEstado(EstadoTurno.PENDIENTE);
+
         turno.setCliente(clienteRepository.findById(dto.getClienteId())
-                .orElseThrow(()  -> new ResourceNotFoundException("Cliente", dto.getClienteId())));
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente", dto.getClienteId())));
+
         turno.setProfesionalServicio(profesionalServicioRepository.findById(dto.getProfesionalServicioId())
-                .orElseThrow(()  -> new ResourceNotFoundException("ProfesionalServicio", dto.getProfesionalServicioId())));
+                .orElseThrow(() -> new ResourceNotFoundException("ProfesionalServicio", dto.getProfesionalServicioId())));
+
         turno.setCentroDeEstetica(centroDeEsteticaRepository.findById(dto.getCentroId())
-         .orElseThrow(()  -> new ResourceNotFoundException("Centro de estetica", dto.getProfesionalServicioId())));
+                .orElseThrow(() -> new ResourceNotFoundException("Centro de estetica", dto.getProfesionalServicioId())));
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         Map<String, Object> variables = Map.of(
@@ -68,13 +74,20 @@ public class TurnoServiceImpl implements TurnoService {
                         turno.getCentroDeEstetica().getDomicilio().getLocalidad() + ", " +
                         turno.getCentroDeEstetica().getDomicilio().getProvincia(),
                 "servicio", capitalizar(turno.getProfesionalServicio().getServicio().getTipoDeServicio().toString()),
-                "profesional", turno.getProfesionalServicio().getProfesional().getNombre() + " " + turno.getProfesionalServicio().getProfesional().getApellido(),
+                "profesional", turno.getProfesionalServicio().getProfesional().getNombre() + " " +
+                        turno.getProfesionalServicio().getProfesional().getApellido(),
                 "fecha", turno.getFecha().format(formatter),
                 "hora", turno.getHora().toString(),
                 "linkCentro", "https://beauty-connect.vercel.app/misTurnos"
         );
 
-        emailService.enviarMailConTemplate(turno.getCliente().getUsuario().getMail(), "Turno agendado", "email/turnoAgendado", variables);
+        emailService.enviarMailConTemplate(
+                turno.getCliente().getUsuario().getMail(),
+                "Turno agendado",
+                "email/turnoAgendado",
+                variables
+        );
+
         return turnoMapper.toResponseDTO(turnoRepository.save(turno));
     }
 
@@ -94,18 +107,12 @@ public class TurnoServiceImpl implements TurnoService {
                 .collect(Collectors.toList());
     }
 
-//    @Override
-//    public List<TurnoResponseDTO> listarPorPrestador(Long prestadorId) {
-//        return turnoRepository.findByPrestadorId(prestadorId).stream()
-//                .map(turnoMapper::toResponseDTO)
-//                .collect(Collectors.toList());
-//    }
-
     @Override
     @Transactional
     public TurnoResponseDTO cambiarEstado(Long turnoId, EstadoTurno nuevoEstado) {
         Turno turno = turnoRepository.findById(turnoId)
                 .orElseThrow(() -> new ResourceNotFoundException("Turno", turnoId));
+
         turno.setEstado(nuevoEstado);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -114,13 +121,20 @@ public class TurnoServiceImpl implements TurnoService {
                     "nombreCliente", turno.getCliente().getNombre(),
                     "nombreCentro", turno.getCentroDeEstetica().getNombre(),
                     "servicio", capitalizar(turno.getProfesionalServicio().getServicio().getTipoDeServicio().toString()),
-                    "profesional", turno.getProfesionalServicio().getProfesional().getNombre() + " " + turno.getProfesionalServicio().getProfesional().getApellido(),
+                    "profesional", turno.getProfesionalServicio().getProfesional().getNombre() + " " +
+                            turno.getProfesionalServicio().getProfesional().getApellido(),
                     "fecha", turno.getFecha().format(formatter),
                     "hora", turno.getHora().toString()
             );
 
-            emailService.enviarMailConTemplate(turno.getCliente().getUsuario().getMail(), "Turno cancelado", "email/turnoCancelado", variables);
+            emailService.enviarMailConTemplate(
+                    turno.getCliente().getUsuario().getMail(),
+                    "Turno cancelado",
+                    "email/turnoCancelado",
+                    variables
+            );
         }
+
         return turnoMapper.toResponseDTO(turnoRepository.save(turno));
     }
 
@@ -142,9 +156,10 @@ public class TurnoServiceImpl implements TurnoService {
         actualizado.setId(id);
         return turnoMapper.toResponseDTO(turnoRepository.save(actualizado));
     }
+
     @Override
     @Transactional
-    public List<TurnoResponseDTO>obtenerPorCentro(Long centroId){
+    public List<TurnoResponseDTO> obtenerPorCentro(Long centroId) {
         return turnoRepository.findByCentroDeEsteticaId(centroId).stream()
                 .map(turnoMapper::toResponseDTO)
                 .collect(Collectors.toList());
@@ -154,7 +169,7 @@ public class TurnoServiceImpl implements TurnoService {
     @Transactional
     public Long contarTurnosPorDia(LocalDate fecha, Long centroId) {
         int cantidad = turnoRepository.findAllByFecha(fecha, centroId).size();
-        return Long.valueOf(cantidad);
+        return (long) cantidad;
     }
 
     @Override
@@ -163,12 +178,11 @@ public class TurnoServiceImpl implements TurnoService {
         LocalDate inicioSemana = fecha.with(DayOfWeek.MONDAY);
         LocalDate finSemana = fecha.with(DayOfWeek.SUNDAY);
         int cantidad = turnoRepository.findAllByRango(inicioSemana, finSemana, centroId).size();
-        return Long.valueOf(cantidad);
+        return (long) cantidad;
     }
 
     public static String capitalizar(String texto) {
         if (texto == null || texto.isEmpty()) return texto;
         return texto.substring(0, 1).toUpperCase() + texto.substring(1).toLowerCase();
     }
-
 }

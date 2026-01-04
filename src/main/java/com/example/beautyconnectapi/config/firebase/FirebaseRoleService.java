@@ -17,7 +17,7 @@ public class FirebaseRoleService {
 
     public void asignarRol(String uid, String rol) throws FirebaseAuthException {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("role", rol); // p.ej. "ADMIN", "SUPERADMIN", "CLIENTE"
+        claims.put("role", rol); // "ADMIN", "SUPERADMIN", "CLIENTE"
         auth.setCustomUserClaims(uid, claims);
     }
 }

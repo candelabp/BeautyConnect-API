@@ -37,7 +37,7 @@ public class TurnoController {
         return ResponseEntity.ok(turnoService.obtenerPorId(id));
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/update/{id}") //el update es innecesario
     public ResponseEntity<TurnoResponseDTO> actualizar(@PathVariable Long id, @Valid @RequestBody TurnoDTO dto) {
         return ResponseEntity.ok(turnoService.actualizar(id, dto));
     }
