@@ -8,7 +8,6 @@ import com.example.beautyconnectapi.model.entity.Cliente;
 import com.example.beautyconnectapi.model.enums.Rol;
 import com.example.beautyconnectapi.repository.ClienteRepository;
 import com.example.beautyconnectapi.service.ClienteService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,7 +73,7 @@ public class ClienteServiceImpl implements ClienteService {
     @Transactional(readOnly = true)
     public ClienteResponseDTO obtenerPorUid(String uid) {
         Cliente cliente = clienteRepo.findByUsuarioUid(uid)
-                .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado para uid: " + uid));
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente" , uid));
         return clienteMapper.toResponseDto(cliente);
     }
 
@@ -82,7 +81,7 @@ public class ClienteServiceImpl implements ClienteService {
     @Transactional
     public ClienteResponseDTO cambiarEstadoActive(Long id){
         Cliente cliente = clienteRepo.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente", id));
         cliente.setActive(!cliente.getActive());
         cliente.getUsuario().setActive(cliente.getActive());
         return clienteMapper.toResponseDto(clienteRepo.save(cliente));

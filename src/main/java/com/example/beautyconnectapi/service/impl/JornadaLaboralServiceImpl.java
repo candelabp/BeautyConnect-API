@@ -143,17 +143,7 @@ public class JornadaLaboralServiceImpl implements JornadaLaboralService {
     private static LocalTime normalize(LocalTime t) { return t.withSecond(0).withNano(0); }
 
     private JornadaLaboralResponseDTO toDTO(JornadaLaboral j) {
-        // Opción A: ResponseDTO tiene constructor con todos los args
-       /* return new JornadaLaboralResponseDTO(
-                j.getId(),
-                j.getProfesional().getId(),
-                j.getDia(),
-                j.getHoraInicio(),
-                j.getHoraFin(),
-                j.getActivo() != null ? j.getActivo() : Boolean.TRUE
-        );*/
 
-        // Opción B (si tu ResponseDTO es clase con setters):
 
         JornadaLaboralResponseDTO dto = new JornadaLaboralResponseDTO();
         dto.setId(j.getId());

@@ -105,7 +105,7 @@ public class TurnoServiceImpl implements TurnoService {
     @Transactional
     public TurnoResponseDTO cambiarEstado(Long turnoId, EstadoTurno nuevoEstado) {
         Turno turno = turnoRepository.findById(turnoId)
-                .orElseThrow(() -> new RuntimeException("Turno no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Turno", turnoId));
         turno.setEstado(nuevoEstado);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 

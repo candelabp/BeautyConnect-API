@@ -22,7 +22,7 @@ public class JornadaLaboral  extends Base{
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private DayOfWeek dia; // MONDAY..SUNDAY
+    private DayOfWeek dia;
 
     @Column(nullable = false)
     private LocalTime horaInicio;

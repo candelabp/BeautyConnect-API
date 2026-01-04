@@ -13,10 +13,8 @@ public class JacksonConfig {
     public ObjectMapper objectMapper() {
         ObjectMapper mapper = new ObjectMapper();
 
-        // 👇 soporte para LocalDate, LocalTime, LocalDateTime
         mapper.registerModule(new JavaTimeModule());
 
-        // 👇 evita que serialice fechas como timestamps (números)
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
         return mapper;
