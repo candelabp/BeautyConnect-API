@@ -2,8 +2,6 @@ package com.example.beautyconnectapi.controller;
 
 
 
-import com.example.beautyconnectapi.model.dto.domicilio.DomicilioDTO;
-import com.example.beautyconnectapi.model.dto.domicilio.DomicilioResponseDTO;
 import com.example.beautyconnectapi.model.dto.horarioCentro.HorarioCentroDTO;
 import com.example.beautyconnectapi.model.dto.horarioCentro.HorarioCentroResponseDTO;
 

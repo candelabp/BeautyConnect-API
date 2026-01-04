@@ -1,23 +1,17 @@
 package com.example.beautyconnectapi.controller;
 
 import com.example.beautyconnectapi.service.impl.GeoRefService;
-import jakarta.persistence.Cacheable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
-import org.springframework.web.client.RestTemplate;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import java.util.Map;
-import java.util.HashMap;
-import java.util.List;
+
+
 
 @RestController
 @RequestMapping("/api/georef")

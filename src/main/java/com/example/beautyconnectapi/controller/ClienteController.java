@@ -3,6 +3,7 @@ package com.example.beautyconnectapi.controller;
 import com.example.beautyconnectapi.model.dto.cliente.ClienteDTO;
 import com.example.beautyconnectapi.model.dto.cliente.ClienteResponseDTO;
 import com.example.beautyconnectapi.service.ClienteService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class ClienteController {
 
     // POST /api/cliente
     @PostMapping
-    public ResponseEntity<ClienteResponseDTO> registrar(@RequestBody ClienteDTO dto) {
+    public ResponseEntity<ClienteResponseDTO> registrar(@Valid @RequestBody ClienteDTO dto) {
         ClienteResponseDTO nuevoCliente = clienteService.registrarCliente(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoCliente);
     }
@@ -40,12 +41,12 @@ public class ClienteController {
 
     // PUT /api/cliente/update/{id}
     @PutMapping("/update/{id}")
-    public ResponseEntity<ClienteResponseDTO> actualizar(@PathVariable Long id, @RequestBody ClienteDTO dto) {
+    public ResponseEntity<ClienteResponseDTO> actualizar(@PathVariable Long id, @Valid @RequestBody ClienteDTO dto) {
         ClienteResponseDTO actualizado = clienteService.actualizarCliente(id, dto);
         return ResponseEntity.ok(actualizado);
     }
 
-    // DELETE /api/cliente/{id}
+
     @GetMapping("/by-uid/{uid}")
     public ResponseEntity<ClienteResponseDTO> getByUid(@PathVariable String uid) {
         return ResponseEntity.ok(clienteService.obtenerPorUid(uid));

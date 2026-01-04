@@ -1,12 +1,10 @@
 package com.example.beautyconnectapi.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Entity;
-import jakarta.validation.constraints.NotNull;
+
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
