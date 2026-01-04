@@ -1,6 +1,7 @@
 package com.example.beautyconnectapi.service.impl;
 
 import com.example.beautyconnectapi.config.mapper.TurnoMapper;
+import com.example.beautyconnectapi.exception.ResourceNotFoundException;
 import com.example.beautyconnectapi.model.dto.turno.TurnoDTO;
 import com.example.beautyconnectapi.model.dto.turno.TurnoResponseDTO;
 import com.example.beautyconnectapi.model.entity.Turno;
@@ -52,11 +53,11 @@ public class TurnoServiceImpl implements TurnoService {
         Turno turno = turnoMapper.toEntity(dto);
         turno.setEstado(EstadoTurno.PENDIENTE);
         turno.setCliente(clienteRepository.findById(dto.getClienteId())
-                .orElseThrow(()  -> new RuntimeException("Cliente no encontrado"))) ;
+                .orElseThrow(()  -> new ResourceNotFoundException("Cliente", dto.getClienteId())));
         turno.setProfesionalServicio(profesionalServicioRepository.findById(dto.getProfesionalServicioId())
-                .orElseThrow(()  -> new RuntimeException("ProfesionalServicio no encontrado"))) ;
+                .orElseThrow(()  -> new ResourceNotFoundException("ProfesionalServicio", dto.getProfesionalServicioId())));
         turno.setCentroDeEstetica(centroDeEsteticaRepository.findById(dto.getCentroId())
-         .orElseThrow(()  -> new RuntimeException("ProfesionalServicio no encontrado")));
+         .orElseThrow(()  -> new ResourceNotFoundException("Centro de estetica", dto.getProfesionalServicioId())));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         Map<String, Object> variables = Map.of(
@@ -128,14 +129,14 @@ public class TurnoServiceImpl implements TurnoService {
     public TurnoResponseDTO obtenerPorId(Long id) {
         return turnoRepository.findById(id)
                 .map(turnoMapper::toResponseDTO)
-                .orElseThrow(() -> new EntityNotFoundException("Turno no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Turno", id));
     }
 
     @Override
     @Transactional
     public TurnoResponseDTO actualizar(Long id, TurnoDTO dto) {
         Turno existente = turnoRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Turno no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Turno", id));
 
         Turno actualizado = turnoMapper.toEntity(dto);
         actualizado.setId(id);

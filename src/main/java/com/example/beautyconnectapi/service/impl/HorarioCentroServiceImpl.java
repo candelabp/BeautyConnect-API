@@ -1,6 +1,7 @@
 package com.example.beautyconnectapi.service.impl;
 
 import com.example.beautyconnectapi.config.mapper.HorarioCentroMapper;
+import com.example.beautyconnectapi.exception.ResourceNotFoundException;
 import com.example.beautyconnectapi.model.dto.horarioCentro.HorarioCentroDTO;
 import com.example.beautyconnectapi.model.dto.horarioCentro.HorarioCentroResponseDTO;
 import com.example.beautyconnectapi.model.entity.Domicilio;
@@ -24,7 +25,7 @@ public class HorarioCentroServiceImpl implements HorarioCentroService {
     @Transactional
     public HorarioCentroResponseDTO updateHorarioCentro(HorarioCentroDTO dto, Long horarioId){
         HorarioCentro horarioCentro = horarioCentroRepository.findById(horarioId)
-                .orElseThrow(() -> new RuntimeException("Horario no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Horario", horarioId));
         if (!horarioCentro.getHoraMInicio().equals(dto.getHoraMInicio())) {
             horarioCentro.setHoraMInicio(dto.getHoraMInicio());
         }

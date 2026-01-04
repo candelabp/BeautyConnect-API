@@ -1,6 +1,7 @@
 package com.example.beautyconnectapi.service.impl;
 
 import com.example.beautyconnectapi.config.mapper.DomicilioMapper;
+import com.example.beautyconnectapi.exception.ResourceNotFoundException;
 import com.example.beautyconnectapi.model.dto.domicilio.DomicilioDTO;
 import com.example.beautyconnectapi.model.dto.domicilio.DomicilioResponseDTO;
 import com.example.beautyconnectapi.model.entity.Domicilio;
@@ -35,7 +36,7 @@ public class DomicilioServiceImpl implements DomicilioService {
     @Transactional(readOnly = true)
     public DomicilioResponseDTO getDomicilioById(Long domicilioId){
         Domicilio domicilio = domicilioRepository.findById(domicilioId)
-                .orElseThrow(() -> new RuntimeException("Domicilio no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Domicilio", domicilioId));
         return domicilioMapper.toResponseDTO(domicilio);
     }
 
@@ -43,7 +44,7 @@ public class DomicilioServiceImpl implements DomicilioService {
     @Transactional
     public DomicilioResponseDTO updateDomicilio(Long domicilioId, DomicilioDTO domicilioDto){
         Domicilio domicilio = domicilioRepository.findById(domicilioId)
-                .orElseThrow(() -> new RuntimeException("Domicilio no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Domicilio", domicilioId));
 
         if (!domicilio.getCalle().equals(domicilioDto.getCalle())) {
             domicilio.setCalle(domicilioDto.getCalle());
@@ -69,7 +70,7 @@ public class DomicilioServiceImpl implements DomicilioService {
     @Transactional
     public DomicilioResponseDTO deleteDomicilio(Long domicilioId){
         Domicilio domicilio = domicilioRepository.findById(domicilioId)
-                .orElseThrow(() -> new RuntimeException("Domicilio con el id " + domicilioId + " no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Domicilio", domicilioId));
         domicilio.setActive(false);
         domicilioRepository.save(domicilio);
         return domicilioMapper.toResponseDTO(domicilio);

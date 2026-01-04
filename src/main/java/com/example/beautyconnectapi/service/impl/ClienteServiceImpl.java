@@ -1,6 +1,7 @@
 package com.example.beautyconnectapi.service.impl;
 
 import com.example.beautyconnectapi.config.mapper.ClienteMapper;
+import com.example.beautyconnectapi.exception.ResourceNotFoundException;
 import com.example.beautyconnectapi.model.dto.cliente.ClienteDTO;
 import com.example.beautyconnectapi.model.dto.cliente.ClienteResponseDTO;
 import com.example.beautyconnectapi.model.entity.Cliente;
@@ -44,7 +45,7 @@ public class ClienteServiceImpl implements ClienteService {
     @Transactional(readOnly = true)
     public ClienteResponseDTO obtenerPorId(Long id) {
         Cliente cliente = clienteRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente", id));
         return clienteMapper.toResponseDto(cliente);
 
     }
@@ -52,12 +53,14 @@ public class ClienteServiceImpl implements ClienteService {
     @Transactional
     public ClienteResponseDTO actualizarCliente(Long id, ClienteDTO dto) {
         Cliente cliente = clienteRepo.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado"));
+                .orElseThrow(() -> new  ResourceNotFoundException("Cliente", id));
 
-        Cliente actualizado = clienteMapper.toEntity(dto);
-        actualizado.setId(id);
-        actualizado.setUsuario(cliente.getUsuario()); // mantener referencia si aplica
-        return clienteMapper.toResponseDto(clienteRepo.save(actualizado));
+        cliente.setNombre(dto.getNombre());
+        cliente.setApellido(dto.getApellido());
+        cliente.setTelefono(dto.getTelefono());
+
+        Cliente guardado = clienteRepo.save(cliente);
+        return clienteMapper.toResponseDto(guardado);
     }
 
     @Override

@@ -28,13 +28,11 @@ public class DisponibilidadOnDemandServiceImpl implements DisponibilidadOnDemand
 
     @Override
     public HorariosDisponiblesResponse generarIniciosDisponibles(Long profId, Long servicioId, LocalDate fecha, int stepMin) {
-        // 1) obtener duración desde ProfesionalServicio
         var ps = profServRepo.findByProfesional_IdAndServicio_Id(profId, servicioId)
                 .orElseThrow(() -> new EntityNotFoundException("Relación Profesional-Servicio no encontrada"));
         int duracion = ps.getDuracion();
         if (duracion <= 0) throw new IllegalArgumentException("Duración de servicio inválida");
 
-        // 2) franjas de jornada para el día
         var franjas = jornadaRepo.findAllByProfesional_IdAndDiaAndActiveTrue(profId, fecha.getDayOfWeek());
         if (franjas.isEmpty()) {
             if (DEBUG) {
@@ -47,7 +45,6 @@ public class DisponibilidadOnDemandServiceImpl implements DisponibilidadOnDemand
                     .fecha(fecha).duracionMin(duracion).inicios(List.of()).build();
         }
 
-        // 3) turnos ya reservados del día (cualquier servicio) -> FILTRAR ESTADOS
         var ocupados = turnoRepo.findAllByProfesionalServicio_Profesional_IdAndFecha(profId, fecha)
                 .stream()
                 .filter(t -> t.getEstado() != EstadoTurno.CANCELADO && t.getEstado() != EstadoTurno.FINALIZADO) // ✅ cambio clave
@@ -132,13 +129,12 @@ public class DisponibilidadOnDemandServiceImpl implements DisponibilidadOnDemand
         return res;
     }
 
-    /** resta intervalos: base = libres (jornada), rest = ocupados (turnos) */
     private static List<Rango> subtract(List<Rango> base, List<Rango> rest) {
         List<Rango> result = new ArrayList<>(base);
         for (Rango o : rest) {
             List<Rango> next = new ArrayList<>();
             for (Rango b : result) {
-                if (o.end <= b.start || o.start >= b.end) { // sin superposición
+                if (o.end <= b.start || o.start >= b.end) {
                     next.add(b);
                     continue;
                 }

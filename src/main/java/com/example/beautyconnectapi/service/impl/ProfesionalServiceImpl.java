@@ -1,6 +1,7 @@
 package com.example.beautyconnectapi.service.impl;
 
 import com.example.beautyconnectapi.config.mapper.ProfesionalMapper;
+import com.example.beautyconnectapi.exception.ResourceNotFoundException;
 import com.example.beautyconnectapi.model.dto.profesional.ProfesionalDTO;
 import com.example.beautyconnectapi.model.dto.profesional.ProfesionalResponseDTO;
 import com.example.beautyconnectapi.model.entity.CentroDeEstetica;
@@ -40,7 +41,7 @@ public class ProfesionalServiceImpl implements ProfesionalService {
     @Transactional(readOnly = true)
     public ProfesionalResponseDTO getProfesionalById(Long profesionalId){
         Profesional profesional = profesionalRepository.findById(profesionalId)
-                .orElseThrow(() -> new RuntimeException("Profesional no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Profesional", profesionalId));
         return profesionalMapper.toResponseDTO(profesional);
     }
 
@@ -48,7 +49,7 @@ public class ProfesionalServiceImpl implements ProfesionalService {
     @Transactional
     public ProfesionalResponseDTO updateProfesional(Long profesionalId, ProfesionalDTO profesionalDto){
         Profesional profesional = profesionalRepository.findById(profesionalId)
-                .orElseThrow(() -> new RuntimeException("Profesional no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Profesional", profesionalId));
 
         if(!profesional.getNombre().equals(profesionalDto.getNombre())){
             profesional.setNombre(profesionalDto.getNombre());
@@ -70,7 +71,7 @@ public class ProfesionalServiceImpl implements ProfesionalService {
     @Transactional
     public ProfesionalResponseDTO deleteProfesional(Long profesionalId){
         Profesional profesional = profesionalRepository.findById(profesionalId)
-                .orElseThrow(() -> new RuntimeException("Profesional no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Profesional", profesionalId));
         profesional.setActive(!profesional.getActive());
         profesionalRepository.save(profesional);
         return profesionalMapper.toResponseDTO(profesional);

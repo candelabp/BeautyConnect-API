@@ -1,10 +1,13 @@
 package com.example.beautyconnectapi.service.impl;
 
 import com.example.beautyconnectapi.config.mapper.CentroDeEsteticaMapper;
+import com.example.beautyconnectapi.exception.BusinessConflictException;
+import com.example.beautyconnectapi.exception.ResourceNotFoundException;
 import com.example.beautyconnectapi.model.dto.centroDeEstetica.CentroDeEsteticaDTO;
 import com.example.beautyconnectapi.model.dto.centroDeEstetica.CentroDeEsteticaResponseDTO;
 import com.example.beautyconnectapi.model.entity.CentroDeEstetica;
 import com.example.beautyconnectapi.model.entity.HorarioCentro;
+import com.example.beautyconnectapi.model.entity.PrestadorDeServicio;
 import com.example.beautyconnectapi.model.enums.Estado;
 import com.example.beautyconnectapi.repository.*;
 import com.example.beautyconnectapi.service.CentroDeEsteticaService;
@@ -41,13 +44,18 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
 
     @Override
     @Transactional
-    public CentroDeEsteticaResponseDTO registrar(CentroDeEsteticaDTO centroDeEsteticadto) {
-        CentroDeEstetica centroDeEstetica = centroDeEsteticaMapper.toEntity(centroDeEsteticadto);
-        centroDeEstetica.setEstado(Estado.PENDIENTE);
-        centroDeEstetica.setActive(false);
-        centroDeEstetica.setPrestadorDeServicio(prestadorDeServicioRepository.findById(centroDeEsteticadto.getPrestadorDeServicioId())
-                .orElseThrow(()  -> new RuntimeException("Prestador no encontrado"))) ;
-        return centroDeEsteticaMapper.toResponseDTO(centroDeEsteticaRepository.save(centroDeEstetica));
+    public CentroDeEsteticaResponseDTO registrar(CentroDeEsteticaDTO dto) {
+        CentroDeEstetica centro = centroDeEsteticaMapper.toEntity(dto);
+        centro.setEstado(Estado.PENDIENTE);
+        centro.setActive(false);
+
+        PrestadorDeServicio prestador = prestadorDeServicioRepository.findById(dto.getPrestadorDeServicioId())
+                .orElseThrow(() -> new ResourceNotFoundException("PrestadorDeServicio", dto.getPrestadorDeServicioId()));
+
+        centro.setPrestadorDeServicio(prestador);
+
+        CentroDeEstetica guardado = centroDeEsteticaRepository.save(centro);
+        return centroDeEsteticaMapper.toResponseDTO(guardado);
     }
 
     @Override
@@ -79,18 +87,17 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
     @Transactional
     public CentroDeEsteticaResponseDTO cambiarEstado(Long id, Estado estado) {
         CentroDeEstetica centroDeEstetica = centroDeEsteticaRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Centro no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Centro", id));
         centroDeEstetica.setEstado(estado);
         if (estado.equals(Estado.ACEPTADO)) {
             Map<String, Object> variables = new HashMap<>();
             variables.put("nombrePrestador", centroDeEstetica.getPrestadorDeServicio().getNombre());
             variables.put("nombreCentro", centroDeEstetica.getNombre());
 
-            // Usar la ruta correcta: "email/centro-aprobado"
             emailService.enviarMailConTemplate(
                     centroDeEstetica.getPrestadorDeServicio().getUsuario().getMail(),
                     "¡Tu centro ha sido aprobado! - BeautyConnect",
-                    "email/centroAprobado",  // ← Ruta correcta
+                    "email/centroAprobado",
                     variables
             );
         }
@@ -114,7 +121,7 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
     @Transactional
     public CentroDeEsteticaResponseDTO actualizar(Long id, CentroDeEsteticaDTO dto) {
         CentroDeEstetica entity = centroDeEsteticaRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Centro no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Centro", id));
         if ((!entity.getNombre().equals(dto.getNombre()) && (!dto.getNombre().isBlank()))) {
             entity.setNombre(dto.getNombre());
         }
@@ -135,10 +142,9 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
             horarioCentroRepository.deleteAll(entity.getHorariosCentro());
             entity.getHorariosCentro().clear();
 
-                // Mapear los nuevos DTOs a entidades
                 List<HorarioCentro> nuevosHorarios = dto.getHorariosCentro().stream().map(horarioDTO -> {
                     HorarioCentro horario = new HorarioCentro();
-                    horario.setId(horarioDTO.getId()); // importante para actualizar existentes
+                    horario.setId(horarioDTO.getId());
                     horario.setDia(horarioDTO.getDia());
                     horario.setHoraMInicio(horarioDTO.getHoraMInicio());
                     horario.setHoraMFinalizacion(horarioDTO.getHoraMFinalizacion());
@@ -159,7 +165,7 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
     public CentroDeEsteticaResponseDTO obtenerPorId(Long id) {
         return centroDeEsteticaRepository.findById(id)
                 .map(centroDeEsteticaMapper::toResponseDTO)
-                .orElseThrow(() -> new EntityNotFoundException("Centro no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Centro", id));
     }
 
     @Override
@@ -167,7 +173,7 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
     public Long obtenerIdPorUid(String uid) {
         Long id = centroDeEsteticaRepository.findIdByUsuarioUid(uid);
         if (id == null) {
-            throw new RuntimeException("No se encontró Centro de Estética para el uid " + uid);
+            throw new ResourceNotFoundException("Centro de estetica", uid);
         }
         return id;
     }
@@ -184,30 +190,30 @@ public class CentroDeEsteticaServiceImpl implements CentroDeEsteticaService {
 
     @Override
     @Transactional
-    public CentroDeEsteticaResponseDTO activar_desactivar(Long id){
-        CentroDeEstetica centroDeEstetica = centroDeEsteticaRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Centro no encontrado"));
+    public CentroDeEsteticaResponseDTO activar_desactivar(Long id) {
 
-        if (!centroDeEstetica.getActive()) {
+        CentroDeEstetica centro = centroDeEsteticaRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("CentroDeEstetica", id));
 
-            boolean tieneProfesionales = !profesionalRepository.findByCentroDeEsteticaId(centroDeEstetica.getId()).isEmpty();
-            boolean tieneServicios = !servicioRepository.getByCentroDeEsteticaId(centroDeEstetica.getId()).isEmpty();
-
+        if (!centro.getActive()) {
+            boolean tieneProfesionales = !profesionalRepository.findByCentroDeEsteticaId(centro.getId()).isEmpty();
+            boolean tieneServicios = !servicioRepository.getByCentroDeEsteticaId(centro.getId()).isEmpty();
             if (!tieneProfesionales || !tieneServicios) {
-                throw new RuntimeException("El centro debe tener al menos un profesional y un servicio antes de activarse.");
+                throw new BusinessConflictException("El centro debe tener al menos un profesional y un servicio antes de activarse.");
             }
-
-            boolean tieneRelacion = centroDeEstetica.getServicios().stream()
-                    .anyMatch(servicio ->
-                            !profesionalServicioRepository.findByServicio_Id(servicio.getId()).isEmpty()
+            boolean tieneRelacion = centro.getServicios().stream()
+                    .anyMatch(servicio -> !profesionalServicioRepository
+                            .findByServicio_Id(servicio.getId()).isEmpty()
                     );
-
             if (!tieneRelacion) {
-                throw new RuntimeException("No se puede activar el centro: no existe ninguna relación entre prestador y servicio.");
+                throw new BusinessConflictException("No se puede activar el centro: no existe ninguna relación entre profesional y servicio.");
             }
         }
-        centroDeEstetica.setActive(!centroDeEstetica.getActive());
-        return centroDeEsteticaMapper.toResponseDTO(centroDeEstetica);
+        centro.setActive(!centro.getActive());
+        CentroDeEstetica guardado = centroDeEsteticaRepository.save(centro);
+
+        return centroDeEsteticaMapper.toResponseDTO(guardado);
     }
+
 
 }

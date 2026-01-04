@@ -1,6 +1,7 @@
 package com.example.beautyconnectapi.service.impl;
 
 import com.example.beautyconnectapi.config.mapper.PrestadorDeServicioMapper;
+import com.example.beautyconnectapi.exception.ResourceNotFoundException;
 import com.example.beautyconnectapi.model.dto.prestadorDeServicio.PrestadorDeServicioDTO;
 import com.example.beautyconnectapi.model.dto.prestadorDeServicio.PrestadorDeServicioResponseDTO;
 import com.example.beautyconnectapi.model.entity.PrestadorDeServicio;
@@ -52,14 +53,14 @@ public class PrestadorDeServicioImpl implements PrestadorDeServicioService {
     public PrestadorDeServicioResponseDTO buscarPorId(Long id) {
         return prestadorDeServicioRepository.findById(id)
                 .map(prestadorDeServicioMapper::toResponseDTO)
-                .orElseThrow(() -> new RuntimeException("Prestador no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Prestador con id: ", id));
     }
 
     @Override
     @Transactional
     public PrestadorDeServicioResponseDTO actualizar(Long id, PrestadorDeServicioDTO dto) {
         PrestadorDeServicio entity = prestadorDeServicioRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Prestador no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Prestador", id));
         if ((!entity.getNombre().equals(dto.getNombre()) && (!dto.getNombre().isBlank()))) {
             entity.setNombre(dto.getNombre());
         }
@@ -83,7 +84,7 @@ public class PrestadorDeServicioImpl implements PrestadorDeServicioService {
    @Transactional(readOnly = true)
    public PrestadorDeServicioResponseDTO obtenerPorUid(String uid) {
        PrestadorDeServicio prestadorDeServicio = prestadorDeServicioRepository.findByUsuarioUid(uid)
-              .orElseThrow(() -> new RuntimeException("Prestador no encontrado para uid: " + uid));
+              .orElseThrow(() -> new ResourceNotFoundException("Prestador: " , uid));
        return prestadorDeServicioMapper.toResponseDTO(prestadorDeServicio);
     }
 
@@ -91,7 +92,7 @@ public class PrestadorDeServicioImpl implements PrestadorDeServicioService {
     @Transactional
     public PrestadorDeServicioResponseDTO cambiarEstadoActive(Long id){
         PrestadorDeServicio prestador = prestadorDeServicioRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Prestador no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Prestador", id));
         prestador.setActive(!prestador.getActive());
         prestador.getUsuario().setActive(prestador.getActive());
         return prestadorDeServicioMapper.toResponseDTO(prestadorDeServicioRepository.save(prestador));

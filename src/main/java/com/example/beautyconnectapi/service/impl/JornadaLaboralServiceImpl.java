@@ -1,5 +1,8 @@
 package com.example.beautyconnectapi.service.impl;
 
+import com.example.beautyconnectapi.exception.BadRequestException;
+import com.example.beautyconnectapi.exception.BusinessConflictException;
+import com.example.beautyconnectapi.exception.ResourceNotFoundException;
 import com.example.beautyconnectapi.model.dto.jornadaLaboral.JornadaLaboralCreateDTO;
 import com.example.beautyconnectapi.model.dto.jornadaLaboral.JornadaLaboralResponseDTO;
 import com.example.beautyconnectapi.model.dto.jornadaLaboral.JornadaLaboralUpdateDTO;
@@ -29,7 +32,7 @@ public class JornadaLaboralServiceImpl implements JornadaLaboralService {
     @Transactional
     public JornadaLaboralResponseDTO create(JornadaLaboralCreateDTO dto) {
         Profesional prof = profesionalRepo.findById(dto.getProfesionalId())
-                .orElseThrow(() -> new EntityNotFoundException("Profesional no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Profesional", dto.getProfesionalId()));
 
         validarRango(dto.getHoraInicio(), dto.getHoraFin());
         validarNoSolapado(prof.getId(), dto.getDia(), dto.getHoraInicio(), dto.getHoraFin(), null);
@@ -53,7 +56,7 @@ public class JornadaLaboralServiceImpl implements JornadaLaboralService {
     @Transactional(readOnly = true)
     public JornadaLaboralResponseDTO get(Long id) {
         JornadaLaboral j = repo.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Jornada no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Jornada", id));
         return toDTO(j);
     }
 
@@ -80,7 +83,7 @@ public class JornadaLaboralServiceImpl implements JornadaLaboralService {
     @Transactional
     public JornadaLaboralResponseDTO update(Long id, JornadaLaboralUpdateDTO dto) {
         JornadaLaboral j = repo.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Jornada no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Jornada", id));
 
         validarRango(dto.getHoraInicio(), dto.getHoraFin());
         validarNoSolapado(j.getProfesional().getId(), dto.getDia(), dto.getHoraInicio(), dto.getHoraFin(), id);
@@ -96,7 +99,7 @@ public class JornadaLaboralServiceImpl implements JornadaLaboralService {
     @Transactional
     public JornadaLaboralResponseDTO toggleActive(Long id, boolean active) {
         JornadaLaboral j = repo.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Jornada no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Jornada", id));
         j.setActive(active);
         return toDTO(repo.save(j));
     }
@@ -104,27 +107,37 @@ public class JornadaLaboralServiceImpl implements JornadaLaboralService {
     @Override
     @Transactional
     public void delete(Long id) {
-        if (!repo.existsById(id)) throw new EntityNotFoundException("Jornada no encontrada");
+        if (!repo.existsById(id)) throw new ResourceNotFoundException("Jornada", id);
         repo.deleteById(id);
     }
 
     // ==== helpers ====
     private void validarRango(LocalTime ini, LocalTime fin) {
-        if (ini == null || fin == null) throw new IllegalArgumentException("Horarios requeridos");
-        if (!fin.isAfter(ini)) throw new IllegalArgumentException("horaFin debe ser posterior a horaInicio");
+        if (ini == null || fin == null) {
+            throw new BadRequestException("Horarios requeridos");
+        }
+        if (!fin.isAfter(ini)) {
+            throw new BadRequestException("horaFin debe ser posterior a horaInicio");
+        }
     }
 
     private void validarNoSolapado(Long profesionalId, DayOfWeek dia, LocalTime ini, LocalTime fin, Long ignoreId) {
         int s = toMin(ini), e = toMin(fin);
+
         for (JornadaLaboral j : repo.findAllByProfesional_IdAndDia(profesionalId, dia)) {
             if (ignoreId != null && j.getId().equals(ignoreId)) continue;
+
             int s2 = toMin(j.getHoraInicio()), e2 = toMin(j.getHoraFin());
-            boolean overlap = s < e2 && s2 < e; // intersección estricta
+            boolean overlap = s < e2 && s2 < e;
+
             if (overlap) {
-                throw new IllegalStateException("Solapamiento con jornada ID=" + j.getId());
+                throw new BusinessConflictException(
+                        "Solapamiento con jornada existente (id=" + j.getId() + ")"
+                );
             }
         }
     }
+
 
     private static int toMin(LocalTime t) { return t.getHour() * 60 + t.getMinute(); }
     private static LocalTime normalize(LocalTime t) { return t.withSecond(0).withNano(0); }

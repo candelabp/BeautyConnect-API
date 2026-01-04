@@ -1,6 +1,7 @@
 package com.example.beautyconnectapi.service.impl;
 
 import com.example.beautyconnectapi.config.mapper.SuperAdminMapper;
+import com.example.beautyconnectapi.exception.ResourceNotFoundException;
 import com.example.beautyconnectapi.model.dto.prestadorDeServicio.PrestadorDeServicioResponseDTO;
 import com.example.beautyconnectapi.model.dto.superAdmin.SuperAdminDTO;
 import com.example.beautyconnectapi.model.dto.superAdmin.SuperAdminResponseDTO;
@@ -33,7 +34,7 @@ public class SuperAdminImpl implements SuperAdminService {
     @Transactional(readOnly = true)
     public SuperAdminResponseDTO getSuperAdminById(Long superAdminId){
         SuperAdmin superAdmin = superAdminRepository.findById(superAdminId)
-                .orElseThrow(() -> new RuntimeException("SuperAdmin no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("SuperAdmin", superAdminId));
         return superAdminMapper.toResponseDTO(superAdmin);
     }
 
@@ -41,7 +42,7 @@ public class SuperAdminImpl implements SuperAdminService {
     @Transactional
     public SuperAdminResponseDTO updateSuperAdmin(Long superAdminId,SuperAdminDTO superAdminDTO){
         SuperAdmin superAdmin = superAdminRepository.findById(superAdminId)
-                .orElseThrow(() -> new RuntimeException("SuperAdmin no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("SuperAdmin", superAdminId));
         if (!superAdmin.getNombre().equals(superAdminDTO.getNombre())){
             superAdmin.setNombre(superAdminDTO.getNombre());
         }
@@ -56,7 +57,7 @@ public class SuperAdminImpl implements SuperAdminService {
     @Transactional(readOnly = true)
     public SuperAdminResponseDTO obtenerPorUid(String uid) {
         SuperAdmin superAdmin = superAdminRepository.findByUsuarioUid(uid)
-                .orElseThrow(() -> new RuntimeException("Admin no encontrado para uid: " + uid));
+                .orElseThrow(() -> new ResourceNotFoundException("Admin" , uid));
         return superAdminMapper.toResponseDTO(superAdmin);
     }
 }

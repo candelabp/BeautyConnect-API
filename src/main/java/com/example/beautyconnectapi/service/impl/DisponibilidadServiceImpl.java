@@ -1,6 +1,7 @@
 package com.example.beautyconnectapi.service.impl;
 
 import com.example.beautyconnectapi.config.mapper.DisponibilidadMapper;
+import com.example.beautyconnectapi.exception.ResourceNotFoundException;
 import com.example.beautyconnectapi.model.dto.disponibilidad.DisponibilidadDTO;
 import com.example.beautyconnectapi.model.dto.disponibilidad.DisponibilidadResponseDTO;
 import com.example.beautyconnectapi.model.entity.Disponibilidad;
@@ -31,7 +32,7 @@ public class DisponibilidadServiceImpl implements DisponibilidadService {
     @Transactional(readOnly = true)
     public DisponibilidadResponseDTO getDisponibilidadById(Long disponibilidadId){
         Disponibilidad disponibilidad = disponibilidadRepository.findById(disponibilidadId)
-                .orElseThrow(() -> new RuntimeException("Disponibilidad no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Disponibilidad", disponibilidadId));
 
         return disponibilidadMapper.toResponseDTO(disponibilidad);
     }
@@ -40,7 +41,7 @@ public class DisponibilidadServiceImpl implements DisponibilidadService {
     @Transactional
     public DisponibilidadResponseDTO updateDisponibilidad(Long disponibilidadId, DisponibilidadDTO disponibilidadDto){
         Disponibilidad disponibilidad = disponibilidadRepository.findById(disponibilidadId)
-                .orElseThrow(() -> new RuntimeException("Disponibilidad no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Disponibilidad", disponibilidadId));
 
         if(!disponibilidad.getFecha().equals(disponibilidadDto.getFecha())){
             disponibilidad.setFecha(disponibilidadDto.getFecha());
@@ -59,7 +60,7 @@ public class DisponibilidadServiceImpl implements DisponibilidadService {
     @Transactional
     public DisponibilidadResponseDTO deleteDisponibilidad(Long disponibilidadId){
         Disponibilidad disponibilidad = disponibilidadRepository.findById(disponibilidadId)
-                .orElseThrow(() -> new RuntimeException("Disponibilidad no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Disponibilidad", disponibilidadId));
 
         disponibilidad.setActive(false);
         disponibilidadRepository.save(disponibilidad);

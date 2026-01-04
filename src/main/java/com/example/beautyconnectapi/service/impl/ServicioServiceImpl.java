@@ -1,6 +1,7 @@
 package com.example.beautyconnectapi.service.impl;
 
 import com.example.beautyconnectapi.config.mapper.ServicioMapper;
+import com.example.beautyconnectapi.exception.ResourceNotFoundException;
 import com.example.beautyconnectapi.model.dto.servicio.ServicioDTO;
 import com.example.beautyconnectapi.model.dto.servicio.ServicioResponseDTO;
 import com.example.beautyconnectapi.model.entity.CentroDeEstetica;
@@ -49,7 +50,7 @@ public class ServicioServiceImpl implements ServicioService {
     @Transactional(readOnly = true)
     public ServicioResponseDTO getServicioById(Long servicioId){
         Servicio servicio = servicioRepository.findById(servicioId)
-                .orElseThrow(() -> new RuntimeException("Servicio no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Servicio", servicioId));
         return servicioMapper.toResponseDTO(servicio);
     }
 
@@ -57,7 +58,7 @@ public class ServicioServiceImpl implements ServicioService {
     @Transactional
     public ServicioResponseDTO updateServicio(Long servicioId, ServicioDTO servicioDto){
         Servicio servicio = servicioRepository.findById(servicioId)
-                .orElseThrow(() -> new RuntimeException("Servicio no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Servicio", servicioId));
 
         if (!servicio.getPrecio().equals(servicioDto.getPrecio())){
             servicio.setPrecio(servicioDto.getPrecio());
@@ -80,7 +81,7 @@ public class ServicioServiceImpl implements ServicioService {
     @Transactional
     public ServicioResponseDTO deleteServicio(Long servicioId){
         Servicio servicio = servicioRepository.findById(servicioId)
-                .orElseThrow(() -> new RuntimeException("Servicio no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Servicio", servicioId));
         servicio.setActive(!servicio.getActive());
         servicioRepository.save(servicio);
         return servicioMapper.toResponseDTO(servicio);
@@ -98,8 +99,7 @@ public class ServicioServiceImpl implements ServicioService {
     @Override
     @Transactional(readOnly = true)
     public List<ServicioResponseDTO> listarPorUid(String uid) {
-        // Si tu repo retorna List<Servicio>, podés usar .stream().toList()
-        // Para ser 100% compatible si retorna Iterable, lo hacemos sin streams:
+
         Iterable<Servicio> servicios = servicioRepository
                 .findByCentroDeEstetica_PrestadorDeServicio_Usuario_Uid(uid);
 

@@ -1,6 +1,7 @@
 package com.example.beautyconnectapi.service.impl;
 
 import com.example.beautyconnectapi.config.mapper.ReseniaMapper;
+import com.example.beautyconnectapi.exception.ResourceNotFoundException;
 import com.example.beautyconnectapi.model.dto.resenia.ReseniaDTO;
 import com.example.beautyconnectapi.model.dto.resenia.ReseniaResponseDTO;
 import com.example.beautyconnectapi.model.dto.turno.TurnoDTO;
@@ -41,11 +42,11 @@ public class ReseniaServiceImpl implements ReseniaService {
     public ReseniaResponseDTO crear(ReseniaDTO dto){
         Resenia resenia = reseniaMapper.toEntity(dto);
         resenia.setCliente(clienteRepository.findById(dto.getClienteId())
-                .orElseThrow(()  -> new RuntimeException("Cliente no encontrado"))) ;
+                .orElseThrow(()  -> new ResourceNotFoundException("Cliente", dto.getClienteId()))) ;
         resenia.setCentroDeEstetica(centroDeEsteticaRepository.findById(dto.getCentroDeEsteticaId())
-                .orElseThrow(()  -> new RuntimeException("Centro no encontrado"))) ;
+                .orElseThrow(()  -> new ResourceNotFoundException("Centro", dto.getCentroDeEsteticaId()))) ;
         resenia.setTurno(turnoRepository.findById(dto.getTurnoId())
-                .orElseThrow(()  -> new RuntimeException("Turno no encontrado"))); ;
+                .orElseThrow(()  -> new ResourceNotFoundException("Turno", dto.getTurnoId()))); ;
         return reseniaMapper.toResponseDTO(reseniaRepository.save(resenia));
 
     }
@@ -63,7 +64,7 @@ public class ReseniaServiceImpl implements ReseniaService {
     @Transactional
     public ReseniaResponseDTO actualizar(Long id, ReseniaDTO dto) {
         Resenia existente = reseniaRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Reseña no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Reseña", id));
 
         Resenia actualizado = reseniaMapper.toEntity(dto);
         actualizado.setId(id);
@@ -81,7 +82,7 @@ public class ReseniaServiceImpl implements ReseniaService {
     public ReseniaResponseDTO obtenerPorId(Long id) {
         return reseniaRepository.findById(id)
                 .map(reseniaMapper::toResponseDTO)
-                .orElseThrow(() -> new EntityNotFoundException("Reseña no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Reseña", id));
     }
 
 
